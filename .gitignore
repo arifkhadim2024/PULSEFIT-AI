@@ -31,10 +31,12 @@ yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 
-# OS Files
+# OS Files & Browser Downloads
 .DS_Store
 *.pem
 Thumbs.db
+*.html
+*_files/
 
 # IDE Files
 .vscode/
