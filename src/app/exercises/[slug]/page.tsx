@@ -142,8 +142,10 @@ export default function ExerciseDetailPage() {
           <ExerciseMediaDisplay
             exerciseName={exercise.name}
             primaryMuscle={exercise.primaryMuscle}
+            secondaryMuscles={exercise.secondaryMuscles}
             mediaList={exercise.media || []}
             movementPattern={exercise.movementPattern}
+            equipment={exercise.equipment}
             tempo={exercise.tempo}
           />
 

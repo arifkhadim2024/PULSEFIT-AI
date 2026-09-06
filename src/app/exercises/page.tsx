@@ -11,14 +11,16 @@ import {
   ArrowRight, 
   Layers, 
   Zap, 
-  ChevronRight,
-  Flame,
-  ArrowUpDown,
-  RotateCcw,
+  Box, 
+  RotateCcw, 
+  Scale,
+  X,
+  Eye,
   SlidersHorizontal,
-  Scale
+  Flame
 } from 'lucide-react';
 import { MUSCLE_GROUPS, EQUIPMENT_LIST } from '@/lib/biomechanics';
+import Exercise3DViewer from '@/components/Exercise3DViewer';
 
 export default function ExercisesPage() {
   return (
@@ -45,6 +47,9 @@ function ExercisesContent() {
 
   // Compare selection drawer
   const [compareList, setCompareList] = useState<any[]>([]);
+
+  // 3D Quick Preview Modal State
+  const [active3DExercise, setActive3DExercise] = useState<any | null>(null);
 
   useEffect(() => {
     setLoading(true);
@@ -92,24 +97,26 @@ function ExercisesContent() {
       <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
         <div>
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-bold uppercase tracking-wider mb-2">
-            <Dumbbell className="w-3.5 h-3.5" />
-            <span>Encyclopedia of Biomechanics</span>
+            <Box className="w-3.5 h-3.5" />
+            <span>Interactive 3D Biomechanics & Anatomy</span>
           </div>
           <h1 className="text-3xl sm:text-4xl font-black text-white tracking-tight">
-            Comprehensive Exercise Database
+            Comprehensive 3D Exercise Database
           </h1>
           <p className="text-xs sm:text-sm text-slate-400 mt-1">
-            Browse {total} verified exercises with precise setup cues, execution steps, tempo cadences, and alternatives.
+            Browse {total} verified exercises with real-time 3D anatomical models, 360° rotation, EMG muscle heatmaps, and form cues.
           </p>
         </div>
 
-        <Link
-          href="/muscles"
-          className="px-4 py-2.5 rounded-2xl bg-slate-900 hover:bg-slate-800 border border-slate-800 text-xs font-bold text-slate-200 flex items-center gap-2 transition-all"
-        >
-          <Layers className="w-4 h-4 text-emerald-400" />
-          <span>Interactive Muscle Map</span>
-        </Link>
+        <div className="flex items-center gap-2">
+          <Link
+            href="/muscles"
+            className="px-4 py-2.5 rounded-2xl bg-slate-900 hover:bg-slate-800 border border-slate-800 text-xs font-bold text-slate-200 flex items-center gap-2 transition-all shadow-md"
+          >
+            <Layers className="w-4 h-4 text-emerald-400" />
+            <span>3D Muscle Explorer</span>
+          </Link>
+        </div>
       </div>
 
       {/* Filter Bar & Search */}
@@ -121,7 +128,7 @@ function ExercisesContent() {
             type="text"
             value={search}
             onChange={e => setSearch(e.target.value)}
-            placeholder="Search exercises by name, keyword, or biomechanical tag (e.g. 'Bench', 'Squat', 'Lats')..."
+            placeholder="Search all 3D exercises by name, keyword, or biomechanical tag (e.g. 'Bench', 'Squat', 'Deadlift')..."
             className="w-full bg-slate-950 border border-slate-800 rounded-2xl pl-12 pr-4 py-3.5 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500 transition-colors"
           />
         </div>
@@ -251,6 +258,55 @@ function ExercisesContent() {
         </div>
       )}
 
+      {/* 3D Quick Preview Interactive Modal */}
+      {active3DExercise && (
+        <div className="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4">
+          <div className="relative w-full max-w-4xl bg-slate-900 border border-slate-800 rounded-3xl overflow-hidden shadow-2xl animate-in fade-in zoom-in-95 duration-200">
+            {/* Modal Header */}
+            <div className="flex items-center justify-between px-6 py-4 bg-slate-950 border-b border-slate-800">
+              <div className="flex items-center gap-2">
+                <Box className="w-5 h-5 text-emerald-400" />
+                <h3 className="text-lg font-bold text-white">{active3DExercise.name}</h3>
+                <span className="px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 text-[10px] font-black uppercase">
+                  3D Biomechanics
+                </span>
+              </div>
+              <button
+                onClick={() => setActive3DExercise(null)}
+                className="p-1.5 rounded-xl bg-slate-800 text-slate-400 hover:text-white hover:bg-slate-700 transition-colors"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            {/* Modal Body: Full 3D Simulation */}
+            <div className="p-4 sm:p-6 space-y-4">
+              <Exercise3DViewer
+                exerciseName={active3DExercise.name}
+                primaryMuscle={active3DExercise.primaryMuscle}
+                secondaryMuscles={active3DExercise.secondaryMuscles}
+                movementPattern={active3DExercise.movementPattern}
+                equipment={active3DExercise.equipment}
+                tempo={active3DExercise.tempo}
+              />
+
+              <div className="flex items-center justify-between pt-2">
+                <p className="text-xs text-slate-400 line-clamp-1 max-w-lg">
+                  {active3DExercise.description}
+                </p>
+                <Link
+                  href={`/exercises/${active3DExercise.slug}`}
+                  className="px-4 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs flex items-center gap-1.5 transition-all shadow-md shadow-emerald-500/20 shrink-0"
+                >
+                  <span>Full Form Guide & Sets</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Exercises Grid */}
       {loading ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -276,16 +332,19 @@ function ExercisesContent() {
             const isComparing = compareList.some(e => e.id === ex.id);
             return (
               <div
-                key={ex.id}
-                className="glass-card rounded-3xl p-6 space-y-4 flex flex-col justify-between group"
+                key={ex.id || ex.slug}
+                className="glass-card rounded-3xl p-6 space-y-4 flex flex-col justify-between group relative border border-slate-800 hover:border-emerald-500/50 transition-all shadow-xl"
               >
                 <div className="space-y-3">
-                  {/* Tags */}
+                  {/* Tags & 3D Ready Badge */}
                   <div className="flex items-center justify-between">
-                    <span className="px-2.5 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-[11px] font-bold">
+                    <span className="px-2.5 py-0.5 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 text-[11px] font-bold">
                       {ex.primaryMuscle}
                     </span>
-                    <span className="text-[11px] font-mono text-slate-400">{ex.difficulty}</span>
+                    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-cyan-500/15 text-cyan-300 border border-cyan-500/30 text-[10px] font-black uppercase tracking-wider">
+                      <Box className="w-3 h-3 text-cyan-400" />
+                      3D Model
+                    </span>
                   </div>
 
                   {/* Title & Description */}
@@ -310,23 +369,35 @@ function ExercisesContent() {
                 </div>
 
                 {/* Bottom Actions */}
-                <div className="pt-3 border-t border-slate-800/80 flex items-center justify-between">
-                  <button
-                    onClick={() => toggleCompare(ex)}
-                    className={`px-3 py-1.5 rounded-xl text-xs font-semibold transition-all ${
-                      isComparing
-                        ? 'bg-amber-500 text-slate-950 font-bold'
-                        : 'bg-slate-800 hover:bg-slate-750 text-slate-300 hover:text-white'
-                    }`}
-                  >
-                    {isComparing ? '✓ In Compare' : '+ Compare'}
-                  </button>
+                <div className="pt-3 border-t border-slate-800/80 flex items-center justify-between gap-2">
+                  <div className="flex items-center gap-1.5">
+                    {/* 1-Click 3D Quick View Button */}
+                    <button
+                      onClick={() => setActive3DExercise(ex)}
+                      className="px-2.5 py-1.5 rounded-xl bg-slate-950 hover:bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 text-xs font-bold flex items-center gap-1 transition-all"
+                      title="Preview interactive 3D model"
+                    >
+                      <Box className="w-3.5 h-3.5" />
+                      <span>3D View</span>
+                    </button>
+
+                    <button
+                      onClick={() => toggleCompare(ex)}
+                      className={`px-2.5 py-1.5 rounded-xl text-xs font-semibold transition-all ${
+                        isComparing
+                          ? 'bg-amber-500 text-slate-950 font-bold'
+                          : 'bg-slate-800 hover:bg-slate-750 text-slate-300 hover:text-white'
+                      }`}
+                    >
+                      {isComparing ? '✓ In Compare' : '+ Compare'}
+                    </button>
+                  </div>
 
                   <Link
                     href={`/exercises/${ex.slug}`}
                     className="inline-flex items-center gap-1 text-xs font-bold text-emerald-400 hover:text-emerald-300 group-hover:translate-x-1 transition-transform"
                   >
-                    <span>Form Guide</span>
+                    <span>Guide</span>
                     <ArrowRight className="w-3.5 h-3.5" />
                   </Link>
                 </div>

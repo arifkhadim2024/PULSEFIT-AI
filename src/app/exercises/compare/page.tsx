@@ -3,7 +3,8 @@
 import React, { useState, useEffect, Suspense } from 'react';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
-import { Scale, ArrowLeft, ArrowRight, Check, X, Dumbbell, Sparkles, Layers, Activity } from 'lucide-react';
+import { Scale, ArrowLeft, ArrowRight, Check, X, Dumbbell, Sparkles, Layers, Activity, Box } from 'lucide-react';
+import Exercise3DViewer from '@/components/Exercise3DViewer';
 
 export default function ExerciseComparePage() {
   return (
@@ -22,6 +23,7 @@ function ExerciseCompareContent() {
   const [exercise2, setExercise2] = useState<any>(null);
   const [allExercises, setAllExercises] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const [show3DSimulations, setShow3DSimulations] = useState(true);
 
   useEffect(() => {
     fetch('/api/exercises?limit=120')
@@ -61,9 +63,21 @@ function ExerciseCompareContent() {
             <span>Side-by-Side Biomechanical Comparison</span>
           </h1>
           <p className="text-xs text-slate-400 mt-1">
-            Compare muscle recruitment, range of motion, and stability trade-offs.
+            Compare muscle recruitment, range of motion, and stability trade-offs in real-time 3D.
           </p>
         </div>
+
+        <button
+          onClick={() => setShow3DSimulations(!show3DSimulations)}
+          className={`px-4 py-2.5 rounded-2xl text-xs font-bold flex items-center gap-2 transition-all shadow-md ${
+            show3DSimulations
+              ? 'bg-emerald-500 text-slate-950 font-black'
+              : 'bg-slate-900 text-slate-300 border border-slate-800'
+          }`}
+        >
+          <Box className="w-4 h-4" />
+          <span>{show3DSimulations ? 'Hide 3D Models' : 'Show 3D Models'}</span>
+        </button>
       </div>
 
       {/* Comparison Selectors */}
@@ -80,7 +94,7 @@ function ExerciseCompareContent() {
             className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-3 text-sm text-white focus:outline-none focus:border-emerald-500"
           >
             {allExercises.map(ex => (
-              <option key={ex.id} value={ex.slug}>{ex.name} ({ex.primaryMuscle})</option>
+              <option key={ex.id || ex.slug} value={ex.slug}>{ex.name} ({ex.primaryMuscle})</option>
             ))}
           </select>
         </div>
@@ -97,7 +111,7 @@ function ExerciseCompareContent() {
             className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-3 text-sm text-white focus:outline-none focus:border-cyan-500"
           >
             {allExercises.map(ex => (
-              <option key={ex.id} value={ex.slug}>{ex.name} ({ex.primaryMuscle})</option>
+              <option key={ex.id || ex.slug} value={ex.slug}>{ex.name} ({ex.primaryMuscle})</option>
             ))}
           </select>
         </div>
@@ -106,11 +120,50 @@ function ExerciseCompareContent() {
       {loading || !exercise1 || !exercise2 ? (
         <div className="h-96 rounded-3xl bg-slate-900/50 border border-slate-800 animate-pulse"></div>
       ) : (
-        /* Comparison Table Cards */
+        /* Comparison Table & 3D Cards */
         <div className="space-y-6">
+          {/* Side-by-Side 3D Simulation Viewers */}
+          {show3DSimulations && (
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              <div className="space-y-3">
+                <div className="flex items-center justify-between px-2">
+                  <span className="text-xs font-bold text-emerald-400 uppercase tracking-wider flex items-center gap-1.5">
+                    <Box className="w-3.5 h-3.5" />
+                    3D Simulation: {exercise1.name}
+                  </span>
+                </div>
+                <Exercise3DViewer
+                  exerciseName={exercise1.name}
+                  primaryMuscle={exercise1.primaryMuscle}
+                  secondaryMuscles={exercise1.secondaryMuscles}
+                  movementPattern={exercise1.movementPattern}
+                  equipment={exercise1.equipment}
+                  tempo={exercise1.tempo}
+                />
+              </div>
+
+              <div className="space-y-3">
+                <div className="flex items-center justify-between px-2">
+                  <span className="text-xs font-bold text-cyan-400 uppercase tracking-wider flex items-center gap-1.5">
+                    <Box className="w-3.5 h-3.5" />
+                    3D Simulation: {exercise2.name}
+                  </span>
+                </div>
+                <Exercise3DViewer
+                  exerciseName={exercise2.name}
+                  primaryMuscle={exercise2.primaryMuscle}
+                  secondaryMuscles={exercise2.secondaryMuscles}
+                  movementPattern={exercise2.movementPattern}
+                  equipment={exercise2.equipment}
+                  tempo={exercise2.tempo}
+                />
+              </div>
+            </div>
+          )}
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Card 1 */}
-            <div className="p-6 sm:p-8 rounded-3xl bg-slate-900 border border-emerald-500/30 space-y-5 shadow-2xl">
+            <div className="p-6 sm:p-8 rounded-3xl bg-slate-900 border border-emerald-500/30 space-y-4 shadow-2xl">
               <div className="flex items-center justify-between">
                 <span className="px-3 py-1 rounded-full bg-emerald-500/15 text-emerald-400 text-xs font-bold uppercase">
                   Option A
@@ -129,7 +182,7 @@ function ExerciseCompareContent() {
             </div>
 
             {/* Card 2 */}
-            <div className="p-6 sm:p-8 rounded-3xl bg-slate-900 border border-cyan-500/30 space-y-5 shadow-2xl">
+            <div className="p-6 sm:p-8 rounded-3xl bg-slate-900 border border-cyan-500/30 space-y-4 shadow-2xl">
               <div className="flex items-center justify-between">
                 <span className="px-3 py-1 rounded-full bg-cyan-500/15 text-cyan-400 text-xs font-bold uppercase">
                   Option B
@@ -158,7 +211,7 @@ function ExerciseCompareContent() {
 
             <div className="divide-y divide-slate-800 text-xs sm:text-sm">
               <div className="grid grid-cols-3 p-4 items-center">
-                <span className="font-bold text-slate-400">Primary Muscle</span>
+                <span className="font-bold text-slate-400">Primary Target Muscle</span>
                 <strong className="text-emerald-400">{exercise1.primaryMuscle}</strong>
                 <strong className="text-cyan-400">{exercise2.primaryMuscle}</strong>
               </div>

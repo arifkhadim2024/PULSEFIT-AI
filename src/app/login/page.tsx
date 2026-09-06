@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { Dumbbell, Sparkles, Lock, Mail, ArrowRight, Shield, AlertCircle } from 'lucide-react';
+import { Dumbbell, Sparkles, Lock, Mail, ArrowRight, Shield, AlertCircle, CheckCircle2, Loader2 } from 'lucide-react';
 
 export default function LoginPage() {
   const router = useRouter();
@@ -11,9 +11,9 @@ export default function LoginPage() {
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const performLogin = async (loginEmail: string, loginPass: string) => {
     setError(null);
     setLoading(true);
 
@@ -21,73 +21,100 @@ export default function LoginPage() {
       const res = await fetch('/api/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({ email: loginEmail, password: loginPass }),
       });
 
       const data = await res.json();
       if (!res.ok) {
-        setError(data.error || 'Login failed');
+        setError(data.error || 'Login failed. Please check credentials.');
         setLoading(false);
         return;
       }
 
+      setSuccess(true);
       router.push('/dashboard');
       router.refresh();
     } catch (err) {
-      setError('An unexpected error occurred. Please try again.');
+      setError('An unexpected network error occurred. Please try again.');
       setLoading(false);
     }
   };
 
-  const fillCredentials = (fillEmail: string, fillPass: string) => {
-    setEmail(fillEmail);
-    setPassword(fillPass);
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    await performLogin(email, password);
+  };
+
+  const handleQuickDemoLogin = async (demoEmail: string, demoPass: string) => {
+    setEmail(demoEmail);
+    setPassword(demoPass);
+    await performLogin(demoEmail, demoPass);
   };
 
   return (
-    <div className="min-h-[80vh] flex items-center justify-center px-4 py-12">
+    <div className="min-h-[85vh] flex items-center justify-center px-4 py-12">
       <div className="w-full max-w-md space-y-6">
         {/* Header */}
         <div className="text-center space-y-2">
-          <div className="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-emerald-500/20 border border-emerald-500/40 text-emerald-400 mb-2">
-            <Dumbbell className="w-6 h-6" />
+          <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-gradient-to-tr from-emerald-500/20 to-teal-500/20 border border-emerald-500/40 text-emerald-400 mb-2 shadow-lg shadow-emerald-500/10">
+            <Dumbbell className="w-7 h-7" />
           </div>
           <h2 className="text-3xl font-black text-white tracking-tight">Welcome Back</h2>
-          <p className="text-xs text-slate-400">Sign in to access your workouts, PRs, and AI coach.</p>
+          <p className="text-xs text-slate-400">Sign in to access your 3D exercises, AI Coach, workouts, and PRs.</p>
         </div>
 
-        {/* Demo Fast Login Helper */}
-        <div className="p-4 rounded-2xl bg-slate-900/90 border border-slate-800 space-y-2.5">
-          <span className="text-[11px] font-bold uppercase tracking-wider text-emerald-400 flex items-center gap-1.5">
-            <Sparkles className="w-3.5 h-3.5" />
-            1-Click Demo Accounts (Instant Testing)
-          </span>
-          <div className="grid grid-cols-2 gap-2">
+        {/* 1-Click Fast Login Helper */}
+        <div className="p-4 rounded-3xl bg-slate-900/95 border border-slate-800 space-y-3 shadow-xl backdrop-blur-xl">
+          <div className="flex items-center justify-between">
+            <span className="text-[11px] font-bold uppercase tracking-wider text-emerald-400 flex items-center gap-1.5">
+              <Sparkles className="w-3.5 h-3.5" />
+              1-Click Instant Login
+            </span>
+            <span className="text-[10px] text-slate-400 bg-slate-800 px-2 py-0.5 rounded-full">Instant Demo</span>
+          </div>
+
+          <div className="grid grid-cols-2 gap-2.5">
             <button
               type="button"
-              onClick={() => fillCredentials('user@fitai.app', 'User@123456')}
-              className="px-3 py-2 rounded-xl bg-slate-800 hover:bg-slate-750 text-slate-200 text-xs font-semibold text-left border border-slate-700/60 hover:border-emerald-500/50 transition-all"
+              disabled={loading}
+              onClick={() => handleQuickDemoLogin('user@fitai.app', 'User@123456')}
+              className="p-3 rounded-2xl bg-slate-800/90 hover:bg-slate-750 text-slate-200 text-xs font-semibold text-left border border-slate-700/60 hover:border-emerald-500 transition-all group disabled:opacity-50"
             >
-              <span className="block font-bold text-white text-[11px]">Demo Member</span>
-              <span className="text-[10px] text-slate-400">user@fitai.app</span>
+              <div className="flex items-center justify-between mb-1">
+                <span className="font-bold text-white text-xs group-hover:text-emerald-300 transition-colors">Demo Member</span>
+                <ArrowRight className="w-3.5 h-3.5 text-slate-400 group-hover:text-emerald-400 group-hover:translate-x-0.5 transition-all" />
+              </div>
+              <span className="text-[10px] text-slate-400 font-mono block">user@fitai.app</span>
             </button>
+
             <button
               type="button"
-              onClick={() => fillCredentials('admin@fitai.app', 'Admin@123456')}
-              className="px-3 py-2 rounded-xl bg-slate-800 hover:bg-slate-750 text-purple-300 text-xs font-semibold text-left border border-purple-500/30 hover:border-purple-500 transition-all"
+              disabled={loading}
+              onClick={() => handleQuickDemoLogin('admin@fitai.app', 'Admin@123456')}
+              className="p-3 rounded-2xl bg-slate-800/90 hover:bg-slate-750 text-purple-300 text-xs font-semibold text-left border border-purple-500/30 hover:border-purple-500 transition-all group disabled:opacity-50"
             >
-              <span className="block font-bold text-purple-200 text-[11px]">Admin Access</span>
-              <span className="text-[10px] text-slate-400">admin@fitai.app</span>
+              <div className="flex items-center justify-between mb-1">
+                <span className="font-bold text-purple-200 text-xs group-hover:text-purple-100 transition-colors">Admin Access</span>
+                <Shield className="w-3.5 h-3.5 text-purple-400" />
+              </div>
+              <span className="text-[10px] text-slate-400 font-mono block">admin@fitai.app</span>
             </button>
           </div>
         </div>
 
         {/* Login Form */}
-        <form onSubmit={handleSubmit} className="glass-card rounded-3xl p-6 sm:p-8 space-y-4">
+        <form onSubmit={handleSubmit} className="glass-card rounded-3xl p-6 sm:p-8 space-y-4 shadow-2xl">
           {error && (
             <div className="p-3.5 rounded-xl bg-rose-500/10 border border-rose-500/30 text-rose-400 text-xs flex items-center gap-2">
               <AlertCircle className="w-4 h-4 shrink-0" />
               <span>{error}</span>
+            </div>
+          )}
+
+          {success && (
+            <div className="p-3.5 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs flex items-center gap-2">
+              <CheckCircle2 className="w-4 h-4 shrink-0" />
+              <span>Login successful! Redirecting to dashboard...</span>
             </div>
           )}
 
@@ -101,7 +128,7 @@ export default function LoginPage() {
                 value={email}
                 onChange={e => setEmail(e.target.value)}
                 placeholder="you@example.com"
-                className="w-full bg-slate-950 border border-slate-800 rounded-xl pl-10 pr-4 py-3 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500"
+                className="w-full bg-slate-950 border border-slate-800 rounded-xl pl-10 pr-4 py-3 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500 transition-colors"
               />
             </div>
           </div>
@@ -121,7 +148,7 @@ export default function LoginPage() {
                 value={password}
                 onChange={e => setPassword(e.target.value)}
                 placeholder="••••••••"
-                className="w-full bg-slate-950 border border-slate-800 rounded-xl pl-10 pr-4 py-3 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500"
+                className="w-full bg-slate-950 border border-slate-800 rounded-xl pl-10 pr-4 py-3 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500 transition-colors"
               />
             </div>
           </div>
@@ -129,10 +156,13 @@ export default function LoginPage() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-3.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 disabled:opacity-50 text-slate-950 font-bold text-sm transition-all shadow-lg shadow-emerald-500/25 flex items-center justify-center gap-2"
+            className="w-full py-3.5 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-400 hover:from-emerald-400 hover:to-teal-300 disabled:opacity-50 text-slate-950 font-black text-sm transition-all shadow-lg shadow-emerald-500/25 flex items-center justify-center gap-2"
           >
             {loading ? (
-              <span>Signing in...</span>
+              <span className="flex items-center gap-2">
+                <Loader2 className="w-4 h-4 animate-spin" />
+                Signing in...
+              </span>
             ) : (
               <>
                 <span>Sign In to FitPulse</span>

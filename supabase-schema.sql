@@ -2814,3 +2814,4 @@ VALUES
   ('admin-seed-id', 'admin@fitai.app', '$2a$10$tZ26fJtU0uB5XGzC07HjmeB8aU64d1vB78lG.3p8yNqmFq21oT7K6', 'Admin Master', 'ADMIN', 'muscle_building', 'advanced', 1250, 4, 12),
   ('user-demo-id', 'user@fitai.app', '$2a$10$Y1sL9mG1f1Zt4eN0z5eEkuV1c6L9iB5d4rF3mX8jA2gQ7sH9vK3p2', 'Alex Mercer', 'USER', 'muscle_building', 'intermediate', 450, 2, 5)
 ON CONFLICT ("email") DO NOTHING;
+
