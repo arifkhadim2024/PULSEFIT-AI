@@ -40,6 +40,16 @@ export async function PUT(
         intermediateAlternative: data.intermediateAlternative,
         advancedAlternative: data.advancedAlternative,
         tags: data.tags,
+        aliases: data.aliases,
+        formCues: typeof data.formCues === 'string' ? data.formCues : JSON.stringify(data.formCues || []),
+        videoUrl: data.videoUrl || data.mediaUrl || null,
+        thumbnailUrl: data.thumbnailUrl,
+        videoSource: data.videoSource || 'Custom Admin Input',
+        verificationStatus: data.verificationStatus || 'needs_review',
+        videoVerified: Boolean(data.videoVerified),
+        metadataVerified: Boolean(data.metadataVerified ?? true),
+        sourceVerified: Boolean(data.sourceVerified),
+        lastVerified: new Date(),
       },
     });
 

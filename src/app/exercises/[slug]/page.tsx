@@ -26,7 +26,7 @@ import {
 } from 'lucide-react';
 import ExerciseMediaDisplay from '@/components/ExerciseMediaDisplay';
 import TempoTimer from '@/components/TempoTimer';
-import { getExerciseVideoUrl } from '@/lib/exercise-videos';
+import { getExerciseVideoUrl, isExerciseVideoVerified } from '@/lib/exercise-videos';
 
 export default function ExerciseDetailPage() {
   const params = useParams();
@@ -35,9 +35,6 @@ export default function ExerciseDetailPage() {
   const [exercise, setExercise] = useState<any>(null);
   const [related, setRelated] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
-  const [isVideoPlaying, setIsVideoPlaying] = useState(true);
-  const [isVideoMuted, setIsVideoMuted] = useState(true);
-  const videoPlayerRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
     if (!slug) return;
@@ -99,25 +96,15 @@ export default function ExerciseDetailPage() {
     commonMistakes = [];
   }
 
-  const exerciseVideoUrl = getExerciseVideoUrl(exercise.slug, exercise.primaryMuscle, exercise.movementPattern);
+  let formCues: string[] = [];
+  try {
+    formCues = JSON.parse(exercise.formCues || '[]');
+  } catch (e) {
+    formCues = [];
+  }
 
-  const toggleVideoPlay = () => {
-    if (videoPlayerRef.current) {
-      if (isVideoPlaying) {
-        videoPlayerRef.current.pause();
-      } else {
-        videoPlayerRef.current.play();
-      }
-      setIsVideoPlaying(!isVideoPlaying);
-    }
-  };
-
-  const toggleVideoMute = () => {
-    if (videoPlayerRef.current) {
-      videoPlayerRef.current.muted = !isVideoMuted;
-      setIsVideoMuted(!isVideoMuted);
-    }
-  };
+  const isVerified = isExerciseVideoVerified(exercise.slug) || exercise.videoVerified || exercise.verificationStatus === 'verified';
+  const exerciseVideoUrl = getExerciseVideoUrl(exercise.slug) || exercise.videoUrl || (exercise.media && exercise.media[0]?.url);
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-10">
@@ -154,10 +141,18 @@ export default function ExerciseDetailPage() {
           <span className="px-3 py-1 rounded-full bg-purple-500/15 border border-purple-500/30 text-purple-400 text-xs font-bold uppercase tracking-wider">
             {exercise.difficulty}
           </span>
-          <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-300 text-xs font-bold uppercase tracking-wider">
-            <Film className="w-3.5 h-3.5 text-cyan-400" />
-            Kaggle Video Dataset
-          </span>
+
+          {isVerified ? (
+            <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-300 text-xs font-bold uppercase tracking-wider">
+              <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
+              1:1 Verified Demonstration
+            </span>
+          ) : (
+            <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-amber-500/15 border border-amber-500/30 text-amber-300 text-xs font-bold uppercase tracking-wider">
+              <AlertTriangle className="w-3.5 h-3.5 text-amber-400" />
+              Video In Review
+            </span>
+          )}
         </div>
 
         <h1 className="text-3xl sm:text-5xl font-black text-white tracking-tight">
@@ -168,9 +163,9 @@ export default function ExerciseDetailPage() {
         </p>
       </div>
 
-      {/* Main Grid: 3D Media Visualizer & Quick Specs */}
+      {/* Main Grid: HD Video Demonstration & Quick Biomechanical Specs */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-        {/* Left Column: Visual Media Display with 3D and Video Tabs */}
+        {/* Left Column: Visual Media Display with Video and EMG Tabs */}
         <div className="lg:col-span-7 space-y-6">
           <ExerciseMediaDisplay
             exerciseName={exercise.name}
@@ -197,12 +192,16 @@ export default function ExerciseDetailPage() {
 
             <div className="space-y-3 text-xs">
               <div className="flex justify-between py-2 border-b border-slate-800">
-                <span className="text-slate-400">Primary Target:</span>
+                <span className="text-slate-400">Primary Target (Prime Mover):</span>
                 <strong className="text-emerald-400 font-bold">{exercise.primaryMuscle}</strong>
               </div>
               <div className="flex justify-between py-2 border-b border-slate-800">
                 <span className="text-slate-400">Secondary Synergists:</span>
                 <strong className="text-slate-200">{exercise.secondaryMuscles || 'N/A'}</strong>
+              </div>
+              <div className="flex justify-between py-2 border-b border-slate-800">
+                <span className="text-slate-400">Body Part Region:</span>
+                <strong className="text-cyan-400">{exercise.bodyPart}</strong>
               </div>
               <div className="flex justify-between py-2 border-b border-slate-800">
                 <span className="text-slate-400">Equipment Required:</span>
@@ -223,7 +222,7 @@ export default function ExerciseDetailPage() {
             </div>
           </div>
 
-          {/* Caloric Burn & Tags */}
+          {/* Caloric Burn & Energy */}
           <div className="p-6 rounded-3xl bg-slate-900 border border-slate-800 space-y-3">
             <div className="flex items-center gap-2 text-xs font-bold text-amber-400 uppercase tracking-wider">
               <Flame className="w-4 h-4" />
@@ -236,37 +235,6 @@ export default function ExerciseDetailPage() {
         </div>
       </div>
 
-      {/* Dedicated Kaggle Workout Demonstration Video Card */}
-      <div className="p-6 sm:p-8 rounded-3xl bg-slate-900 border border-cyan-500/30 space-y-5 shadow-2xl">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-slate-800">
-          <div>
-            <div className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-cyan-400 mb-1">
-              <Film className="w-4 h-4" />
-              <span>Kaggle Dataset Video Demonstration</span>
-            </div>
-            <h3 className="text-xl font-bold text-white">
-              {exercise.name} - Real-World Form Video
-            </h3>
-          </div>
-          <span className="px-3 py-1 rounded-full bg-slate-950 border border-slate-800 text-xs text-slate-300">
-            Source: <strong className="text-cyan-400">hasyimabdillah/workoutfitness-video</strong>
-          </span>
-        </div>
-
-        <div className="relative w-full aspect-video max-h-[500px] rounded-2xl overflow-hidden bg-black flex items-center justify-center shadow-2xl">
-          <video
-            ref={videoPlayerRef}
-            src={exerciseVideoUrl}
-            autoPlay
-            loop
-            muted={isVideoMuted}
-            controls
-            playsInline
-            className="w-full h-full object-contain bg-black"
-          />
-        </div>
-      </div>
-
       {/* Form Analysis: Step-by-Step Execution Guide */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Setup Steps */}
@@ -275,7 +243,7 @@ export default function ExerciseDetailPage() {
             <span className="w-7 h-7 rounded-xl bg-emerald-500/20 border border-emerald-500/40 text-emerald-400 flex items-center justify-center font-black text-xs">
               1
             </span>
-            <span>Biomechanical Setup & Posture</span>
+            <span>Biomechanical Setup & Starting Position</span>
           </h3>
           <ul className="space-y-3 text-xs sm:text-sm text-slate-300">
             {setupSteps.map((step, idx) => (
@@ -319,29 +287,22 @@ export default function ExerciseDetailPage() {
 
       {/* Common Mistakes & Form Corrections Table */}
       {commonMistakes.length > 0 && (
-        <div className="p-6 sm:p-8 rounded-3xl bg-slate-900 border border-slate-800 space-y-6 shadow-xl">
-          <div>
-            <h3 className="text-lg font-bold text-white flex items-center gap-2">
-              <AlertTriangle className="w-5 h-5 text-amber-400" />
-              <span>Common Technique Mistakes & Corrections</span>
-            </h3>
-            <p className="text-xs text-slate-400 mt-1">
-              Avoid these common biomechanical pitfalls to optimize muscle activation and protect joint structures.
-            </p>
-          </div>
+        <div className="p-6 sm:p-8 rounded-3xl bg-slate-900 border border-slate-800 space-y-5 shadow-xl">
+          <h3 className="text-base font-bold text-white flex items-center gap-2">
+            <AlertTriangle className="w-4 h-4 text-amber-400" />
+            <span>Common Biomechanical Mistakes & Coaching Fixes</span>
+          </h3>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {commonMistakes.map((item, idx) => (
-              <div
-                key={idx}
-                className="p-4 rounded-2xl bg-slate-950 border border-slate-800/80 space-y-2.5"
-              >
-                <div className="flex items-start gap-2 text-rose-400 text-xs font-bold">
-                  <span className="w-1.5 h-1.5 rounded-full bg-rose-400 shrink-0 mt-1.5"></span>
+              <div key={idx} className="p-4 rounded-2xl bg-slate-950 border border-slate-800/80 space-y-2">
+                <div className="flex items-center gap-2 text-rose-400 font-bold text-xs">
+                  <span className="w-1.5 h-1.5 rounded-full bg-rose-400"></span>
                   <span>Mistake: {item.mistake}</span>
                 </div>
-                <div className="flex items-start gap-2 text-emerald-400 text-xs font-semibold pl-3 border-l-2 border-emerald-500/40">
-                  <span>Correction: {item.fix}</span>
+                <div className="flex items-start gap-2 text-emerald-300 text-xs">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 mt-1.5 shrink-0"></span>
+                  <span><strong>Fix:</strong> {item.fix}</span>
                 </div>
               </div>
             ))}
@@ -349,59 +310,54 @@ export default function ExerciseDetailPage() {
         </div>
       )}
 
-      {/* Exercise Substitutions / Alternatives */}
-      <div className="p-6 sm:p-8 rounded-3xl bg-slate-900 border border-slate-800 space-y-6">
-        <div>
-          <h3 className="text-lg font-bold text-white flex items-center gap-2">
-            <RotateCcw className="w-5 h-5 text-cyan-400" />
-            <span>Biomechanical Alternatives & Regressions</span>
+      {/* Alternative Exercises */}
+      {(exercise.beginnerAlternative || exercise.advancedAlternative || related.length > 0) && (
+        <div className="space-y-4">
+          <h3 className="text-xl font-bold text-white flex items-center gap-2">
+            <Scale className="w-5 h-5 text-emerald-400" />
+            <span>Synergistic Alternatives</span>
           </h3>
-          <p className="text-xs text-slate-400 mt-1">
-            Swap this exercise depending on equipment access, joint fatigue, or experience level.
-          </p>
-        </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
-          <div className="p-4 rounded-2xl bg-slate-950 border border-slate-800 space-y-1.5">
-            <span className="text-[10px] font-bold text-emerald-400 uppercase tracking-wider">
-              Beginner Regression
-            </span>
-            <h4 className="font-bold text-white text-sm">
-              {exercise.beginnerAlternative || 'Standard Dumbbell Variation'}
-            </h4>
-            <p className="text-slate-400 text-[11px]">Lower balance and stabilization demands.</p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {exercise.beginnerAlternative && (
+              <div className="p-5 rounded-3xl bg-slate-900 border border-slate-800 space-y-2 hover:border-emerald-500/40 transition-colors">
+                <span className="text-[10px] font-bold text-emerald-400 uppercase tracking-wider block">
+                  Beginner Alternative
+                </span>
+                <h4 className="font-bold text-white text-sm">{exercise.beginnerAlternative}</h4>
+                <p className="text-xs text-slate-400">Great progression for learning movement pattern with reduced joint loading.</p>
+              </div>
+            )}
+
+            {exercise.advancedAlternative && (
+              <div className="p-5 rounded-3xl bg-slate-900 border border-slate-800 space-y-2 hover:border-purple-500/40 transition-colors">
+                <span className="text-[10px] font-bold text-purple-400 uppercase tracking-wider block">
+                  Advanced Overload
+                </span>
+                <h4 className="font-bold text-white text-sm">{exercise.advancedAlternative}</h4>
+                <p className="text-xs text-slate-400">High-intensity overload variation for experienced lifters.</p>
+              </div>
+            )}
+
+            {related.map(rel => (
+              <Link
+                key={rel.id}
+                href={`/exercises/${rel.slug}`}
+                className="p-5 rounded-3xl bg-slate-900 border border-slate-800 space-y-2 hover:border-cyan-500/40 transition-colors group block"
+              >
+                <div className="flex justify-between items-center">
+                  <span className="text-[10px] font-bold text-cyan-400 uppercase tracking-wider">
+                    {rel.primaryMuscle} Alternative
+                  </span>
+                  <ArrowRight className="w-3.5 h-3.5 text-slate-400 group-hover:text-cyan-400 group-hover:translate-x-1 transition-transform" />
+                </div>
+                <h4 className="font-bold text-white text-sm group-hover:text-cyan-300 transition-colors">{rel.name}</h4>
+                <p className="text-xs text-slate-400 line-clamp-1">{rel.description}</p>
+              </Link>
+            ))}
           </div>
-
-          <div className="p-4 rounded-2xl bg-slate-950 border border-slate-800 space-y-1.5">
-            <span className="text-[10px] font-bold text-cyan-400 uppercase tracking-wider">
-              Intermediate Alternative
-            </span>
-            <h4 className="font-bold text-white text-sm">
-              {exercise.intermediateAlternative || 'Barbell Free Weight Equivalent'}
-            </h4>
-            <p className="text-slate-400 text-[11px]">Balanced loading and hypertrophy stimulus.</p>
-          </div>
-
-          <div className="p-4 rounded-2xl bg-slate-950 border border-slate-800 space-y-1.5">
-            <span className="text-[10px] font-bold text-purple-400 uppercase tracking-wider">
-              Advanced Progression
-            </span>
-            <h4 className="font-bold text-white text-sm">
-              {exercise.advancedAlternative || 'Paused / Loaded Deficit Protocol'}
-            </h4>
-            <p className="text-slate-400 text-[11px]">Maximum mechanical tension & overload.</p>
-          </div>
         </div>
-      </div>
-
-      {/* Safety & Medical Notice */}
-      <div className="p-5 rounded-2xl bg-slate-950 border border-slate-800/80 flex items-start gap-3 text-xs text-slate-400">
-        <ShieldCheck className="w-5 h-5 text-emerald-400 shrink-0 mt-0.5" />
-        <div>
-          <strong className="text-slate-200 block mb-0.5">Safety Cue:</strong>
-          {exercise.safetyTips} Discontinue set immediately if you experience sharp pinching joint discomfort or acute strain.
-        </div>
-      </div>
+      )}
     </div>
   );
 }

@@ -22,10 +22,13 @@ import {
   Flame,
   Volume2,
   VolumeX,
-  Scan
+  Scan,
+  CheckCircle2,
+  AlertTriangle,
+  ShieldCheck
 } from 'lucide-react';
 import { MUSCLE_GROUPS, EQUIPMENT_LIST } from '@/lib/biomechanics';
-import { getExerciseVideoUrl } from '@/lib/exercise-videos';
+import { getExerciseVideoUrl, isExerciseVideoVerified } from '@/lib/exercise-videos';
 
 export default function ExercisesPage() {
   return (
@@ -45,6 +48,7 @@ function ExercisesContent() {
 
   // Filters
   const [search, setSearch] = useState('');
+  const [selectedStatus, setSelectedStatus] = useState<'All' | 'verified' | 'needs_review'>('All');
   const [selectedMuscle, setSelectedMuscle] = useState(initialMuscle);
   const [selectedEquipment, setSelectedEquipment] = useState('All');
   const [selectedDifficulty, setSelectedDifficulty] = useState('All');
@@ -60,13 +64,14 @@ function ExercisesContent() {
 
   useEffect(() => {
     fetchExercises();
-  }, [search, selectedMuscle, selectedEquipment, selectedDifficulty, selectedMovement]);
+  }, [search, selectedStatus, selectedMuscle, selectedEquipment, selectedDifficulty, selectedMovement]);
 
   const fetchExercises = async () => {
     setLoading(true);
     try {
       const params = new URLSearchParams();
       if (search) params.set('search', search);
+      if (selectedStatus !== 'All') params.set('status', selectedStatus);
       if (selectedMuscle !== 'All') params.set('muscle', selectedMuscle);
       if (selectedEquipment !== 'All') params.set('equipment', selectedEquipment);
       if (selectedDifficulty !== 'All') params.set('difficulty', selectedDifficulty);
@@ -98,6 +103,7 @@ function ExercisesContent() {
 
   const resetFilters = () => {
     setSearch('');
+    setSelectedStatus('All');
     setSelectedMuscle('All');
     setSelectedEquipment('All');
     setSelectedDifficulty('All');
@@ -110,14 +116,14 @@ function ExercisesContent() {
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-semibold mb-2">
-            <Film className="w-3.5 h-3.5" />
-            <span>Kaggle Dataset HD Video Demonstrations</span>
+            <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
+            <span>Audited Exercise Database with Verified Form Videos</span>
           </div>
           <h1 className="text-3xl sm:text-4xl font-black text-white tracking-tight">
             Exercise Biomechanics Library
           </h1>
           <p className="text-sm text-slate-400 mt-1">
-            Search 117+ exercises with verified real-world form video demonstrations and EMG recruitment data.
+            Search 117+ exercises with 1-to-1 verified real-world movement videos and biomechanical form cues.
           </p>
         </div>
 
@@ -141,24 +147,62 @@ function ExercisesContent() {
 
       {/* Search & Filters Card */}
       <div className="p-6 rounded-3xl bg-slate-900 border border-slate-800 space-y-4 shadow-xl">
-        {/* Search bar */}
-        <div className="relative">
-          <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
-          <input
-            type="text"
-            placeholder="Search exercises by name, muscle, equipment, or form cues..."
-            value={search}
-            onChange={e => setSearch(e.target.value)}
-            className="w-full pl-12 pr-4 py-3.5 bg-slate-950 border border-slate-800 rounded-2xl text-sm text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500 transition-colors"
-          />
-          {search && (
+        {/* Search bar & Verification filter */}
+        <div className="flex flex-col sm:flex-row gap-3 items-center">
+          <div className="relative w-full">
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
+            <input
+              type="text"
+              placeholder="Search exercises by name, muscle, equipment, or form cues..."
+              value={search}
+              onChange={e => setSearch(e.target.value)}
+              className="w-full pl-12 pr-4 py-3.5 bg-slate-950 border border-slate-800 rounded-2xl text-sm text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500 transition-colors"
+            />
+            {search && (
+              <button
+                onClick={() => setSearch('')}
+                className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            )}
+          </div>
+
+          {/* Verification Status Selector */}
+          <div className="flex items-center gap-1.5 bg-slate-950 p-1.5 rounded-2xl border border-slate-800 shrink-0 self-stretch sm:self-auto">
             <button
-              onClick={() => setSearch('')}
-              className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white"
+              onClick={() => setSelectedStatus('All')}
+              className={`px-3 py-2 rounded-xl text-xs font-bold transition-all ${
+                selectedStatus === 'All'
+                  ? 'bg-slate-800 text-white shadow-sm'
+                  : 'text-slate-400 hover:text-white'
+              }`}
             >
-              <X className="w-4 h-4" />
+              All
             </button>
-          )}
+            <button
+              onClick={() => setSelectedStatus('verified')}
+              className={`px-3 py-2 rounded-xl text-xs font-bold flex items-center gap-1 transition-all ${
+                selectedStatus === 'verified'
+                  ? 'bg-emerald-500 text-slate-950 font-black shadow-md shadow-emerald-500/20'
+                  : 'text-emerald-400 hover:bg-emerald-500/10'
+              }`}
+            >
+              <CheckCircle2 className="w-3.5 h-3.5" />
+              <span>Verified (22)</span>
+            </button>
+            <button
+              onClick={() => setSelectedStatus('needs_review')}
+              className={`px-3 py-2 rounded-xl text-xs font-bold flex items-center gap-1 transition-all ${
+                selectedStatus === 'needs_review'
+                  ? 'bg-amber-500 text-slate-950 font-black shadow-md shadow-amber-500/20'
+                  : 'text-amber-400 hover:bg-amber-500/10'
+              }`}
+            >
+              <AlertTriangle className="w-3.5 h-3.5" />
+              <span>In Review</span>
+            </button>
+          </div>
         </div>
 
         {/* Quick Muscle Pills */}
@@ -271,16 +315,16 @@ function ExercisesContent() {
         </div>
       )}
 
-      {/* Kaggle Video Demonstration Modal */}
+      {/* Verified Video Demonstration Modal */}
       {activeVideoExercise && (
         <div className="fixed inset-0 z-50 bg-slate-950/90 backdrop-blur-md flex items-center justify-center p-4">
           <div className="relative w-full max-w-3xl bg-slate-900 border border-slate-800 rounded-3xl overflow-hidden shadow-2xl animate-in fade-in zoom-in-95 duration-200">
             <div className="flex items-center justify-between px-6 py-4 bg-slate-950 border-b border-slate-800">
               <div className="flex items-center gap-2">
-                <Film className="w-5 h-5 text-cyan-400" />
+                <Film className="w-5 h-5 text-emerald-400" />
                 <h3 className="text-lg font-bold text-white">{activeVideoExercise.name}</h3>
-                <span className="px-2.5 py-0.5 rounded-full bg-cyan-500/20 text-cyan-400 text-[10px] font-black uppercase">
-                  Kaggle Video Demo
+                <span className="px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 text-[10px] font-black uppercase">
+                  1:1 Verified Demonstration
                 </span>
               </div>
               <button
@@ -293,16 +337,26 @@ function ExercisesContent() {
 
             <div className="p-4 sm:p-6 space-y-4">
               <div className="relative w-full aspect-video rounded-2xl overflow-hidden bg-black flex items-center justify-center shadow-inner">
-                <video
-                  ref={modalVideoRef}
-                  src={getExerciseVideoUrl(activeVideoExercise.slug, activeVideoExercise.primaryMuscle, activeVideoExercise.movementPattern)}
-                  autoPlay
-                  loop
-                  muted={isVideoMuted}
-                  controls
-                  playsInline
-                  className="w-full h-full object-contain bg-black"
-                />
+                {activeVideoExercise.videoUrl || getExerciseVideoUrl(activeVideoExercise.slug) ? (
+                  <video
+                    ref={modalVideoRef}
+                    src={activeVideoExercise.videoUrl || getExerciseVideoUrl(activeVideoExercise.slug)!}
+                    autoPlay
+                    loop
+                    muted={isVideoMuted}
+                    controls
+                    playsInline
+                    className="w-full h-full object-contain bg-black"
+                  />
+                ) : (
+                  <div className="p-6 text-center space-y-2">
+                    <AlertTriangle className="w-8 h-8 text-amber-400 mx-auto" />
+                    <p className="text-xs font-bold text-white">Video Demonstration in Review</p>
+                    <p className="text-[10px] text-slate-400">
+                      Step-by-step form cues and tempo pacing available in the full guide.
+                    </p>
+                  </div>
+                )}
               </div>
 
               <div className="flex items-center justify-between pt-2">
@@ -317,7 +371,7 @@ function ExercisesContent() {
 
                 <Link
                   href={`/exercises/${activeVideoExercise.slug}`}
-                  className="px-4 py-2 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold text-xs flex items-center gap-1.5 transition-all shadow-md shadow-cyan-500/20 shrink-0"
+                  className="px-4 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs flex items-center gap-1.5 transition-all shadow-md shadow-emerald-500/20 shrink-0"
                 >
                   <span>View Full Guide & Sets</span>
                   <ArrowRight className="w-3.5 h-3.5" />
@@ -351,21 +405,36 @@ function ExercisesContent() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {exercises.map(ex => {
             const isComparing = compareList.some(e => e.id === ex.id);
+            const isVerified = ex.verificationStatus === 'verified' || ex.videoVerified;
+            const hasVideo = Boolean(ex.videoUrl || getExerciseVideoUrl(ex.slug));
+
             return (
               <div
                 key={ex.id || ex.slug}
-                className="glass-card rounded-3xl p-6 space-y-4 flex flex-col justify-between group relative border border-slate-800 hover:border-emerald-500/50 transition-all shadow-xl"
+                className={`glass-card rounded-3xl p-6 space-y-4 flex flex-col justify-between group relative border transition-all shadow-xl ${
+                  isVerified
+                    ? 'border-slate-800 hover:border-emerald-500/50'
+                    : 'border-slate-800/80 hover:border-amber-500/40'
+                }`}
               >
                 <div className="space-y-3">
-                  {/* Badges: Muscle + Video Tag */}
+                  {/* Badges: Muscle + Verification Status */}
                   <div className="flex items-center justify-between">
                     <span className="px-2.5 py-0.5 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 text-[11px] font-bold">
                       {ex.primaryMuscle}
                     </span>
-                    <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-md bg-cyan-500/15 text-cyan-300 border border-cyan-500/30 text-[10px] font-black uppercase tracking-wider">
-                      <Film className="w-3 h-3 text-cyan-400" />
-                      HD Form Video
-                    </span>
+
+                    {hasVideo ? (
+                      <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-md bg-emerald-500/15 text-emerald-300 border border-emerald-500/30 text-[10px] font-black uppercase tracking-wider">
+                        <CheckCircle2 className="w-3 h-3 text-emerald-400" />
+                        1:1 Verified Video
+                      </span>
+                    ) : (
+                      <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-amber-500/10 text-amber-400 border border-amber-500/30 text-[10px] font-bold uppercase tracking-wider">
+                        <AlertTriangle className="w-3 h-3 text-amber-400" />
+                        In Review
+                      </span>
+                    )}
                   </div>
 
                   {/* Title & Description */}
@@ -389,18 +458,20 @@ function ExercisesContent() {
                   </div>
                 </div>
 
-                {/* Bottom Actions: 1-Click Video Demo + Compare + Guide */}
+                {/* Bottom Actions: Video Demo + Compare + Guide */}
                 <div className="pt-3 border-t border-slate-800/80 flex flex-wrap items-center justify-between gap-2">
                   <div className="flex items-center gap-1.5">
-                    {/* 1-Click Video Demo Modal */}
-                    <button
-                      onClick={() => setActiveVideoExercise(ex)}
-                      className="px-3 py-1.5 rounded-xl bg-slate-950 hover:bg-cyan-500/20 text-cyan-400 border border-cyan-500/40 text-xs font-bold flex items-center gap-1.5 transition-all shadow-sm"
-                      title="Watch workout form video demonstration"
-                    >
-                      <Film className="w-3.5 h-3.5" />
-                      <span>Watch Video</span>
-                    </button>
+                    {/* 1-Click Video Demo Modal (if verified) */}
+                    {hasVideo && (
+                      <button
+                        onClick={() => setActiveVideoExercise(ex)}
+                        className="px-3 py-1.5 rounded-xl bg-slate-950 hover:bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 text-xs font-bold flex items-center gap-1.5 transition-all shadow-sm"
+                        title="Watch verified 1:1 form video demonstration"
+                      >
+                        <Film className="w-3.5 h-3.5" />
+                        <span>Watch Video</span>
+                      </button>
+                    )}
 
                     <button
                       onClick={() => toggleCompare(ex)}

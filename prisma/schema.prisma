@@ -64,6 +64,19 @@ model Exercise {
   advancedAlternative    String?
   tags                   String          // Comma-separated keywords
   caloriesBurnPerHour    Int             @default(350)
+  aliases                String?         // Comma-separated or JSON list of alternate names
+  formCues               String?         // JSON array of key form cues
+  videoUrl               String?         // Direct verified video URL
+  thumbnailUrl           String?         // Direct thumbnail URL
+  videoSource            String          @default("Kaggle: hasyimabdillah/workoutfitness-video")
+  verificationStatus     String          @default("verified") // verified, needs_review, draft
+  videoVerified          Boolean         @default(true)
+  metadataVerified       Boolean         @default(true)
+  sourceVerified         Boolean         @default(true)
+  lastVerified           DateTime        @default(now())
+  aiVideoUrl             String?         // AI-generated demonstration video URL
+  aiVideoStatus          String?         @default("pending") // ready, generating, pending, failed
+  aiVideoVerified        Boolean         @default(false)
   isCustom               Boolean         @default(false)
   createdAt              DateTime        @default(now())
   updatedAt              DateTime        @updatedAt

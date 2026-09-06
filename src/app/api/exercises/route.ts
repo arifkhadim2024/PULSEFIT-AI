@@ -13,6 +13,7 @@ export async function GET(req: Request) {
     const difficulty = searchParams.get('difficulty') || '';
     const movement = searchParams.get('movement') || '';
     const bodyPart = searchParams.get('bodyPart') || '';
+    const status = searchParams.get('status') || '';
     const limit = parseInt(searchParams.get('limit') || '120', 10);
     const offset = parseInt(searchParams.get('offset') || '0', 10);
 
@@ -24,7 +25,12 @@ export async function GET(req: Request) {
           { name: { contains: search } },
           { description: { contains: search } },
           { tags: { contains: search } },
+          { primaryMuscle: { contains: search } },
         ];
+      }
+
+      if (status && status !== 'All') {
+        where.verificationStatus = status;
       }
 
       if (muscle && muscle !== 'All') {
@@ -59,7 +65,10 @@ export async function GET(req: Request) {
               take: 1,
             },
           },
-          orderBy: { name: 'asc' },
+          orderBy: [
+            { videoVerified: 'desc' },
+            { name: 'asc' }
+          ],
         }),
       ]);
 
@@ -78,6 +87,7 @@ export async function GET(req: Request) {
     // High performance resilient fallback
     const fallbackResult = getFallbackExercises({
       search,
+      status,
       muscle,
       equipment,
       difficulty,

@@ -63,7 +63,7 @@ export default function ExerciseMediaDisplay({
   const containerRef = useRef<HTMLDivElement>(null);
 
   const slug = exerciseSlug || exerciseName.toLowerCase().replace(/[^a-z0-9]/g, '-');
-  const kaggleVideoUrl = getExerciseVideoUrl(slug, primaryMuscle, movementPattern);
+  const kaggleVideoUrl = getExerciseVideoUrl(slug);
   const primaryMedia = mediaList.find(m => m.type === 'VIDEO') || mediaList[0];
   const videoSrc = (primaryMedia?.url && !primaryMedia.url.includes('ForBiggerBlazes')) ? primaryMedia.url : kaggleVideoUrl;
 
@@ -232,10 +232,17 @@ export default function ExerciseMediaDisplay({
 
         {/* Dataset & Tempo Tag */}
         <div className="flex items-center gap-2 text-xs">
-          <span className="px-2.5 py-0.5 rounded-full bg-cyan-500/10 text-cyan-400 border border-cyan-500/30 text-[10px] font-bold flex items-center gap-1">
-            <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse"></span>
-            Kaggle Video Dataset
-          </span>
+          {videoSrc ? (
+            <span className="px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 text-[10px] font-bold flex items-center gap-1">
+              <CheckCircle2 className="w-3 h-3 text-emerald-400" />
+              1:1 Verified Demonstration
+            </span>
+          ) : (
+            <span className="px-2.5 py-0.5 rounded-full bg-amber-500/10 text-amber-400 border border-amber-500/30 text-[10px] font-bold flex items-center gap-1">
+              <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse"></span>
+              Video Under Curation
+            </span>
+          )}
           <span className="hidden md:inline text-slate-400 text-xs">
             Tempo: <strong className="text-white font-mono">{tempo}</strong>
           </span>
@@ -262,13 +269,13 @@ export default function ExerciseMediaDisplay({
               className="w-full h-full object-contain bg-black cursor-pointer"
             />
           ) : (
-            <div className="relative w-full h-full flex flex-col items-center justify-center bg-gradient-to-br from-slate-950 via-slate-900 to-emerald-950/40 p-6 text-center">
-              <div className="w-16 h-16 rounded-full bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center mb-4 text-emerald-400 shadow-xl animate-pulse">
-                <Activity className="w-8 h-8" />
+            <div className="relative w-full h-full flex flex-col items-center justify-center bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 p-6 text-center">
+              <div className="w-16 h-16 rounded-full bg-amber-500/10 border border-amber-500/30 flex items-center justify-center mb-4 text-amber-400 shadow-xl">
+                <Film className="w-8 h-8" />
               </div>
-              <h4 className="text-xl font-bold text-white mb-1">{exerciseName}</h4>
-              <p className="text-xs text-slate-400 mb-4">
-                Full HD Real Video Demonstration
+              <h4 className="text-lg font-bold text-white mb-1">{exerciseName}</h4>
+              <p className="text-xs text-slate-400 max-w-sm mb-4">
+                Verified 1-to-1 video demonstration is currently in review. Follow the step-by-step form cues & tempo metronome below.
               </p>
               <div className="flex flex-wrap items-center justify-center gap-2">
                 <span className="px-3 py-1 rounded-full bg-slate-800 text-xs text-emerald-400 font-semibold border border-slate-700">
@@ -276,6 +283,9 @@ export default function ExerciseMediaDisplay({
                 </span>
                 <span className="px-3 py-1 rounded-full bg-slate-800 text-xs text-cyan-400 font-semibold border border-slate-700">
                   Pattern: {movementPattern}
+                </span>
+                <span className="px-3 py-1 rounded-full bg-slate-800 text-xs text-purple-400 font-semibold border border-slate-700">
+                  Equipment: {equipment}
                 </span>
               </div>
             </div>

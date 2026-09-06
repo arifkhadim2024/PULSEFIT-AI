@@ -247,8 +247,10 @@ INSERT INTO "Exercise" (
   "executionSteps" = EXCLUDED."executionSteps",
   "commonMistakes" = EXCLUDED."commonMistakes";
 `;
-    const videoUrl = getExerciseVideoUrl(ex.slug, ex.primaryMuscle, ex.movementPattern);
-    sql += `INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('media-${ex.slug}', ${escapeSql(ex.id)}, 'VIDEO', '${videoUrl}', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;\n`;
+    const videoUrl = getExerciseVideoUrl(ex.slug);
+    if (videoUrl) {
+      sql += `INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('media-${ex.slug}', ${escapeSql(ex.id)}, 'VIDEO', '${videoUrl}', 'KAGGLE', true) ON CONFLICT ("id") DO NOTHING;\n`;
+    }
   }
 
   // Workouts and workout exercises

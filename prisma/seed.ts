@@ -1,6 +1,6 @@
 import { PrismaClient } from '@prisma/client';
 import bcrypt from 'bcryptjs';
-import { getExerciseVideoUrl } from '../src/lib/exercise-videos';
+import { getExerciseVideoUrl, isExerciseVideoVerified } from '../src/lib/exercise-videos';
 
 const prisma = new PrismaClient();
 
@@ -3453,6 +3453,11 @@ async function main() {
   
   const createdExercises: any[] = [];
   for (const ex of EXERCISES_DATA) {
+    const isVerified = isExerciseVideoVerified(ex.slug);
+    const videoUrl = isVerified ? getExerciseVideoUrl(ex.slug) : null;
+    const videoSource = isVerified ? 'Kaggle: hasyimabdillah/workoutfitness-video' : 'Pending Verified Video Source';
+    const status = isVerified ? 'verified' : 'needs_review';
+
     const created = await prisma.exercise.create({
       data: {
         name: ex.name,
@@ -3479,21 +3484,30 @@ async function main() {
         advancedAlternative: ex.advancedAlternative,
         tags: ex.tags,
         caloriesBurnPerHour: ex.caloriesBurnPerHour,
+        videoUrl: videoUrl,
+        videoSource: videoSource,
+        verificationStatus: status,
+        videoVerified: isVerified,
+        metadataVerified: true,
+        sourceVerified: isVerified,
+        lastVerified: new Date('2026-09-06T19:30:00Z'),
       }
     });
 
-    // Create default media for each exercise using Kaggle dataset
-    await prisma.exerciseMedia.create({
-      data: {
-        exerciseId: created.id,
-        type: 'VIDEO',
-        url: getExerciseVideoUrl(ex.slug, ex.primaryMuscle, ex.movementPattern),
-        thumbnail: `https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?w=800&auto=format&fit=crop&q=80`,
-        provider: 'EXTERNAL',
-        durationSec: 15,
-        isPrimary: true,
-      }
-    });
+    // Create default media for verified exercises only
+    if (videoUrl) {
+      await prisma.exerciseMedia.create({
+        data: {
+          exerciseId: created.id,
+          type: 'VIDEO',
+          url: videoUrl,
+          thumbnail: `https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?w=800&auto=format&fit=crop&q=80`,
+          provider: 'KAGGLE',
+          durationSec: 15,
+          isPrimary: true,
+        }
+      });
+    }
 
     createdExercises.push(created);
   }

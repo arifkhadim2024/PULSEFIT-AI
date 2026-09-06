@@ -195,15 +195,22 @@ function ExerciseCompareContent() {
                 </div>
 
                 <div className="relative w-full aspect-video rounded-2xl overflow-hidden bg-black flex items-center justify-center shadow-inner">
-                  <video
-                    ref={video1Ref}
-                    src={getExerciseVideoUrl(exercise1.slug, exercise1.primaryMuscle, exercise1.movementPattern)}
-                    autoPlay
-                    loop
-                    muted={isMuted}
-                    playsInline
-                    className="w-full h-full object-contain bg-black"
-                  />
+                  {getExerciseVideoUrl(exercise1.slug) || exercise1.videoUrl ? (
+                    <video
+                      ref={video1Ref}
+                      src={(getExerciseVideoUrl(exercise1.slug) || exercise1.videoUrl)!}
+                      autoPlay
+                      loop
+                      muted={isMuted}
+                      playsInline
+                      className="w-full h-full object-contain bg-black"
+                    />
+                  ) : (
+                    <div className="p-6 text-center space-y-2">
+                      <span className="text-xs font-bold text-amber-400 block">Video In Review</span>
+                      <p className="text-[10px] text-slate-400">Detailed metric comparison available below.</p>
+                    </div>
+                  )}
                 </div>
               </div>
 
@@ -220,15 +227,22 @@ function ExerciseCompareContent() {
                 </div>
 
                 <div className="relative w-full aspect-video rounded-2xl overflow-hidden bg-black flex items-center justify-center shadow-inner">
-                  <video
-                    ref={video2Ref}
-                    src={getExerciseVideoUrl(exercise2.slug, exercise2.primaryMuscle, exercise2.movementPattern)}
-                    autoPlay
-                    loop
-                    muted={isMuted}
-                    playsInline
-                    className="w-full h-full object-contain bg-black"
-                  />
+                  {getExerciseVideoUrl(exercise2.slug) || exercise2.videoUrl ? (
+                    <video
+                      ref={video2Ref}
+                      src={(getExerciseVideoUrl(exercise2.slug) || exercise2.videoUrl)!}
+                      autoPlay
+                      loop
+                      muted={isMuted}
+                      playsInline
+                      className="w-full h-full object-contain bg-black"
+                    />
+                  ) : (
+                    <div className="p-6 text-center space-y-2">
+                      <span className="text-xs font-bold text-amber-400 block">Video In Review</span>
+                      <p className="text-[10px] text-slate-400">Detailed metric comparison available below.</p>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
