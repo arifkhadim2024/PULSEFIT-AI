@@ -1,14 +1,22 @@
 import { createClient } from '@supabase/supabase-js';
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://hgwabvgqxcefmisgahku.supabase.co';
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'sb_publishable_Ozdn-G0e7AY93lnW-kLWxw_xAR47zLR';
+const supabaseUrl =
+  process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://hgwabvgqxcefmisgahku.supabase.co';
 
-export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+const supabaseKey =
+  process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY ||
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ||
+  'sb_publishable_Ozdn-G0e7AY93lnW-kLWxw_xAR47zLR';
+
+export const supabase = createClient(supabaseUrl, supabaseKey);
 
 /**
  * Helper to upload user avatar or progress photos to Supabase Storage
  */
-export async function uploadProgressPhoto(file: File, userId: string): Promise<{ url: string | null; error: string | null }> {
+export async function uploadProgressPhoto(
+  file: File,
+  userId: string
+): Promise<{ url: string | null; error: string | null }> {
   try {
     const fileExt = file.name.split('.').pop();
     const fileName = `${userId}/${Date.now()}.${fileExt}`;
