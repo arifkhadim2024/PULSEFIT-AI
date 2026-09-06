@@ -15,41 +15,79 @@ import {
   Sparkles,
   Sliders,
   ZoomIn,
-  ZoomOut
+  ZoomOut,
+  Flame,
+  Zap,
+  Cpu
 } from 'lucide-react';
 
 interface Exercise3DViewerProps {
   exerciseName: string;
+  exerciseSlug?: string;
   primaryMuscle: string;
   secondaryMuscles?: string;
   movementPattern?: string;
   equipment?: string;
   tempo?: string;
   className?: string;
+  externalPlaying?: boolean;
+  externalSpeed?: number;
+  onAngleUpdate?: (angles: { primaryJoint: string; angle: number; secondaryJoint: string; angle2: number }) => void;
 }
+
+export type ExerciseMotionType = 
+  | 'bench'
+  | 'incline_bench'
+  | 'decline_bench'
+  | 'pushup'
+  | 'dips'
+  | 'chest_fly'
+  | 'squat'
+  | 'deadlift'
+  | 'rdl'
+  | 'hip_thrust'
+  | 'leg_extension'
+  | 'shoulder_press'
+  | 'lateral_raise'
+  | 'pullup'
+  | 'lat_pulldown'
+  | 'row'
+  | 'bicep_curl'
+  | 'hammer_curl'
+  | 'tricep_pushdown'
+  | 'plank'
+  | 'leg_raise'
+  | 'russian_twist'
+  | 'calves';
 
 export default function Exercise3DViewer({
   exerciseName,
+  exerciseSlug,
   primaryMuscle = 'Chest',
   secondaryMuscles = '',
   movementPattern = 'Horizontal Push',
   equipment = 'Barbell',
   tempo = '3-0-1-0',
   className = '',
+  externalPlaying,
+  externalSpeed,
+  onAngleUpdate,
 }: Exercise3DViewerProps) {
   const containerRef = useRef<HTMLDivElement>(null);
-  const [isPlaying, setIsPlaying] = useState(true);
-  const [playbackSpeed, setPlaybackSpeed] = useState<number>(1.0);
+  const [internalPlaying, setInternalPlaying] = useState(true);
+  const [internalSpeed, setInternalSpeed] = useState<number>(1.0);
   const [cameraView, setCameraView] = useState<'perspective' | 'front' | 'side' | 'top'>('perspective');
   const [renderMode, setRenderMode] = useState<'heatmap' | 'hologram' | 'anatomical'>('heatmap');
   const [showJointAngles, setShowJointAngles] = useState(true);
-  const [isFullscreen, setIsFullscreen] = useState(false);
   const [jointAngleData, setJointAngleData] = useState<{ primaryJoint: string; angle: number; secondaryJoint: string; angle2: number }>({
-    primaryJoint: 'Elbow',
+    primaryJoint: 'Elbow Flexion',
     angle: 90,
-    secondaryJoint: 'Shoulder',
+    secondaryJoint: 'Shoulder Abduction',
     angle2: 45,
   });
+
+  const isPlaying = externalPlaying !== undefined ? externalPlaying : internalPlaying;
+  const playbackSpeed = externalSpeed !== undefined ? externalSpeed : internalSpeed;
 
   // Scene state refs for Three.js
   const sceneState = useRef<{
@@ -74,42 +112,51 @@ export default function Exercise3DViewer({
     sphericalCoords: { radius: 5.5, theta: Math.PI / 4, phi: Math.PI / 3 },
   });
 
-  // Normalize muscle targeting
-  const muscleTarget = useMemo(() => {
+  // Resolve exact Motion Type matching the 22 Kaggle Dataset categories
+  const motionType = useMemo<ExerciseMotionType>(() => {
+    const slug = (exerciseSlug || exerciseName || '').toLowerCase();
     const p = primaryMuscle.toLowerCase();
     const pattern = movementPattern.toLowerCase();
     const eq = equipment.toLowerCase();
 
-    let type: 'bench' | 'squat' | 'deadlift' | 'ohp' | 'row' | 'pullup' | 'curl' | 'tricep' | 'lateral' | 'core' | 'lunge' | 'calves' = 'bench';
+    // 1. Specific slug keywords from Kaggle dataset
+    if (slug.includes('decline')) return 'decline_bench';
+    if (slug.includes('incline')) return 'incline_bench';
+    if (slug.includes('push-up') || slug.includes('pushup')) return 'pushup';
+    if (slug.includes('dip')) return 'dips';
+    if (slug.includes('pec-deck') || slug.includes('fly') || slug.includes('flye')) return 'chest_fly';
+    if (slug.includes('bench-press') || slug.includes('chest-press')) return 'bench';
+    if (slug.includes('hip-thrust') || slug.includes('glute-bridge')) return 'hip_thrust';
+    if (slug.includes('romanian') || slug.includes('stiff-leg') || slug.includes('good-morning')) return 'rdl';
+    if (slug.includes('deadlift')) return 'deadlift';
+    if (slug.includes('leg-extension') || slug.includes('leg-curl')) return 'leg_extension';
+    if (slug.includes('squat') || slug.includes('leg-press') || slug.includes('lunge')) return 'squat';
+    if (slug.includes('pull-up') || slug.includes('chin-up')) return 'pullup';
+    if (slug.includes('lat-pulldown') || slug.includes('pulldown')) return 'lat_pulldown';
+    if (slug.includes('row')) return 'row';
+    if (slug.includes('hammer-curl')) return 'hammer_curl';
+    if (slug.includes('curl')) return 'bicep_curl';
+    if (slug.includes('pushdown') || slug.includes('skull-crusher') || slug.includes('tricep-extension')) return 'tricep_pushdown';
+    if (slug.includes('lateral-raise') || slug.includes('front-raise') || slug.includes('rear-delt')) return 'lateral_raise';
+    if (slug.includes('shoulder-press') || slug.includes('overhead-press') || slug.includes('arnold') || slug.includes('military')) return 'shoulder_press';
+    if (slug.includes('plank') || slug.includes('ab-wheel')) return 'plank';
+    if (slug.includes('leg-raise')) return 'leg_raise';
+    if (slug.includes('russian-twist') || slug.includes('woodchopper')) return 'russian_twist';
+    if (slug.includes('calf') || slug.includes('calves')) return 'calves';
 
-    if (p.includes('chest') || pattern.includes('horizontal push')) {
-      type = 'bench';
-    } else if (p.includes('quad') || p.includes('glute') && pattern.includes('squat')) {
-      type = 'squat';
-    } else if (p.includes('hamstring') || p.includes('lower back') || pattern.includes('hinge') || exerciseName.toLowerCase().includes('deadlift')) {
-      type = 'deadlift';
-    } else if (p.includes('shoulder') && (pattern.includes('vertical push') || pattern.includes('push'))) {
-      type = 'ohp';
-    } else if (pattern.includes('vertical pull') || exerciseName.toLowerCase().includes('pull-up') || exerciseName.toLowerCase().includes('lat pulldown')) {
-      type = 'pullup';
-    } else if (pattern.includes('horizontal pull') || exerciseName.toLowerCase().includes('row')) {
-      type = 'row';
-    } else if (p.includes('bicep') || exerciseName.toLowerCase().includes('curl')) {
-      type = 'curl';
-    } else if (p.includes('tricep') || exerciseName.toLowerCase().includes('pushdown') || exerciseName.toLowerCase().includes('skull')) {
-      type = 'tricep';
-    } else if (p.includes('deltoid') || exerciseName.toLowerCase().includes('raise') || exerciseName.toLowerCase().includes('fly')) {
-      type = 'lateral';
-    } else if (p.includes('abs') || p.includes('core') || exerciseName.toLowerCase().includes('plank')) {
-      type = 'core';
-    } else if (pattern.includes('lunge') || exerciseName.toLowerCase().includes('split')) {
-      type = 'lunge';
-    } else if (p.includes('calf') || exerciseName.toLowerCase().includes('calf')) {
-      type = 'calves';
-    }
+    // 2. Pattern and Muscle Fallbacks
+    if (p.includes('chest') || pattern.includes('horizontal push')) return 'bench';
+    if (p.includes('quad') || pattern.includes('squat')) return 'squat';
+    if (p.includes('hamstring') || pattern.includes('hinge')) return 'rdl';
+    if (p.includes('shoulder') || pattern.includes('vertical push')) return 'shoulder_press';
+    if (pattern.includes('vertical pull') || p.includes('lat')) return 'lat_pulldown';
+    if (pattern.includes('horizontal pull') || p.includes('back')) return 'row';
+    if (p.includes('bicep')) return 'bicep_curl';
+    if (p.includes('tricep')) return 'tricep_pushdown';
+    if (p.includes('abs') || p.includes('core')) return 'plank';
 
-    return { type, primary: primaryMuscle, equipment: eq };
-  }, [primaryMuscle, movementPattern, equipment, exerciseName]);
+    return 'bench';
+  }, [exerciseSlug, exerciseName, primaryMuscle, movementPattern, equipment]);
 
   useEffect(() => {
     const container = containerRef.current;
@@ -117,8 +164,8 @@ export default function Exercise3DViewer({
 
     // 1. Create Three.js Scene
     const scene = new THREE.Scene();
-    scene.background = new THREE.Color(0x060b13);
-    scene.fog = new THREE.FogExp2(0x060b13, 0.08);
+    scene.background = new THREE.Color(0x040810);
+    scene.fog = new THREE.FogExp2(0x040810, 0.08);
     sceneState.current.scene = scene;
 
     // 2. Camera Setup
@@ -134,24 +181,24 @@ export default function Exercise3DViewer({
     renderer.shadowMap.enabled = true;
     renderer.shadowMap.type = THREE.PCFSoftShadowMap;
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    renderer.toneMappingExposure = 1.2;
+    renderer.toneMappingExposure = 1.25;
     container.replaceChildren(renderer.domElement);
     sceneState.current.renderer = renderer;
 
     // 4. Studio Lighting & Cyber Atmosphere
-    const ambientLight = new THREE.AmbientLight(0x1a2e3b, 1.2);
+    const ambientLight = new THREE.AmbientLight(0x1a2e3b, 1.3);
     scene.add(ambientLight);
 
-    const keyLight = new THREE.DirectionalLight(0xffffff, 2.0);
+    const keyLight = new THREE.DirectionalLight(0xffffff, 2.2);
     keyLight.position.set(4, 6, 4);
     keyLight.castShadow = true;
     scene.add(keyLight);
 
-    const rimLightCyan = new THREE.DirectionalLight(0x06b6d4, 2.5);
+    const rimLightCyan = new THREE.DirectionalLight(0x06b6d4, 2.8);
     rimLightCyan.position.set(-5, 4, -4);
     scene.add(rimLightCyan);
 
-    const fillLightEmerald = new THREE.DirectionalLight(0x10b981, 1.8);
+    const fillLightEmerald = new THREE.DirectionalLight(0x10b981, 2.0);
     fillLightEmerald.position.set(0, -3, 3);
     scene.add(fillLightEmerald);
 
@@ -168,14 +215,14 @@ export default function Exercise3DViewer({
     scene.add(ringMesh);
 
     // 6. Build the 3D Anatomical Human Rig
-    const rig = buildHumanAnatomicalRig(muscleTarget.primary, secondaryMuscles, renderMode);
+    const rig = buildHumanAnatomicalRig(primaryMuscle, secondaryMuscles, renderMode);
     scene.add(rig.root);
     sceneState.current.rigRoot = rig.root;
     sceneState.current.muscleMeshes = rig.muscleMeshes;
     sceneState.current.jointMarkers = rig.jointMarkers;
 
     // 7. Build Equipment
-    const eqGroup = buildEquipment(muscleTarget.type, equipment);
+    const eqGroup = buildEquipment(motionType, equipment);
     scene.add(eqGroup);
     sceneState.current.equipmentGroup = eqGroup;
 
@@ -190,7 +237,7 @@ export default function Exercise3DViewer({
       }
 
       const t = sceneState.current.animTime;
-      updateKinematics(t, muscleTarget.type, rig, eqGroup);
+      updateKinematics(t, motionType, rig, eqGroup);
 
       renderer.render(scene, camera);
       sceneState.current.reqId = requestAnimationFrame(animate);
@@ -256,9 +303,8 @@ export default function Exercise3DViewer({
       window.removeEventListener('resize', handleResize);
       renderer.dispose();
     };
-  }, [muscleTarget, renderMode]);
+  }, [motionType, renderMode, primaryMuscle, secondaryMuscles, isPlaying, playbackSpeed]);
 
-  // Update camera coordinates based on spherical angles
   const updateCameraPosition = () => {
     const { camera } = sceneState.current;
     if (!camera) return;
@@ -270,7 +316,6 @@ export default function Exercise3DViewer({
     camera.lookAt(0, 0.1, 0);
   };
 
-  // Camera presets
   const setCameraPreset = (preset: 'perspective' | 'front' | 'side' | 'top') => {
     setCameraView(preset);
     if (preset === 'perspective') {
@@ -411,7 +456,7 @@ export default function Exercise3DViewer({
     const headMesh = new THREE.Mesh(new THREE.SphereGeometry(0.24, 24, 24), new THREE.MeshStandardMaterial({ color: 0x1e293b, roughness: 0.3 }));
     headGroup.add(headMesh);
 
-    // Futuristic Cyan Visor
+    // Visor
     const visor = new THREE.Mesh(new THREE.BoxGeometry(0.26, 0.08, 0.15), new THREE.MeshStandardMaterial({ color: 0x06b6d4, emissive: 0x06b6d4, emissiveIntensity: 1.2 }));
     visor.position.set(0, 0.02, 0.18);
     headGroup.add(visor);
@@ -549,17 +594,18 @@ export default function Exercise3DViewer({
   // -------------------------------------------------------------
   // PROCEDURAL 3D EQUIPMENT BUILDER
   // -------------------------------------------------------------
-  function buildEquipment(type: string, eqType: string) {
+  function buildEquipment(type: ExerciseMotionType, eqType: string) {
     const group = new THREE.Group();
     const chromeMat = new THREE.MeshStandardMaterial({ color: 0xd1d5db, metalness: 0.9, roughness: 0.15 });
     const rubberMat = new THREE.MeshStandardMaterial({ color: 0x111827, roughness: 0.7 });
     const redPlateMat = new THREE.MeshStandardMaterial({ color: 0xef4444, metalness: 0.4, roughness: 0.3 });
     const benchPadMat = new THREE.MeshStandardMaterial({ color: 0x0f172a, roughness: 0.8 });
 
-    if (type === 'bench') {
-      // Workout Bench
+    if (type === 'bench' || type === 'incline_bench' || type === 'decline_bench' || type === 'hip_thrust') {
       const bench = new THREE.Mesh(new THREE.BoxGeometry(0.6, 0.1, 1.8), benchPadMat);
       bench.position.set(0, -0.35, 0);
+      if (type === 'incline_bench') bench.rotation.x = -0.4;
+      if (type === 'decline_bench') bench.rotation.x = 0.3;
       group.add(bench);
 
       const benchLegs = new THREE.Mesh(new THREE.CylinderGeometry(0.04, 0.04, 1.4), chromeMat);
@@ -577,7 +623,6 @@ export default function Exercise3DViewer({
       bar.rotation.z = Math.PI / 2;
       barbell.add(bar);
 
-      // 20kg Plates on left/right
       const plateL = new THREE.Mesh(new THREE.CylinderGeometry(0.35, 0.35, 0.08, 32), redPlateMat);
       plateL.rotation.z = Math.PI / 2;
       plateL.position.x = -0.95;
@@ -590,8 +635,7 @@ export default function Exercise3DViewer({
 
       barbell.position.set(0, 0.65, 0);
       group.add(barbell);
-    } else if (type === 'squat' || type === 'ohp' || type === 'deadlift' || type === 'row') {
-      // Free Standing Olympic Barbell
+    } else if (type === 'squat' || type === 'shoulder_press' || type === 'deadlift' || type === 'rdl' || type === 'row' || type === 'bicep_curl') {
       const barbell = new THREE.Group();
       barbell.name = 'dynamicBarbell';
       const bar = new THREE.Mesh(new THREE.CylinderGeometry(0.02, 0.02, 2.2), chromeMat);
@@ -609,14 +653,20 @@ export default function Exercise3DViewer({
       barbell.add(plateR);
 
       group.add(barbell);
-    } else if (type === 'pullup') {
-      // Calisthenics Rig Top Bar
+    } else if (type === 'pullup' || type === 'lat_pulldown') {
       const pullBar = new THREE.Mesh(new THREE.CylinderGeometry(0.03, 0.03, 2.4), chromeMat);
       pullBar.rotation.z = Math.PI / 2;
       pullBar.position.set(0, 2.1, 0);
       group.add(pullBar);
-    } else if (type === 'curl' || type === 'lateral' || type === 'tricep') {
-      // Pair of Dumbbells in hands
+    } else if (type === 'dips') {
+      const barL = new THREE.Mesh(new THREE.CylinderGeometry(0.03, 0.03, 1.2), chromeMat);
+      barL.rotation.x = Math.PI / 2;
+      barL.position.set(-0.6, 0.2, 0);
+      const barR = new THREE.Mesh(new THREE.CylinderGeometry(0.03, 0.03, 1.2), chromeMat);
+      barR.rotation.x = Math.PI / 2;
+      barR.position.set(0.6, 0.2, 0);
+      group.add(barL, barR);
+    } else if (type === 'hammer_curl' || type === 'lateral_raise' || type === 'tricep_pushdown' || type === 'russian_twist') {
       const dbL = new THREE.Group();
       dbL.name = 'dumbbellLeft';
       const handleL = new THREE.Mesh(new THREE.CylinderGeometry(0.02, 0.02, 0.3), chromeMat);
@@ -642,9 +692,9 @@ export default function Exercise3DViewer({
   }
 
   // -------------------------------------------------------------
-  // KINEMATIC CYCLE & JOINT UPDATER
+  // ACCURATE 3D KINEMATIC CYCLE FOR EVERY KAGGLE EXERCISE
   // -------------------------------------------------------------
-  function updateKinematics(time: number, type: string, rig: any, eqGroup: THREE.Group) {
+  function updateKinematics(time: number, type: ExerciseMotionType, rig: any, eqGroup: THREE.Group) {
     const cycle = (Math.sin(time * 2.2) + 1) / 2; // 0.0 (bottom/stretch) to 1.0 (lockout/contraction)
     const barbell = eqGroup.getObjectByName('dynamicBarbell');
     const dbL = eqGroup.getObjectByName('dumbbellLeft');
@@ -658,47 +708,96 @@ export default function Exercise3DViewer({
       }
     });
 
-    if (type === 'bench') {
-      // Horizontal Press Cycle
+    let currentAngles = { primaryJoint: 'Elbow Flexion', angle: 90, secondaryJoint: 'Shoulder Angle', angle2: 45 };
+
+    // Reset default limbs
+    rig.root.rotation.set(0, 0, 0);
+    rig.root.position.set(0, 0, 0);
+    rig.pelvisGroup.rotation.set(0, 0, 0);
+    rig.torsoGroup.rotation.set(0, 0, 0);
+    rig.leftHip.rotation.set(0, 0, 0);
+    rig.rightHip.rotation.set(0, 0, 0);
+    rig.leftKnee.rotation.set(0, 0, 0);
+    rig.rightKnee.rotation.set(0, 0, 0);
+
+    if (type === 'bench' || type === 'incline_bench' || type === 'decline_bench') {
+      const pitch = type === 'incline_bench' ? -Math.PI / 3 : type === 'decline_bench' ? -Math.PI / 1.7 : -Math.PI / 2;
       rig.root.position.set(0, -0.05, 0);
-      rig.root.rotation.set(-Math.PI / 2, 0, 0);
+      rig.root.rotation.set(pitch, 0, 0);
 
-      const pressAngle = (1 - cycle) * 1.1; // 0 to 1.1 rad
-      rig.leftShoulder.rotation.x = -0.3 + (1 - cycle) * 0.5;
-      rig.leftShoulder.rotation.z = -0.4 - (1 - cycle) * 0.4;
+      const pressAngle = (1 - cycle) * 1.1;
+      rig.leftShoulder.rotation.set(-0.3 + (1 - cycle) * 0.5, 0, -0.4 - (1 - cycle) * 0.4);
       rig.leftElbow.rotation.x = -pressAngle;
-
-      rig.rightShoulder.rotation.x = -0.3 + (1 - cycle) * 0.5;
-      rig.rightShoulder.rotation.z = 0.4 + (1 - cycle) * 0.4;
+      rig.rightShoulder.rotation.set(-0.3 + (1 - cycle) * 0.5, 0, 0.4 + (1 - cycle) * 0.4);
       rig.rightElbow.rotation.x = -pressAngle;
 
       if (barbell) {
         barbell.position.set(0, 0.15 + cycle * 0.45, 0);
       }
 
-      setJointAngleData({
+      currentAngles = {
         primaryJoint: 'Elbow Flexion',
         angle: Math.round(90 + (1 - cycle) * 45),
         secondaryJoint: 'Shoulder Abduction',
         angle2: Math.round(45 + (1 - cycle) * 25),
-      });
+      };
+    } else if (type === 'pushup') {
+      rig.root.position.set(0, -1.35 + cycle * 0.25, 0);
+      rig.root.rotation.set(-Math.PI / 2, 0, 0);
+
+      const pushAngle = (1 - cycle) * 1.3;
+      rig.leftShoulder.rotation.set(0, 0, -0.5 - (1 - cycle) * 0.3);
+      rig.leftElbow.rotation.x = -pushAngle;
+      rig.rightShoulder.rotation.set(0, 0, 0.5 + (1 - cycle) * 0.3);
+      rig.rightElbow.rotation.x = -pushAngle;
+
+      currentAngles = {
+        primaryJoint: 'Elbow Depth Angle',
+        angle: Math.round(90 + (1 - cycle) * 60),
+        secondaryJoint: 'Spine Alignment',
+        angle2: 180,
+      };
+    } else if (type === 'dips') {
+      const dipDepth = (1 - cycle) * 0.4;
+      rig.root.position.y = 0.3 - dipDepth;
+      rig.torsoGroup.rotation.x = 0.3; // forward chest lean
+
+      const elbowDip = (1 - cycle) * 1.5;
+      rig.leftShoulder.rotation.set(-0.2, 0, -0.3);
+      rig.leftElbow.rotation.x = -elbowDip;
+      rig.rightShoulder.rotation.set(-0.2, 0, 0.3);
+      rig.rightElbow.rotation.x = -elbowDip;
+
+      currentAngles = {
+        primaryJoint: 'Elbow Flexion',
+        angle: Math.round(90 + (1 - cycle) * 45),
+        secondaryJoint: 'Torso Incline',
+        angle2: 30,
+      };
+    } else if (type === 'chest_fly') {
+      const flySweep = cycle * 1.2;
+      rig.leftShoulder.rotation.set(0, -flySweep, -0.2);
+      rig.leftElbow.rotation.x = -0.35;
+      rig.rightShoulder.rotation.set(0, flySweep, 0.2);
+      rig.rightElbow.rotation.x = -0.35;
+
+      currentAngles = {
+        primaryJoint: 'Pectoral Adduction',
+        angle: Math.round(cycle * 90),
+        secondaryJoint: 'Elbow Angle (Fixed)',
+        angle2: 145,
+      };
     } else if (type === 'squat') {
-      // Squat Depth Kinematics
-      rig.root.rotation.set(0, 0, 0);
       const depth = (1 - cycle) * 0.75;
       rig.root.position.y = -depth * 0.9;
 
-      // Hip flexion & Knee flexion
-      const kneeBend = (1 - cycle) * 1.7; // ~97 degrees
+      const kneeBend = (1 - cycle) * 1.7;
       rig.leftHip.rotation.x = -(1 - cycle) * 1.3;
       rig.leftKnee.rotation.x = kneeBend;
       rig.rightHip.rotation.x = -(1 - cycle) * 1.3;
       rig.rightKnee.rotation.x = kneeBend;
 
-      // Torso forward lean for balance
       rig.torsoGroup.rotation.x = (1 - cycle) * 0.5;
-
-      // Arm grip on upper traps
       rig.leftShoulder.rotation.set(0.4, 0, -1.2);
       rig.leftElbow.rotation.x = -1.6;
       rig.rightShoulder.rotation.set(0.4, 0, 1.2);
@@ -708,126 +807,220 @@ export default function Exercise3DViewer({
         barbell.position.set(0, 1.05 - depth * 0.9, -0.08);
       }
 
-      setJointAngleData({
-        primaryJoint: 'Knee Angle',
+      currentAngles = {
+        primaryJoint: 'Knee Flexion',
         angle: Math.round(180 - kneeBend * 57.3),
-        secondaryJoint: 'Hip Hinge',
+        secondaryJoint: 'Hip Hinge Depth',
         angle2: Math.round(180 - (1 - cycle) * 75),
-      });
-    } else if (type === 'deadlift' || type === 'row') {
-      // Posterior Chain Hip Hinge
-      rig.root.rotation.set(0, 0, 0);
-      const hinge = (1 - cycle) * 1.1;
-      rig.root.position.y = -(1 - cycle) * 0.3;
+      };
+    } else if (type === 'deadlift' || type === 'rdl') {
+      const hinge = (1 - cycle) * 1.2;
+      rig.root.position.y = -(1 - cycle) * 0.25;
 
       rig.pelvisGroup.rotation.x = hinge;
       rig.leftHip.rotation.x = -hinge * 0.3;
-      rig.leftKnee.rotation.x = hinge * 0.4;
+      rig.leftKnee.rotation.x = type === 'deadlift' ? hinge * 0.5 : hinge * 0.2;
       rig.rightHip.rotation.x = -hinge * 0.3;
-      rig.rightKnee.rotation.x = hinge * 0.4;
+      rig.rightKnee.rotation.x = type === 'deadlift' ? hinge * 0.5 : hinge * 0.2;
 
-      // Arms hanging down or rowing
-      if (type === 'row') {
-        const rowPull = cycle * 1.2;
-        rig.leftShoulder.rotation.x = -rowPull * 0.5;
-        rig.leftElbow.rotation.x = -rowPull;
-        rig.rightShoulder.rotation.x = -rowPull * 0.5;
-        rig.rightElbow.rotation.x = -rowPull;
-      } else {
-        rig.leftShoulder.rotation.x = 0;
-        rig.leftElbow.rotation.x = -0.1;
-        rig.rightShoulder.rotation.x = 0;
-        rig.rightElbow.rotation.x = -0.1;
-      }
+      rig.leftShoulder.rotation.x = 0;
+      rig.leftElbow.rotation.x = -0.1;
+      rig.rightShoulder.rotation.x = 0;
+      rig.rightElbow.rotation.x = -0.1;
 
       if (barbell) {
         barbell.position.set(0, -0.4 + cycle * 0.8, 0.45 - hinge * 0.2);
       }
 
-      setJointAngleData({
+      currentAngles = {
         primaryJoint: 'Hip Hinge Angle',
         angle: Math.round(180 - hinge * 57.3),
-        secondaryJoint: 'Lumbar Extension',
-        angle2: 0,
-      });
-    } else if (type === 'ohp') {
-      // Overhead Press Lockout
-      rig.root.position.set(0, 0, 0);
-      rig.root.rotation.set(0, 0, 0);
+        secondaryJoint: 'Spine Neutrality',
+        angle2: 180,
+      };
+    } else if (type === 'hip_thrust') {
+      rig.root.position.set(0, -0.45, 0);
+      rig.torsoGroup.rotation.x = -(1 - cycle) * 0.8;
+      rig.pelvisGroup.position.y = (cycle - 1) * 0.35;
+      rig.leftKnee.rotation.x = 1.6;
+      rig.rightKnee.rotation.x = 1.6;
 
-      const overhead = cycle * 2.1; // 0 to full vertical
-      rig.leftShoulder.rotation.set(0, 0, -0.4 - overhead * 0.6);
-      rig.leftShoulder.rotation.x = -overhead * 0.6;
+      if (barbell) {
+        barbell.position.set(0, -0.1 + cycle * 0.35, 0.15);
+      }
+
+      currentAngles = {
+        primaryJoint: 'Hip Extension',
+        angle: Math.round(180 - (1 - cycle) * 60),
+        secondaryJoint: 'Glute Peak Tension',
+        angle2: Math.round(cycle * 100),
+      };
+    } else if (type === 'leg_extension') {
+      const legExt = cycle * 1.5;
+      rig.leftHip.rotation.x = -1.4;
+      rig.rightHip.rotation.x = -1.4;
+      rig.leftKnee.rotation.x = 1.5 - legExt;
+      rig.rightKnee.rotation.x = 1.5 - legExt;
+
+      currentAngles = {
+        primaryJoint: 'Knee Extension',
+        angle: Math.round(90 + cycle * 90),
+        secondaryJoint: 'Quad Peak Squeeze',
+        angle2: Math.round(cycle * 100),
+      };
+    } else if (type === 'shoulder_press') {
+      const overhead = cycle * 2.1;
+      rig.leftShoulder.rotation.set(-overhead * 0.6, 0, -0.4 - overhead * 0.6);
       rig.leftElbow.rotation.x = -(1 - cycle) * 1.6;
-
-      rig.rightShoulder.rotation.set(0, 0, 0.4 + overhead * 0.6);
-      rig.rightShoulder.rotation.x = -overhead * 0.6;
+      rig.rightShoulder.rotation.set(-overhead * 0.6, 0, 0.4 + overhead * 0.6);
       rig.rightElbow.rotation.x = -(1 - cycle) * 1.6;
 
       if (barbell) {
         barbell.position.set(0, 0.9 + cycle * 0.85, 0.15);
       }
 
-      setJointAngleData({
+      currentAngles = {
         primaryJoint: 'Elbow Lockout',
         angle: Math.round(90 + cycle * 85),
         secondaryJoint: 'Shoulder Elevation',
         angle2: Math.round(cycle * 180),
-      });
-    } else if (type === 'pullup') {
-      // Vertical Pull / Pull-up Kinematics
-      rig.root.rotation.set(0, 0, 0);
-      rig.root.position.y = cycle * 0.65;
+      };
+    } else if (type === 'lateral_raise') {
+      const raise = cycle * 1.5;
+      rig.leftShoulder.rotation.z = -raise;
+      rig.rightShoulder.rotation.z = raise;
+      rig.leftElbow.rotation.x = -0.2;
+      rig.rightElbow.rotation.x = -0.2;
 
+      if (dbL && dbR) {
+        dbL.position.set(-0.5 - cycle * 0.5, 0.1 + cycle * 0.7, 0);
+        dbR.position.set(0.5 + cycle * 0.5, 0.1 + cycle * 0.7, 0);
+      }
+
+      currentAngles = {
+        primaryJoint: 'Shoulder Abduction',
+        angle: Math.round(cycle * 90),
+        secondaryJoint: 'Side Delt Load',
+        angle2: Math.round(cycle * 100),
+      };
+    } else if (type === 'pullup' || type === 'lat_pulldown') {
       const pull = cycle * 1.8;
+      if (type === 'pullup') rig.root.position.y = cycle * 0.65;
       rig.leftShoulder.rotation.set(0, 0, -2.4 + pull * 0.6);
       rig.leftElbow.rotation.x = -pull;
       rig.rightShoulder.rotation.set(0, 0, 2.4 - pull * 0.6);
       rig.rightElbow.rotation.x = -pull;
 
-      setJointAngleData({
+      currentAngles = {
         primaryJoint: 'Elbow Flexion',
         angle: Math.round(170 - pull * 50),
         secondaryJoint: 'Scapular Depression',
         angle2: Math.round(cycle * 45),
-      });
-    } else if (type === 'curl') {
-      // Bicep Flexion Arc
-      rig.root.position.set(0, 0, 0);
-      rig.root.rotation.set(0, 0, 0);
+      };
+    } else if (type === 'row') {
+      const hinge = 0.8;
+      rig.pelvisGroup.rotation.x = hinge;
+      const rowPull = cycle * 1.4;
+      rig.leftShoulder.rotation.x = -rowPull * 0.5;
+      rig.leftElbow.rotation.x = -rowPull;
+      rig.rightShoulder.rotation.x = -rowPull * 0.5;
+      rig.rightElbow.rotation.x = -rowPull;
 
+      if (barbell) {
+        barbell.position.set(0, -0.2 + cycle * 0.45, 0.35);
+      }
+
+      currentAngles = {
+        primaryJoint: 'Elbow Pull Angle',
+        angle: Math.round(180 - rowPull * 60),
+        secondaryJoint: 'Scapular Retraction',
+        angle2: Math.round(cycle * 40),
+      };
+    } else if (type === 'bicep_curl' || type === 'hammer_curl') {
       const curl = cycle * 2.3;
       rig.leftShoulder.rotation.set(0, 0, -0.2);
       rig.leftElbow.rotation.x = -curl;
       rig.rightShoulder.rotation.set(0, 0, 0.2);
       rig.rightElbow.rotation.x = -curl;
 
+      if (barbell && type === 'bicep_curl') {
+        barbell.position.set(0, 0.2 + cycle * 0.45, 0.35 + cycle * 0.15);
+      }
       if (dbL && dbR) {
         dbL.position.set(-0.52, 0.45 - (1 - cycle) * 0.4, 0.2 + cycle * 0.25);
         dbR.position.set(0.52, 0.45 - (1 - cycle) * 0.4, 0.2 + cycle * 0.25);
       }
 
-      setJointAngleData({
+      currentAngles = {
         primaryJoint: 'Bicep Elbow Angle',
         angle: Math.round(160 - cycle * 115),
-        secondaryJoint: 'Supination',
-        angle2: 90,
-      });
-    } else {
-      // Default Standing Athletic Movement
-      rig.root.position.set(0, 0, 0);
-      rig.root.rotation.set(0, 0, 0);
+        secondaryJoint: 'Peak Contraction',
+        angle2: Math.round(cycle * 100),
+      };
+    } else if (type === 'tricep_pushdown') {
+      const extend = cycle * 1.8;
+      rig.leftShoulder.rotation.set(-0.2, 0, -0.1);
+      rig.leftElbow.rotation.x = -(1.8 - extend);
+      rig.rightShoulder.rotation.set(-0.2, 0, 0.1);
+      rig.rightElbow.rotation.x = -(1.8 - extend);
 
+      currentAngles = {
+        primaryJoint: 'Tricep Extension',
+        angle: Math.round(80 + cycle * 95),
+        secondaryJoint: 'Triceps Long Head',
+        angle2: Math.round(cycle * 100),
+      };
+    } else if (type === 'plank') {
+      rig.root.position.set(0, -1.4, 0);
+      rig.root.rotation.set(-Math.PI / 2, 0, 0);
+      rig.leftElbow.rotation.x = -1.5;
+      rig.rightElbow.rotation.x = -1.5;
+
+      currentAngles = {
+        primaryJoint: 'Core Isometric Brace',
+        angle: 180,
+        secondaryJoint: 'Anti-Extension Force',
+        angle2: 100,
+      };
+    } else if (type === 'leg_raise') {
+      const raise = cycle * 1.5;
+      rig.leftHip.rotation.x = -raise;
+      rig.rightHip.rotation.x = -raise;
+      rig.leftKnee.rotation.x = 0.2;
+      rig.rightKnee.rotation.x = 0.2;
+
+      currentAngles = {
+        primaryJoint: 'Hip Flexion',
+        angle: Math.round(180 - raise * 57.3),
+        secondaryJoint: 'Lower Rectus Abdominis',
+        angle2: Math.round(cycle * 100),
+      };
+    } else if (type === 'russian_twist') {
+      rig.root.position.set(0, -1.2, 0);
+      rig.torsoGroup.rotation.x = 0.6; // 45 lean back
+      const twist = Math.sin(time * 3) * 0.7;
+      rig.torsoGroup.rotation.y = twist;
+
+      currentAngles = {
+        primaryJoint: 'Thoracic Rotation',
+        angle: Math.round(twist * 57.3),
+        secondaryJoint: 'Oblique Contraction',
+        angle2: 85,
+      };
+    } else {
       rig.leftShoulder.rotation.x = Math.sin(time * 2) * 0.3;
       rig.rightShoulder.rotation.x = -Math.sin(time * 2) * 0.3;
 
-      setJointAngleData({
+      currentAngles = {
         primaryJoint: 'Motion Vector',
         angle: Math.round(75 + cycle * 30),
-        secondaryJoint: 'Torso Brace',
+        secondaryJoint: 'Kinematic Flow',
         angle2: 90,
-      });
+      };
     }
+
+    setJointAngleData(currentAngles);
+    if (onAngleUpdate) onAngleUpdate(currentAngles);
   }
 
   return (
@@ -912,7 +1105,7 @@ export default function Exercise3DViewer({
           {/* Left: Play / Pause / Speed */}
           <div className="flex items-center gap-2">
             <button
-              onClick={() => setIsPlaying(!isPlaying)}
+              onClick={() => setInternalPlaying(!isPlaying)}
               className="p-2 rounded-xl bg-emerald-500 text-slate-950 font-bold hover:bg-emerald-400 transition-all shadow-md shadow-emerald-500/20 hover:scale-105"
               title={isPlaying ? 'Pause 3D Cycle' : 'Play 3D Cycle'}
             >
@@ -923,7 +1116,7 @@ export default function Exercise3DViewer({
               {[0.5, 1.0, 1.5].map(spd => (
                 <button
                   key={spd}
-                  onClick={() => setPlaybackSpeed(spd)}
+                  onClick={() => setInternalSpeed(spd)}
                   className={`px-2 py-0.5 rounded-lg text-[11px] font-bold ${
                     playbackSpeed === spd
                       ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/40'
