@@ -22,9 +22,11 @@ import {
   AlertTriangle,
   CheckCircle2,
   Flame,
-  Zap
+  Zap,
+  Repeat
 } from 'lucide-react';
-import { getExerciseVideoUrl, isExerciseVideoVerified } from '@/lib/exercise-videos';
+import { getExerciseMediaDetails } from '@/lib/exercise-media-engine';
+import { getExerciseVideoUrl } from '@/lib/exercise-videos';
 
 export default function ExerciseComparePage() {
   return (
@@ -50,6 +52,9 @@ function ExerciseCompareContent() {
   const [isPlaying2, setIsPlaying2] = useState(true);
   const [isMuted, setIsMuted] = useState(true);
 
+  // Demonstration loop phase
+  const [demoPhase, setDemoPhase] = useState<'start' | 'contraction'>('start');
+
   const video1Ref = useRef<HTMLVideoElement>(null);
   const video2Ref = useRef<HTMLVideoElement>(null);
 
@@ -74,8 +79,19 @@ function ExerciseCompareContent() {
       .catch(() => setLoading(false));
   }, [slug1, slug2]);
 
-  const hasVideo1 = Boolean(exercise1 && (getExerciseVideoUrl(exercise1.slug) || exercise1.videoUrl));
-  const hasVideo2 = Boolean(exercise2 && (getExerciseVideoUrl(exercise2.slug) || exercise2.videoUrl));
+  // Demo auto-loop interval
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setDemoPhase(prev => (prev === 'start' ? 'contraction' : 'start'));
+    }, 1800);
+    return () => clearInterval(interval);
+  }, []);
+
+  const media1 = exercise1 ? getExerciseMediaDetails(exercise1.slug) : null;
+  const media2 = exercise2 ? getExerciseMediaDetails(exercise2.slug) : null;
+
+  const hasVideo1 = Boolean(exercise1 && (media1?.type === 'video' || getExerciseVideoUrl(exercise1.slug) || exercise1.videoUrl));
+  const hasVideo2 = Boolean(exercise2 && (media2?.type === 'video' || getExerciseVideoUrl(exercise2.slug) || exercise2.videoUrl));
   const hasAnyVideo = hasVideo1 || hasVideo2;
 
   const togglePlaySync = () => {
@@ -120,7 +136,7 @@ function ExerciseCompareContent() {
           </Link>
           <h1 className="text-3xl font-black text-white tracking-tight flex items-center gap-2.5">
             <Scale className="w-7 h-7 text-emerald-400" />
-            <span>Side-by-Side Movement & Biomechanics Comparison</span>
+            <span>Side-by-Side Visual Form & Biomechanics Comparison</span>
           </h1>
           <p className="text-xs text-slate-400 mt-1">
             Compare movement execution, anatomical muscle recruitment, and kinematic force curves in real-time.
@@ -202,21 +218,23 @@ function ExerciseCompareContent() {
                     <h3 className="text-base font-bold text-white line-clamp-1">{exercise1.name}</h3>
                   </div>
                   {hasVideo1 ? (
-                    <span className="text-[10px] font-bold text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-full border border-emerald-500/30">
-                      1:1 Video Demo
+                    <span className="text-[10px] font-bold text-emerald-400 bg-emerald-500/10 px-2.5 py-0.5 rounded-full border border-emerald-500/30 flex items-center gap-1">
+                      <Film className="w-3 h-3 text-emerald-400" />
+                      1:1 HD Video
                     </span>
                   ) : (
-                    <span className="text-[10px] font-bold text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded-full border border-amber-500/30">
-                      In Review
+                    <span className="text-[10px] font-bold text-cyan-400 bg-cyan-500/10 px-2.5 py-0.5 rounded-full border border-cyan-500/30 flex items-center gap-1">
+                      <Repeat className="w-3 h-3 text-cyan-400 animate-spin" />
+                      Dual-Phase Sequence
                     </span>
                   )}
                 </div>
 
-                <div className="relative w-full aspect-video rounded-2xl overflow-hidden bg-black flex items-center justify-center shadow-inner">
+                <div className="relative w-full aspect-video rounded-2xl overflow-hidden bg-slate-950 flex items-center justify-center shadow-inner">
                   {hasVideo1 ? (
                     <video
                       ref={video1Ref}
-                      src={(getExerciseVideoUrl(exercise1.slug) || exercise1.videoUrl)!}
+                      src={media1?.videoUrl || (getExerciseVideoUrl(exercise1.slug) || exercise1.videoUrl)!}
                       autoPlay
                       loop
                       muted={isMuted}
@@ -224,28 +242,16 @@ function ExerciseCompareContent() {
                       className="w-full h-full object-contain bg-black"
                     />
                   ) : (
-                    <div className="w-full h-full p-6 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 flex flex-col justify-between text-left">
-                      <div className="flex items-center justify-between">
-                        <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-400 font-mono flex items-center gap-1">
-                          <Activity className="w-3 h-3" /> Biomechanical Model
-                        </span>
-                        <span className="text-[10px] text-slate-400 font-mono">Tempo: {exercise1.tempo}</span>
-                      </div>
-
-                      <div className="space-y-2 my-auto">
-                        <div className="text-xs text-slate-300">
-                          <span className="text-slate-400 text-[10px] block uppercase font-bold">Prime Target</span>
-                          <strong className="text-emerald-400 text-sm">{exercise1.primaryMuscle}</strong>
-                        </div>
-                        <div className="text-xs text-slate-300">
-                          <span className="text-slate-400 text-[10px] block uppercase font-bold">Synergists</span>
-                          <span className="text-slate-200">{exercise1.secondaryMuscles || 'Kinetic Stabilizers'}</span>
-                        </div>
-                      </div>
-
-                      <div className="pt-2 border-t border-slate-800/80 flex items-center justify-between text-[11px] text-slate-400">
-                        <span>Pattern: <strong className="text-white">{exercise1.movementPattern}</strong></span>
-                        <span>Equipment: <strong className="text-emerald-300">{exercise1.equipment}</strong></span>
+                    <div className="relative w-full h-full flex items-center justify-center overflow-hidden bg-slate-950">
+                      {media1?.frameStartUrl && (
+                        <img
+                          src={demoPhase === 'start' ? media1.frameStartUrl : media1.frameContractionUrl!}
+                          alt={exercise1.name}
+                          className="w-full h-full object-contain transition-all duration-300"
+                        />
+                      )}
+                      <div className="absolute top-2 left-2 px-2 py-0.5 rounded-lg bg-slate-950/80 text-[10px] font-bold text-emerald-400 border border-emerald-500/30 backdrop-blur-sm">
+                        {demoPhase === 'start' ? 'Phase 1: Setup & Stretch' : 'Phase 2: Peak Contraction'}
                       </div>
                     </div>
                   )}
@@ -262,21 +268,23 @@ function ExerciseCompareContent() {
                     <h3 className="text-base font-bold text-white line-clamp-1">{exercise2.name}</h3>
                   </div>
                   {hasVideo2 ? (
-                    <span className="text-[10px] font-bold text-cyan-400 bg-cyan-500/10 px-2 py-0.5 rounded-full border border-cyan-500/30">
-                      1:1 Video Demo
+                    <span className="text-[10px] font-bold text-cyan-400 bg-cyan-500/10 px-2.5 py-0.5 rounded-full border border-cyan-500/30 flex items-center gap-1">
+                      <Film className="w-3 h-3 text-cyan-400" />
+                      1:1 HD Video
                     </span>
                   ) : (
-                    <span className="text-[10px] font-bold text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded-full border border-amber-500/30">
-                      In Review
+                    <span className="text-[10px] font-bold text-cyan-400 bg-cyan-500/10 px-2.5 py-0.5 rounded-full border border-cyan-500/30 flex items-center gap-1">
+                      <Repeat className="w-3 h-3 text-cyan-400 animate-spin" />
+                      Dual-Phase Sequence
                     </span>
                   )}
                 </div>
 
-                <div className="relative w-full aspect-video rounded-2xl overflow-hidden bg-black flex items-center justify-center shadow-inner">
+                <div className="relative w-full aspect-video rounded-2xl overflow-hidden bg-slate-950 flex items-center justify-center shadow-inner">
                   {hasVideo2 ? (
                     <video
                       ref={video2Ref}
-                      src={(getExerciseVideoUrl(exercise2.slug) || exercise2.videoUrl)!}
+                      src={media2?.videoUrl || (getExerciseVideoUrl(exercise2.slug) || exercise2.videoUrl)!}
                       autoPlay
                       loop
                       muted={isMuted}
@@ -284,28 +292,16 @@ function ExerciseCompareContent() {
                       className="w-full h-full object-contain bg-black"
                     />
                   ) : (
-                    <div className="w-full h-full p-6 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 flex flex-col justify-between text-left">
-                      <div className="flex items-center justify-between">
-                        <span className="text-[10px] font-bold uppercase tracking-wider text-cyan-400 font-mono flex items-center gap-1">
-                          <Activity className="w-3 h-3" /> Biomechanical Model
-                        </span>
-                        <span className="text-[10px] text-slate-400 font-mono">Tempo: {exercise2.tempo}</span>
-                      </div>
-
-                      <div className="space-y-2 my-auto">
-                        <div className="text-xs text-slate-300">
-                          <span className="text-slate-400 text-[10px] block uppercase font-bold">Prime Target</span>
-                          <strong className="text-cyan-400 text-sm">{exercise2.primaryMuscle}</strong>
-                        </div>
-                        <div className="text-xs text-slate-300">
-                          <span className="text-slate-400 text-[10px] block uppercase font-bold">Synergists</span>
-                          <span className="text-slate-200">{exercise2.secondaryMuscles || 'Kinetic Stabilizers'}</span>
-                        </div>
-                      </div>
-
-                      <div className="pt-2 border-t border-slate-800/80 flex items-center justify-between text-[11px] text-slate-400">
-                        <span>Pattern: <strong className="text-white">{exercise2.movementPattern}</strong></span>
-                        <span>Equipment: <strong className="text-cyan-300">{exercise2.equipment}</strong></span>
+                    <div className="relative w-full h-full flex items-center justify-center overflow-hidden bg-slate-950">
+                      {media2?.frameStartUrl && (
+                        <img
+                          src={demoPhase === 'start' ? media2.frameStartUrl : media2.frameContractionUrl!}
+                          alt={exercise2.name}
+                          className="w-full h-full object-contain transition-all duration-300"
+                        />
+                      )}
+                      <div className="absolute top-2 left-2 px-2 py-0.5 rounded-lg bg-slate-950/80 text-[10px] font-bold text-cyan-400 border border-cyan-500/30 backdrop-blur-sm">
+                        {demoPhase === 'start' ? 'Phase 1: Setup & Stretch' : 'Phase 2: Peak Contraction'}
                       </div>
                     </div>
                   )}

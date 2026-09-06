@@ -23,8 +23,11 @@ import {
   AlertTriangle,
   Zap,
   ArrowRight,
-  TrendingUp
+  TrendingUp,
+  Image as ImageIcon,
+  Repeat
 } from 'lucide-react';
+import { getExerciseMediaDetails, ExerciseMediaResult } from '@/lib/exercise-media-engine';
 import { getExerciseVideoUrl } from '@/lib/exercise-videos';
 
 interface ExerciseMediaDisplayProps {
@@ -56,6 +59,9 @@ export default function ExerciseMediaDisplay({
   tempo = '3-1-1-0',
   initialTab = 'video',
 }: ExerciseMediaDisplayProps) {
+  const slug = exerciseSlug || exerciseName.toLowerCase().replace(/[^a-z0-9]/g, '-');
+  const mediaDetails = getExerciseMediaDetails(slug);
+
   const [activeTab, setActiveTab] = useState<'video' | 'ai_hud' | 'heatmap' | 'biomechanics'>(initialTab);
   const [isPlaying, setIsPlaying] = useState(true);
   const [isMuted, setIsMuted] = useState(true);
@@ -65,17 +71,17 @@ export default function ExerciseMediaDisplay({
   const [duration, setDuration] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
 
-  // Animated Cadence Simulation for In-Review Exercises
-  const [cadencePhase, setCadencePhase] = useState<'concentric' | 'squeeze' | 'eccentric' | 'pause'>('concentric');
-  const [cadenceProgress, setCadenceProgress] = useState(0);
+  // Dual-Phase Form Demonstration Player State
+  const [currentFramePhase, setCurrentFramePhase] = useState<'start' | 'contraction'>('start');
+  const [demoAutoLoop, setDemoAutoLoop] = useState(true);
 
   const videoRef = useRef<HTMLVideoElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
-  const slug = exerciseSlug || exerciseName.toLowerCase().replace(/[^a-z0-9]/g, '-');
-  const kaggleVideoUrl = getExerciseVideoUrl(slug);
   const primaryMedia = mediaList.find(m => m.type === 'VIDEO') || mediaList[0];
-  const videoSrc = (primaryMedia?.url && !primaryMedia.url.includes('ForBiggerBlazes')) ? primaryMedia.url : kaggleVideoUrl;
+  const videoSrc = (primaryMedia?.url && !primaryMedia.url.includes('ForBiggerBlazes')) 
+    ? primaryMedia.url 
+    : (mediaDetails.type === 'video' ? mediaDetails.videoUrl : getExerciseVideoUrl(slug));
   const hasVideo = Boolean(videoSrc);
 
   // Parse tempo (e.g. "3-1-1-0" -> [3, 1, 1, 0])
@@ -84,45 +90,29 @@ export default function ExerciseMediaDisplay({
   const stretchSec = tempoParts[1] || 1;
   const concentricSec = tempoParts[2] || 1;
   const squeezeSec = tempoParts[3] || 0;
-  const totalCycleSec = Math.max(1, eccentricSec + stretchSec + concentricSec + squeezeSec);
+  const totalCycleMs = Math.max(1500, (eccentricSec + stretchSec + concentricSec + squeezeSec) * 1000 / playbackSpeed);
 
-  // Cadence animation loop for kinetic guide
+  // Auto-looping dual-phase demonstration animation
   useEffect(() => {
-    if (hasVideo) return;
-    let startTime = performance.now();
-    let animId: number;
+    if (hasVideo || !demoAutoLoop) return;
 
-    const tick = (now: number) => {
-      const elapsedSec = ((now - startTime) / 1000) % totalCycleSec;
-      const progress = (elapsedSec / totalCycleSec) * 100;
-      setCadenceProgress(progress);
+    const interval = setInterval(() => {
+      setCurrentFramePhase(prev => (prev === 'start' ? 'contraction' : 'start'));
+    }, totalCycleMs / 2);
 
-      // Determine current phase
-      if (elapsedSec < concentricSec) {
-        setCadencePhase('concentric');
-      } else if (elapsedSec < concentricSec + squeezeSec) {
-        setCadencePhase('squeeze');
-      } else if (elapsedSec < concentricSec + squeezeSec + eccentricSec) {
-        setCadencePhase('eccentric');
-      } else {
-        setCadencePhase('pause');
-      }
-
-      animId = requestAnimationFrame(tick);
-    };
-
-    animId = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(animId);
-  }, [hasVideo, totalCycleSec, concentricSec, squeezeSec, eccentricSec]);
+    return () => clearInterval(interval);
+  }, [hasVideo, demoAutoLoop, totalCycleMs, playbackSpeed]);
 
   const togglePlay = () => {
-    if (videoRef.current) {
+    if (hasVideo && videoRef.current) {
       if (isPlaying) {
         videoRef.current.pause();
       } else {
         videoRef.current.play().catch(() => {});
       }
       setIsPlaying(!isPlaying);
+    } else {
+      setDemoAutoLoop(!demoAutoLoop);
     }
   };
 
@@ -156,10 +146,12 @@ export default function ExerciseMediaDisplay({
   };
 
   const handleRestart = () => {
-    if (videoRef.current) {
+    if (hasVideo && videoRef.current) {
       videoRef.current.currentTime = 0;
       videoRef.current.play().catch(() => {});
       setIsPlaying(true);
+    } else {
+      setCurrentFramePhase('start');
     }
   };
 
@@ -172,7 +164,7 @@ export default function ExerciseMediaDisplay({
     }
   };
 
-  // Synchronize playback speed and play state
+  // Synchronize video playback speed and play state
   useEffect(() => {
     if (videoRef.current && hasVideo) {
       if (isPlaying) {
@@ -190,7 +182,7 @@ export default function ExerciseMediaDisplay({
     return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
   };
 
-  // Exercise joint angle determination based on movement pattern
+  // Primary joint angle & biomechanics calculations
   const getPrimaryJointInfo = () => {
     const p = (movementPattern || '').toLowerCase();
     const name = exerciseName.toLowerCase();
@@ -199,25 +191,25 @@ export default function ExerciseMediaDisplay({
         joint: 'Knee & Hip Flexion', 
         targetAngle: '90° (Parallel Depth)', 
         normalRange: '45° - 120°', 
-        phase: 'Peak Depth',
+        phase: currentFramePhase === 'start' ? 'Initial Setup / Lockout' : 'Peak Depth & Hip Drive',
         action: 'Knee extension & Hip extension drive'
       };
     }
-    if (p.includes('hinge') || name.includes('deadlift') || name.includes('rdl')) {
+    if (p.includes('hinge') || name.includes('deadlift') || name.includes('rdl') || name.includes('shrug')) {
       return { 
-        joint: 'Hip Hinge Angle', 
-        targetAngle: '70° Posterior Tilt', 
+        joint: name.includes('shrug') ? 'Scapular Elevation' : 'Hip Hinge Angle', 
+        targetAngle: name.includes('shrug') ? 'Scapular Retraction' : '70° Posterior Tilt', 
         normalRange: '45° - 90°', 
-        phase: 'Eccentric Loaded Stretch',
-        action: 'Hamstrings & Glutes posterior loading'
+        phase: currentFramePhase === 'start' ? 'Initial Stretch & Setup' : 'Peak Squeeze & Contraction',
+        action: name.includes('shrug') ? 'Upper trapezius elevation' : 'Hamstrings & Glutes posterior loading'
       };
     }
-    if (p.includes('pull') || name.includes('row') || name.includes('pullup') || name.includes('lat')) {
+    if (p.includes('pull') || name.includes('row') || name.includes('pullup') || name.includes('lat') || name.includes('chin')) {
       return { 
         joint: 'Scapular Retraction & Elbows', 
         targetAngle: '90° Humeral Adduction', 
         normalRange: '30° - 110°', 
-        phase: 'Peak Contraction Squeeze',
+        phase: currentFramePhase === 'start' ? 'Full Lat Stretch' : 'Peak Contraction Squeeze',
         action: 'Latissimus dorsi & Rhomboid retraction'
       };
     }
@@ -226,7 +218,7 @@ export default function ExerciseMediaDisplay({
         joint: 'Elbow Flexion', 
         targetAngle: '45° Peak Bicep Peak', 
         normalRange: '30° - 145°', 
-        phase: 'Concentric Contraction',
+        phase: currentFramePhase === 'start' ? 'Full Arm Extension' : 'Peak Concentric Bicep Squeeze',
         action: 'Biceps brachii & Brachialis flexion'
       };
     }
@@ -235,24 +227,24 @@ export default function ExerciseMediaDisplay({
         joint: 'Elbow Extension', 
         targetAngle: '180° Full Lockout', 
         normalRange: '45° - 180°', 
-        phase: 'Terminal Extension',
+        phase: currentFramePhase === 'start' ? '90° Elbow Flexion' : 'Terminal Extension Lockout',
         action: 'Triceps brachii lateral/medial head'
       };
     }
-    if (name.includes('raise') || name.includes('lateral') || p.includes('shoulder')) {
+    if (name.includes('raise') || name.includes('lateral') || p.includes('shoulder') || name.includes('press')) {
       return { 
         joint: 'Glenohumeral Abduction', 
         targetAngle: '90° Scapular Plane', 
         normalRange: '0° - 90°', 
-        phase: 'Parallel Hold',
-        action: 'Lateral deltoid abduction'
+        phase: currentFramePhase === 'start' ? 'Lowered Position' : 'Peak Parallel Extension',
+        action: 'Deltoid contraction & abduction'
       };
     }
     return { 
       joint: 'Elbow & Shoulder Angle', 
       targetAngle: '90° Sternum Level', 
       normalRange: '45° - 90°', 
-      phase: 'Bottom Reversal',
+      phase: currentFramePhase === 'start' ? 'Bottom Chest Stretch' : 'Peak Horizontal Lockout',
       action: 'Pectoralis major horizontal adduction'
     };
   };
@@ -281,33 +273,31 @@ export default function ExerciseMediaDisplay({
             {hasVideo ? (
               <>
                 <Film className="w-3.5 h-3.5" />
-                <span>🎬 Form Video Demo</span>
+                <span>🎬 HD Form Video</span>
               </>
             ) : (
               <>
-                <Sparkles className="w-3.5 h-3.5 text-slate-950" />
-                <span>⚡ Kinetic Form Guide</span>
+                <Repeat className="w-3.5 h-3.5 text-slate-950" />
+                <span>⚡ Dual-Phase Movement Demo</span>
               </>
             )}
           </button>
 
-          {/* AI Skeleton HUD Tab (If video exists) */}
-          {hasVideo && (
-            <button
-              onClick={() => {
-                setActiveTab('video');
-                setAiTrackingActive(true);
-              }}
-              className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all ${
-                activeTab === 'video' && aiTrackingActive
-                  ? 'bg-cyan-500/20 text-cyan-400 border border-cyan-500/40'
-                  : 'text-slate-400 hover:text-slate-200'
-              }`}
-            >
-              <Scan className="w-3.5 h-3.5 text-cyan-400" />
-              <span>AI Skeleton HUD</span>
-            </button>
-          )}
+          {/* AI Skeleton HUD Tab */}
+          <button
+            onClick={() => {
+              setActiveTab('video');
+              setAiTrackingActive(true);
+            }}
+            className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all ${
+              activeTab === 'video' && aiTrackingActive
+                ? 'bg-cyan-500/20 text-cyan-400 border border-cyan-500/40'
+                : 'text-slate-400 hover:text-slate-200'
+            }`}
+          >
+            <Scan className="w-3.5 h-3.5 text-cyan-400" />
+            <span>AI Joint HUD</span>
+          </button>
 
           {/* EMG Muscle Activation Tab */}
           <button
@@ -341,12 +331,12 @@ export default function ExerciseMediaDisplay({
           {hasVideo ? (
             <span className="px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 text-[10px] font-bold flex items-center gap-1">
               <CheckCircle2 className="w-3 h-3 text-emerald-400" />
-              1:1 Verified Demonstration
+              1:1 HD Video Verified
             </span>
           ) : (
-            <span className="px-2.5 py-0.5 rounded-full bg-amber-500/15 text-amber-300 border border-amber-500/40 text-[10px] font-bold flex items-center gap-1.5">
-              <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-ping"></span>
-              Video Under Curation
+            <span className="px-2.5 py-0.5 rounded-full bg-cyan-500/15 text-cyan-300 border border-cyan-500/40 text-[10px] font-bold flex items-center gap-1.5">
+              <Sparkles className="w-3 h-3 text-cyan-400" />
+              Verified Form Sequence
             </span>
           )}
           <span className="hidden md:inline text-slate-400 text-xs">
@@ -356,18 +346,18 @@ export default function ExerciseMediaDisplay({
       </div>
 
       {/* ------------------------------------------------------------- */}
-      {/* 1. VERIFIED VIDEO PLAYER OR AI BIOMECHANICAL KINETIC GUIDE */}
+      {/* 1. VISUAL DEMONSTRATION PLAYER (HD VIDEO OR DUAL-PHASE DEMO) */}
       {/* ------------------------------------------------------------- */}
       {activeTab === 'video' && (
-        <div className="relative w-full aspect-video max-h-[520px] bg-black flex items-center justify-center overflow-hidden group">
+        <div className="relative w-full aspect-video max-h-[520px] bg-slate-950 flex items-center justify-center overflow-hidden group">
           {hasVideo ? (
-            /* REAL 1-TO-1 VERIFIED VIDEO */
+            /* REAL 1-TO-1 VERIFIED HD VIDEO */
             <>
               <video
                 key={videoSrc!}
                 ref={videoRef}
                 src={videoSrc!}
-                poster={primaryMedia?.thumbnail || undefined}
+                poster={mediaDetails.thumbnailUrl || primaryMedia?.thumbnail || undefined}
                 autoPlay
                 loop
                 muted={isMuted}
@@ -377,10 +367,9 @@ export default function ExerciseMediaDisplay({
                 className="w-full h-full object-contain bg-black cursor-pointer"
               />
 
-              {/* AI Skeleton Pose HUD Overlay (Only when Video is present) */}
+              {/* AI Skeleton Pose HUD Overlay */}
               {aiTrackingActive && (
                 <div className="absolute inset-0 pointer-events-none z-10 flex flex-col justify-between p-4">
-                  {/* Top Left AI Detection Badge */}
                   <div className="flex items-center gap-2">
                     <div className="px-3 py-1.5 rounded-xl bg-slate-950/80 backdrop-blur-md border border-cyan-500/40 text-cyan-400 text-xs font-bold flex items-center gap-2 shadow-lg">
                       <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
@@ -388,7 +377,6 @@ export default function ExerciseMediaDisplay({
                     </div>
                   </div>
 
-                  {/* Bottom Right AI Joint Angle Degree Badge */}
                   <div className="self-end px-3.5 py-2 rounded-2xl bg-slate-950/90 backdrop-blur-md border border-emerald-500/40 text-right shadow-2xl space-y-0.5">
                     <div className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">
                       {jointInfo.joint}
@@ -404,9 +392,8 @@ export default function ExerciseMediaDisplay({
                 </div>
               )}
 
-              {/* Video Control Bar (Only when Video is present) */}
+              {/* Video Control Bar */}
               <div className={`absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-slate-950/95 via-slate-950/70 to-transparent transition-opacity duration-300 ${isHovered || !isPlaying ? 'opacity-100' : 'opacity-0 sm:opacity-90'}`}>
-                {/* Seek Bar */}
                 <div className="w-full flex items-center gap-3 mb-2">
                   <input
                     type="range"
@@ -423,7 +410,6 @@ export default function ExerciseMediaDisplay({
                 </div>
 
                 <div className="flex flex-wrap items-center justify-between gap-3">
-                  {/* Left Controls: Play, Restart, Mute */}
                   <div className="flex items-center gap-2">
                     <button
                       onClick={togglePlay}
@@ -450,9 +436,7 @@ export default function ExerciseMediaDisplay({
                     </button>
                   </div>
 
-                  {/* Right Controls: Speeds, AI Toggle, Fullscreen */}
                   <div className="flex items-center gap-2">
-                    {/* Speed Controls */}
                     <div className="flex items-center bg-slate-900/90 px-2 py-1 rounded-xl border border-slate-700">
                       {[0.5, 0.75, 1.0, 1.5].map(spd => (
                         <button
@@ -469,7 +453,6 @@ export default function ExerciseMediaDisplay({
                       ))}
                     </div>
 
-                    {/* AI HUD Toggle */}
                     <button
                       onClick={() => setAiTrackingActive(!aiTrackingActive)}
                       className={`px-3 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1.5 transition-all ${
@@ -483,7 +466,6 @@ export default function ExerciseMediaDisplay({
                       <span className="hidden sm:inline">{aiTrackingActive ? 'AI HUD ON' : 'AI HUD OFF'}</span>
                     </button>
 
-                    {/* Fullscreen Toggle */}
                     <button
                       onClick={toggleFullscreen}
                       className="p-2 rounded-xl bg-slate-900/90 border border-slate-700 text-slate-300 hover:text-white hover:bg-slate-800 transition-colors"
@@ -496,124 +478,159 @@ export default function ExerciseMediaDisplay({
               </div>
             </>
           ) : (
-            /* HIGH-TECH BIOMECHANICAL KINETIC GUIDE (For In-Review Exercises) */
-            <div className="relative w-full h-full flex flex-col justify-between bg-gradient-to-br from-slate-950 via-slate-900/90 to-slate-950 p-6 sm:p-8 text-white overflow-hidden">
-              {/* Background Geometric Grid Accent */}
-              <div className="absolute inset-0 opacity-10 bg-[linear-gradient(to_right,#10b981_1px,transparent_1px),linear-gradient(to_bottom,#10b981_1px,transparent_1px)] bg-[size:32px_32px] pointer-events-none"></div>
+            /* DUAL-PHASE FORM DEMONSTRATION PLAYER (FOR ALL 100+ EXERCISES) */
+            <div className="relative w-full h-full bg-slate-950 flex flex-col justify-between overflow-hidden select-none">
+              {/* Image Container with Crossfade */}
+              <div 
+                onClick={() => setCurrentFramePhase(prev => (prev === 'start' ? 'contraction' : 'start'))}
+                className="relative w-full h-full flex items-center justify-center cursor-pointer overflow-hidden"
+              >
+                {/* Frame 1: Starting Position */}
+                {mediaDetails.frameStartUrl && (
+                  <img
+                    src={mediaDetails.frameStartUrl}
+                    alt={`${exerciseName} Starting Position`}
+                    className={`absolute inset-0 w-full h-full object-contain transition-opacity duration-500 ease-in-out ${
+                      currentFramePhase === 'start' ? 'opacity-100 scale-100' : 'opacity-0 scale-95 pointer-events-none'
+                    }`}
+                  />
+                )}
 
-              {/* Header Info */}
-              <div className="relative z-10 flex flex-wrap items-center justify-between gap-3">
-                <div className="flex items-center gap-2">
-                  <div className="w-8 h-8 rounded-xl bg-emerald-500/20 border border-emerald-500/40 flex items-center justify-center text-emerald-400">
-                    <Sparkles className="w-4 h-4" />
+                {/* Frame 2: Contraction Position */}
+                {mediaDetails.frameContractionUrl && (
+                  <img
+                    src={mediaDetails.frameContractionUrl}
+                    alt={`${exerciseName} Peak Contraction Position`}
+                    className={`absolute inset-0 w-full h-full object-contain transition-opacity duration-500 ease-in-out ${
+                      currentFramePhase === 'contraction' ? 'opacity-100 scale-100' : 'opacity-0 scale-95 pointer-events-none'
+                    }`}
+                  />
+                )}
+
+                {/* Top Phase Selector Tabs */}
+                <div className="absolute top-4 left-4 right-4 z-20 flex flex-wrap items-center justify-between gap-2 pointer-events-auto">
+                  <div className="flex items-center gap-2 bg-slate-950/80 backdrop-blur-md p-1 rounded-2xl border border-slate-800">
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setCurrentFramePhase('start');
+                        setDemoAutoLoop(false);
+                      }}
+                      className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 ${
+                        currentFramePhase === 'start'
+                          ? 'bg-emerald-500 text-slate-950 shadow-md'
+                          : 'text-slate-400 hover:text-white'
+                      }`}
+                    >
+                      <span>Phase 1: Setup & Stretch</span>
+                    </button>
+
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setCurrentFramePhase('contraction');
+                        setDemoAutoLoop(false);
+                      }}
+                      className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 ${
+                        currentFramePhase === 'contraction'
+                          ? 'bg-cyan-500 text-slate-950 shadow-md'
+                          : 'text-slate-400 hover:text-white'
+                      }`}
+                    >
+                      <span>Phase 2: Peak Contraction</span>
+                    </button>
                   </div>
-                  <div>
-                    <h4 className="text-base sm:text-lg font-black text-white flex items-center gap-2">
-                      {exerciseName}
-                    </h4>
-                    <span className="text-[11px] text-emerald-400/90 font-mono flex items-center gap-1">
-                      <Activity className="w-3 h-3" />
-                      Kinematic Vector Analysis Active
-                    </span>
-                  </div>
+
+                  {/* Auto-loop Status Pill */}
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setDemoAutoLoop(!demoAutoLoop);
+                    }}
+                    className={`px-3 py-1.5 rounded-xl text-xs font-bold backdrop-blur-md border flex items-center gap-1.5 transition-all ${
+                      demoAutoLoop 
+                        ? 'bg-emerald-500/20 text-emerald-400 border-emerald-500/40 shadow-lg'
+                        : 'bg-slate-900/80 text-slate-400 border-slate-700'
+                    }`}
+                  >
+                    <Repeat className={`w-3.5 h-3.5 ${demoAutoLoop ? 'animate-spin' : ''}`} />
+                    <span>{demoAutoLoop ? 'Cadence Auto-Loop ON' : 'Paused (Click to Resume)'}</span>
+                  </button>
                 </div>
 
-                <div className="flex items-center gap-2">
-                  <span className="px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs font-bold flex items-center gap-1.5">
-                    <AlertTriangle className="w-3.5 h-3.5 text-amber-400" />
-                    <span>Video In Review</span>
-                  </span>
-                </div>
+                {/* AI Joint Degree Overlay Badge */}
+                {aiTrackingActive && (
+                  <div className="absolute bottom-16 right-4 z-20 pointer-events-none px-3.5 py-2 rounded-2xl bg-slate-950/90 backdrop-blur-md border border-emerald-500/40 text-right shadow-2xl space-y-0.5">
+                    <div className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">
+                      {jointInfo.joint}
+                    </div>
+                    <div className="text-base font-black text-emerald-400 font-mono flex items-center justify-end gap-1.5">
+                      <span>{jointInfo.targetAngle}</span>
+                      <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+                    </div>
+                    <div className="text-[9px] text-cyan-300 font-mono">
+                      Phase: {jointInfo.phase}
+                    </div>
+                  </div>
+                )}
               </div>
 
-              {/* Center Kinetic Cadence Pulse & Biomechanics Dashboard */}
-              <div className="relative z-10 grid grid-cols-1 md:grid-cols-3 gap-4 my-auto">
-                {/* 1. Cadence Wave Simulator */}
-                <div className="p-4 rounded-2xl bg-slate-950/80 border border-slate-800/80 backdrop-blur-md space-y-3 flex flex-col justify-between">
-                  <div>
-                    <div className="flex items-center justify-between text-xs mb-1">
-                      <span className="text-slate-400 font-bold uppercase tracking-wider text-[10px]">Cadence Flow</span>
-                      <span className="text-emerald-400 font-mono font-bold text-xs uppercase">{cadencePhase}</span>
-                    </div>
-                    <div className="text-xs text-slate-300 font-semibold mb-2">
-                      {cadencePhase === 'concentric' && '⚡ Concentric Contraction (Explosive Lift)'}
-                      {cadencePhase === 'squeeze' && '🔥 Peak Muscle Contraction & Squeeze'}
-                      {cadencePhase === 'eccentric' && '🌊 Controlled Eccentric Lowering'}
-                      {cadencePhase === 'pause' && '⏸️ Reset & Scapular Re-engagement'}
-                    </div>
-                  </div>
-
-                  {/* Progress Ring Bar */}
-                  <div className="space-y-1.5">
-                    <div className="w-full h-2.5 bg-slate-800 rounded-full overflow-hidden p-0.5">
-                      <div 
-                        className="h-full bg-gradient-to-r from-emerald-500 via-teal-400 to-cyan-400 rounded-full transition-all duration-75"
-                        style={{ width: `${cadenceProgress}%` }}
-                      ></div>
-                    </div>
-                    <div className="flex justify-between text-[10px] font-mono text-slate-400">
-                      <span>Tempo: {tempo}</span>
-                      <span>{Math.round(cadenceProgress)}% Rep Arc</span>
-                    </div>
-                  </div>
-                </div>
-
-                {/* 2. Primary Joint Vector */}
-                <div className="p-4 rounded-2xl bg-slate-950/80 border border-slate-800/80 backdrop-blur-md space-y-2">
-                  <span className="text-slate-400 font-bold uppercase tracking-wider text-[10px] block">
-                    Target Joint Angle
-                  </span>
-                  <p className="text-base font-black text-cyan-400 font-mono">
-                    {jointInfo.targetAngle}
-                  </p>
-                  <p className="text-xs text-slate-300 leading-snug">
-                    {jointInfo.action}
-                  </p>
-                  <div className="pt-1 text-[11px] text-slate-400 font-mono border-t border-slate-800/80">
-                    ROM: <span className="text-slate-200">{jointInfo.normalRange}</span>
-                  </div>
-                </div>
-
-                {/* 3. Anatomical Hypertrophy Profile */}
-                <div className="p-4 rounded-2xl bg-slate-950/80 border border-slate-800/80 backdrop-blur-md space-y-2">
-                  <span className="text-slate-400 font-bold uppercase tracking-wider text-[10px] block">
-                    Target Muscle Excitation
-                  </span>
-                  <p className="text-base font-black text-emerald-400">
-                    {primaryMuscle}
-                  </p>
-                  <div className="flex flex-wrap gap-1.5 pt-1">
-                    <span className="px-2 py-0.5 rounded-md bg-emerald-500/10 text-emerald-400 text-[10px] font-bold border border-emerald-500/20">
-                      {movementPattern}
-                    </span>
-                    <span className="px-2 py-0.5 rounded-md bg-cyan-500/10 text-cyan-400 text-[10px] font-bold border border-cyan-500/20">
-                      {equipment}
-                    </span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Bottom Quick-Action Guidance Bar */}
-              <div className="relative z-10 flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-slate-800/80">
-                <p className="text-xs text-slate-400 max-w-lg">
-                  1-to-1 video is undergoing quality verification. Follow verified biomechanical metrics and form execution steps below.
-                </p>
-
+              {/* Bottom Control Bar */}
+              <div className="relative z-20 p-4 bg-gradient-to-t from-slate-950/95 via-slate-950/80 to-transparent flex flex-wrap items-center justify-between gap-3 border-t border-slate-800/80">
                 <div className="flex items-center gap-2">
                   <button
-                    onClick={() => setActiveTab('heatmap')}
-                    className="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-amber-300 border border-amber-500/30 text-xs font-bold flex items-center gap-1.5 transition-colors"
+                    onClick={togglePlay}
+                    className="p-2.5 rounded-xl bg-gradient-to-r from-emerald-400 to-teal-400 hover:scale-105 text-slate-950 font-black shadow-lg shadow-emerald-500/20 transition-transform"
+                    title={demoAutoLoop ? 'Pause Auto-Loop' : 'Start Auto-Loop'}
                   >
-                    <Flame className="w-3.5 h-3.5" />
-                    <span>View EMG Load</span>
+                    {demoAutoLoop ? <Pause className="w-4 h-4 fill-current" /> : <Play className="w-4 h-4 fill-current" />}
                   </button>
 
                   <button
-                    onClick={() => setActiveTab('biomechanics')}
-                    className="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-purple-300 border border-purple-500/30 text-xs font-bold flex items-center gap-1.5 transition-colors"
+                    onClick={() => setCurrentFramePhase(prev => (prev === 'start' ? 'contraction' : 'start'))}
+                    className="px-3 py-1.5 rounded-xl bg-slate-900 border border-slate-700 text-slate-200 hover:text-white text-xs font-bold transition-colors"
                   >
-                    <Layers className="w-3.5 h-3.5" />
-                    <span>Biomechanics</span>
+                    Switch Phase 🔀
+                  </button>
+                </div>
+
+                <div className="flex items-center gap-2">
+                  {/* Speed Controls */}
+                  <div className="flex items-center bg-slate-900 px-2 py-1 rounded-xl border border-slate-700">
+                    {[0.5, 1.0, 1.5].map(spd => (
+                      <button
+                        key={spd}
+                        onClick={() => setPlaybackSpeed(spd)}
+                        className={`px-2 py-0.5 rounded-lg text-xs font-bold ${
+                          playbackSpeed === spd
+                            ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/40'
+                            : 'text-slate-400 hover:text-white'
+                        }`}
+                      >
+                        {spd}x
+                      </button>
+                    ))}
+                  </div>
+
+                  {/* AI HUD Toggle */}
+                  <button
+                    onClick={() => setAiTrackingActive(!aiTrackingActive)}
+                    className={`px-3 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1.5 transition-all ${
+                      aiTrackingActive
+                        ? 'bg-cyan-500/20 text-cyan-400 border border-cyan-500/40'
+                        : 'bg-slate-900 text-slate-400 border border-slate-700'
+                    }`}
+                  >
+                    <Scan className="w-3.5 h-3.5" />
+                    <span className="hidden sm:inline">{aiTrackingActive ? 'AI HUD ON' : 'AI HUD OFF'}</span>
+                  </button>
+
+                  <button
+                    onClick={toggleFullscreen}
+                    className="p-2 rounded-xl bg-slate-900 border border-slate-700 text-slate-300 hover:text-white transition-colors"
+                    title="Toggle Fullscreen"
+                  >
+                    <Maximize2 className="w-4 h-4" />
                   </button>
                 </div>
               </div>
