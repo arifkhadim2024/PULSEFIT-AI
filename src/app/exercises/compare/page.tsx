@@ -18,9 +18,13 @@ import {
   Pause,
   Volume2,
   VolumeX,
-  RotateCcw
+  RotateCcw,
+  AlertTriangle,
+  CheckCircle2,
+  Flame,
+  Zap
 } from 'lucide-react';
-import { getExerciseVideoUrl } from '@/lib/exercise-videos';
+import { getExerciseVideoUrl, isExerciseVideoVerified } from '@/lib/exercise-videos';
 
 export default function ExerciseComparePage() {
   return (
@@ -70,27 +74,31 @@ function ExerciseCompareContent() {
       .catch(() => setLoading(false));
   }, [slug1, slug2]);
 
+  const hasVideo1 = Boolean(exercise1 && (getExerciseVideoUrl(exercise1.slug) || exercise1.videoUrl));
+  const hasVideo2 = Boolean(exercise2 && (getExerciseVideoUrl(exercise2.slug) || exercise2.videoUrl));
+  const hasAnyVideo = hasVideo1 || hasVideo2;
+
   const togglePlaySync = () => {
     const nextState = !(isPlaying1 && isPlaying2);
     setIsPlaying1(nextState);
     setIsPlaying2(nextState);
 
-    if (video1Ref.current) {
+    if (video1Ref.current && hasVideo1) {
       if (nextState) video1Ref.current.play().catch(() => {});
       else video1Ref.current.pause();
     }
-    if (video2Ref.current) {
+    if (video2Ref.current && hasVideo2) {
       if (nextState) video2Ref.current.play().catch(() => {});
       else video2Ref.current.pause();
     }
   };
 
   const restartBoth = () => {
-    if (video1Ref.current) {
+    if (video1Ref.current && hasVideo1) {
       video1Ref.current.currentTime = 0;
       video1Ref.current.play().catch(() => {});
     }
-    if (video2Ref.current) {
+    if (video2Ref.current && hasVideo2) {
       video2Ref.current.currentTime = 0;
       video2Ref.current.play().catch(() => {});
     }
@@ -112,30 +120,32 @@ function ExerciseCompareContent() {
           </Link>
           <h1 className="text-3xl font-black text-white tracking-tight flex items-center gap-2.5">
             <Scale className="w-7 h-7 text-emerald-400" />
-            <span>Side-by-Side Video Form & Biomechanics Comparison</span>
+            <span>Side-by-Side Movement & Biomechanics Comparison</span>
           </h1>
           <p className="text-xs text-slate-400 mt-1">
-            Compare real movement execution, muscle recruitment, and mechanics in real-time.
+            Compare movement execution, anatomical muscle recruitment, and kinematic force curves in real-time.
           </p>
         </div>
 
-        <div className="flex items-center gap-2">
-          <button
-            onClick={togglePlaySync}
-            className="px-4 py-2 rounded-xl bg-gradient-to-r from-emerald-400 to-teal-400 text-slate-950 text-xs font-black flex items-center gap-1.5 shadow-md hover:scale-105 transition-transform"
-          >
-            {isPlaying1 && isPlaying2 ? <Pause className="w-4 h-4 fill-current" /> : <Play className="w-4 h-4 fill-current" />}
-            <span>{isPlaying1 && isPlaying2 ? 'Pause Both' : 'Play Both'}</span>
-          </button>
+        {hasAnyVideo && (
+          <div className="flex items-center gap-2">
+            <button
+              onClick={togglePlaySync}
+              className="px-4 py-2 rounded-xl bg-gradient-to-r from-emerald-400 to-teal-400 text-slate-950 text-xs font-black flex items-center gap-1.5 shadow-md hover:scale-105 transition-transform"
+            >
+              {isPlaying1 && isPlaying2 ? <Pause className="w-4 h-4 fill-current" /> : <Play className="w-4 h-4 fill-current" />}
+              <span>{isPlaying1 && isPlaying2 ? 'Pause Videos' : 'Play Videos'}</span>
+            </button>
 
-          <button
-            onClick={restartBoth}
-            className="p-2 rounded-xl bg-slate-900 border border-slate-800 text-slate-300 hover:text-white transition-colors"
-            title="Restart both videos"
-          >
-            <RotateCcw className="w-4 h-4" />
-          </button>
-        </div>
+            <button
+              onClick={restartBoth}
+              className="p-2 rounded-xl bg-slate-900 border border-slate-800 text-slate-300 hover:text-white transition-colors"
+              title="Restart videos"
+            >
+              <RotateCcw className="w-4 h-4" />
+            </button>
+          </div>
+        )}
       </div>
 
       {/* Comparison Selectors */}
@@ -179,11 +189,11 @@ function ExerciseCompareContent() {
         <div className="h-96 rounded-3xl bg-slate-900/50 border border-slate-800 animate-pulse"></div>
       ) : (
         <div className="space-y-6">
-          {/* Side-by-Side Video Players */}
+          {/* Side-by-Side Visual Demo / Biomechanical Panels */}
           {showVideos && (
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              {/* Exercise 1 Video */}
-              <div className="p-4 sm:p-5 rounded-3xl bg-slate-900 border border-emerald-500/30 space-y-3 shadow-xl">
+              {/* Exercise 1 Panel */}
+              <div className="p-4 sm:p-5 rounded-3xl bg-slate-900 border border-emerald-500/30 space-y-3 shadow-xl flex flex-col justify-between">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
                     <span className="px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 text-xs font-bold uppercase">
@@ -191,11 +201,19 @@ function ExerciseCompareContent() {
                     </span>
                     <h3 className="text-base font-bold text-white line-clamp-1">{exercise1.name}</h3>
                   </div>
-                  <span className="text-xs font-mono text-emerald-400">{exercise1.primaryMuscle}</span>
+                  {hasVideo1 ? (
+                    <span className="text-[10px] font-bold text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-full border border-emerald-500/30">
+                      1:1 Video Demo
+                    </span>
+                  ) : (
+                    <span className="text-[10px] font-bold text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded-full border border-amber-500/30">
+                      In Review
+                    </span>
+                  )}
                 </div>
 
                 <div className="relative w-full aspect-video rounded-2xl overflow-hidden bg-black flex items-center justify-center shadow-inner">
-                  {getExerciseVideoUrl(exercise1.slug) || exercise1.videoUrl ? (
+                  {hasVideo1 ? (
                     <video
                       ref={video1Ref}
                       src={(getExerciseVideoUrl(exercise1.slug) || exercise1.videoUrl)!}
@@ -206,16 +224,36 @@ function ExerciseCompareContent() {
                       className="w-full h-full object-contain bg-black"
                     />
                   ) : (
-                    <div className="p-6 text-center space-y-2">
-                      <span className="text-xs font-bold text-amber-400 block">Video In Review</span>
-                      <p className="text-[10px] text-slate-400">Detailed metric comparison available below.</p>
+                    <div className="w-full h-full p-6 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 flex flex-col justify-between text-left">
+                      <div className="flex items-center justify-between">
+                        <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-400 font-mono flex items-center gap-1">
+                          <Activity className="w-3 h-3" /> Biomechanical Model
+                        </span>
+                        <span className="text-[10px] text-slate-400 font-mono">Tempo: {exercise1.tempo}</span>
+                      </div>
+
+                      <div className="space-y-2 my-auto">
+                        <div className="text-xs text-slate-300">
+                          <span className="text-slate-400 text-[10px] block uppercase font-bold">Prime Target</span>
+                          <strong className="text-emerald-400 text-sm">{exercise1.primaryMuscle}</strong>
+                        </div>
+                        <div className="text-xs text-slate-300">
+                          <span className="text-slate-400 text-[10px] block uppercase font-bold">Synergists</span>
+                          <span className="text-slate-200">{exercise1.secondaryMuscles || 'Kinetic Stabilizers'}</span>
+                        </div>
+                      </div>
+
+                      <div className="pt-2 border-t border-slate-800/80 flex items-center justify-between text-[11px] text-slate-400">
+                        <span>Pattern: <strong className="text-white">{exercise1.movementPattern}</strong></span>
+                        <span>Equipment: <strong className="text-emerald-300">{exercise1.equipment}</strong></span>
+                      </div>
                     </div>
                   )}
                 </div>
               </div>
 
-              {/* Exercise 2 Video */}
-              <div className="p-4 sm:p-5 rounded-3xl bg-slate-900 border border-cyan-500/30 space-y-3 shadow-xl">
+              {/* Exercise 2 Panel */}
+              <div className="p-4 sm:p-5 rounded-3xl bg-slate-900 border border-cyan-500/30 space-y-3 shadow-xl flex flex-col justify-between">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
                     <span className="px-2.5 py-0.5 rounded-full bg-cyan-500/20 text-cyan-400 text-xs font-bold uppercase">
@@ -223,11 +261,19 @@ function ExerciseCompareContent() {
                     </span>
                     <h3 className="text-base font-bold text-white line-clamp-1">{exercise2.name}</h3>
                   </div>
-                  <span className="text-xs font-mono text-cyan-400">{exercise2.primaryMuscle}</span>
+                  {hasVideo2 ? (
+                    <span className="text-[10px] font-bold text-cyan-400 bg-cyan-500/10 px-2 py-0.5 rounded-full border border-cyan-500/30">
+                      1:1 Video Demo
+                    </span>
+                  ) : (
+                    <span className="text-[10px] font-bold text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded-full border border-amber-500/30">
+                      In Review
+                    </span>
+                  )}
                 </div>
 
                 <div className="relative w-full aspect-video rounded-2xl overflow-hidden bg-black flex items-center justify-center shadow-inner">
-                  {getExerciseVideoUrl(exercise2.slug) || exercise2.videoUrl ? (
+                  {hasVideo2 ? (
                     <video
                       ref={video2Ref}
                       src={(getExerciseVideoUrl(exercise2.slug) || exercise2.videoUrl)!}
@@ -238,9 +284,29 @@ function ExerciseCompareContent() {
                       className="w-full h-full object-contain bg-black"
                     />
                   ) : (
-                    <div className="p-6 text-center space-y-2">
-                      <span className="text-xs font-bold text-amber-400 block">Video In Review</span>
-                      <p className="text-[10px] text-slate-400">Detailed metric comparison available below.</p>
+                    <div className="w-full h-full p-6 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 flex flex-col justify-between text-left">
+                      <div className="flex items-center justify-between">
+                        <span className="text-[10px] font-bold uppercase tracking-wider text-cyan-400 font-mono flex items-center gap-1">
+                          <Activity className="w-3 h-3" /> Biomechanical Model
+                        </span>
+                        <span className="text-[10px] text-slate-400 font-mono">Tempo: {exercise2.tempo}</span>
+                      </div>
+
+                      <div className="space-y-2 my-auto">
+                        <div className="text-xs text-slate-300">
+                          <span className="text-slate-400 text-[10px] block uppercase font-bold">Prime Target</span>
+                          <strong className="text-cyan-400 text-sm">{exercise2.primaryMuscle}</strong>
+                        </div>
+                        <div className="text-xs text-slate-300">
+                          <span className="text-slate-400 text-[10px] block uppercase font-bold">Synergists</span>
+                          <span className="text-slate-200">{exercise2.secondaryMuscles || 'Kinetic Stabilizers'}</span>
+                        </div>
+                      </div>
+
+                      <div className="pt-2 border-t border-slate-800/80 flex items-center justify-between text-[11px] text-slate-400">
+                        <span>Pattern: <strong className="text-white">{exercise2.movementPattern}</strong></span>
+                        <span>Equipment: <strong className="text-cyan-300">{exercise2.equipment}</strong></span>
+                      </div>
                     </div>
                   )}
                 </div>
