@@ -22,8 +22,7 @@ import {
   Play,
   Pause,
   Volume2,
-  VolumeX,
-  Box
+  VolumeX
 } from 'lucide-react';
 import ExerciseMediaDisplay from '@/components/ExerciseMediaDisplay';
 import TempoTimer from '@/components/TempoTimer';

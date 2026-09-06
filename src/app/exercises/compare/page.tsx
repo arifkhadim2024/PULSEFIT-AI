@@ -1,10 +1,26 @@
 'use client';
 
-import React, { useState, useEffect, Suspense } from 'react';
+import React, { useState, useEffect, Suspense, useRef } from 'react';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
-import { Scale, ArrowLeft, ArrowRight, Check, X, Dumbbell, Sparkles, Layers, Activity, Box } from 'lucide-react';
-import Exercise3DViewer from '@/components/Exercise3DViewer';
+import { 
+  Scale, 
+  ArrowLeft, 
+  ArrowRight, 
+  Check, 
+  X, 
+  Dumbbell, 
+  Sparkles, 
+  Layers, 
+  Activity, 
+  Film,
+  Play,
+  Pause,
+  Volume2,
+  VolumeX,
+  RotateCcw
+} from 'lucide-react';
+import { getExerciseVideoUrl } from '@/lib/exercise-videos';
 
 export default function ExerciseComparePage() {
   return (
@@ -23,7 +39,15 @@ function ExerciseCompareContent() {
   const [exercise2, setExercise2] = useState<any>(null);
   const [allExercises, setAllExercises] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
-  const [show3DSimulations, setShow3DSimulations] = useState(true);
+  const [showVideos, setShowVideos] = useState(true);
+
+  // Video playback states
+  const [isPlaying1, setIsPlaying1] = useState(true);
+  const [isPlaying2, setIsPlaying2] = useState(true);
+  const [isMuted, setIsMuted] = useState(true);
+
+  const video1Ref = useRef<HTMLVideoElement>(null);
+  const video2Ref = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
     fetch('/api/exercises?limit=120')
@@ -46,6 +70,34 @@ function ExerciseCompareContent() {
       .catch(() => setLoading(false));
   }, [slug1, slug2]);
 
+  const togglePlaySync = () => {
+    const nextState = !(isPlaying1 && isPlaying2);
+    setIsPlaying1(nextState);
+    setIsPlaying2(nextState);
+
+    if (video1Ref.current) {
+      if (nextState) video1Ref.current.play().catch(() => {});
+      else video1Ref.current.pause();
+    }
+    if (video2Ref.current) {
+      if (nextState) video2Ref.current.play().catch(() => {});
+      else video2Ref.current.pause();
+    }
+  };
+
+  const restartBoth = () => {
+    if (video1Ref.current) {
+      video1Ref.current.currentTime = 0;
+      video1Ref.current.play().catch(() => {});
+    }
+    if (video2Ref.current) {
+      video2Ref.current.currentTime = 0;
+      video2Ref.current.play().catch(() => {});
+    }
+    setIsPlaying1(true);
+    setIsPlaying2(true);
+  };
+
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
       {/* Header */}
@@ -60,24 +112,30 @@ function ExerciseCompareContent() {
           </Link>
           <h1 className="text-3xl font-black text-white tracking-tight flex items-center gap-2.5">
             <Scale className="w-7 h-7 text-emerald-400" />
-            <span>Side-by-Side Biomechanical Comparison</span>
+            <span>Side-by-Side Video Form & Biomechanics Comparison</span>
           </h1>
           <p className="text-xs text-slate-400 mt-1">
-            Compare muscle recruitment, range of motion, and stability trade-offs in real-time 3D.
+            Compare real movement execution, muscle recruitment, and mechanics in real-time.
           </p>
         </div>
 
-        <button
-          onClick={() => setShow3DSimulations(!show3DSimulations)}
-          className={`px-4 py-2.5 rounded-2xl text-xs font-bold flex items-center gap-2 transition-all shadow-md ${
-            show3DSimulations
-              ? 'bg-emerald-500 text-slate-950 font-black'
-              : 'bg-slate-900 text-slate-300 border border-slate-800'
-          }`}
-        >
-          <Box className="w-4 h-4" />
-          <span>{show3DSimulations ? 'Hide 3D Models' : 'Show 3D Models'}</span>
-        </button>
+        <div className="flex items-center gap-2">
+          <button
+            onClick={togglePlaySync}
+            className="px-4 py-2 rounded-xl bg-gradient-to-r from-emerald-400 to-teal-400 text-slate-950 text-xs font-black flex items-center gap-1.5 shadow-md hover:scale-105 transition-transform"
+          >
+            {isPlaying1 && isPlaying2 ? <Pause className="w-4 h-4 fill-current" /> : <Play className="w-4 h-4 fill-current" />}
+            <span>{isPlaying1 && isPlaying2 ? 'Pause Both' : 'Play Both'}</span>
+          </button>
+
+          <button
+            onClick={restartBoth}
+            className="p-2 rounded-xl bg-slate-900 border border-slate-800 text-slate-300 hover:text-white transition-colors"
+            title="Restart both videos"
+          >
+            <RotateCcw className="w-4 h-4" />
+          </button>
+        </div>
       </div>
 
       {/* Comparison Selectors */}
@@ -120,53 +178,69 @@ function ExerciseCompareContent() {
       {loading || !exercise1 || !exercise2 ? (
         <div className="h-96 rounded-3xl bg-slate-900/50 border border-slate-800 animate-pulse"></div>
       ) : (
-        /* Comparison Table & 3D Cards */
         <div className="space-y-6">
-          {/* Side-by-Side 3D Simulation Viewers */}
-          {show3DSimulations && (
+          {/* Side-by-Side Video Players */}
+          {showVideos && (
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              <div className="space-y-3">
-                <div className="flex items-center justify-between px-2">
-                  <span className="text-xs font-bold text-emerald-400 uppercase tracking-wider flex items-center gap-1.5">
-                    <Box className="w-3.5 h-3.5" />
-                    3D Simulation: {exercise1.name}
-                  </span>
+              {/* Exercise 1 Video */}
+              <div className="p-4 sm:p-5 rounded-3xl bg-slate-900 border border-emerald-500/30 space-y-3 shadow-xl">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <span className="px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 text-xs font-bold uppercase">
+                      Option A
+                    </span>
+                    <h3 className="text-base font-bold text-white line-clamp-1">{exercise1.name}</h3>
+                  </div>
+                  <span className="text-xs font-mono text-emerald-400">{exercise1.primaryMuscle}</span>
                 </div>
-                <Exercise3DViewer
-                  exerciseName={exercise1.name}
-                  primaryMuscle={exercise1.primaryMuscle}
-                  secondaryMuscles={exercise1.secondaryMuscles}
-                  movementPattern={exercise1.movementPattern}
-                  equipment={exercise1.equipment}
-                  tempo={exercise1.tempo}
-                />
+
+                <div className="relative w-full aspect-video rounded-2xl overflow-hidden bg-black flex items-center justify-center shadow-inner">
+                  <video
+                    ref={video1Ref}
+                    src={getExerciseVideoUrl(exercise1.slug, exercise1.primaryMuscle, exercise1.movementPattern)}
+                    autoPlay
+                    loop
+                    muted={isMuted}
+                    playsInline
+                    className="w-full h-full object-contain bg-black"
+                  />
+                </div>
               </div>
 
-              <div className="space-y-3">
-                <div className="flex items-center justify-between px-2">
-                  <span className="text-xs font-bold text-cyan-400 uppercase tracking-wider flex items-center gap-1.5">
-                    <Box className="w-3.5 h-3.5" />
-                    3D Simulation: {exercise2.name}
-                  </span>
+              {/* Exercise 2 Video */}
+              <div className="p-4 sm:p-5 rounded-3xl bg-slate-900 border border-cyan-500/30 space-y-3 shadow-xl">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <span className="px-2.5 py-0.5 rounded-full bg-cyan-500/20 text-cyan-400 text-xs font-bold uppercase">
+                      Option B
+                    </span>
+                    <h3 className="text-base font-bold text-white line-clamp-1">{exercise2.name}</h3>
+                  </div>
+                  <span className="text-xs font-mono text-cyan-400">{exercise2.primaryMuscle}</span>
                 </div>
-                <Exercise3DViewer
-                  exerciseName={exercise2.name}
-                  primaryMuscle={exercise2.primaryMuscle}
-                  secondaryMuscles={exercise2.secondaryMuscles}
-                  movementPattern={exercise2.movementPattern}
-                  equipment={exercise2.equipment}
-                  tempo={exercise2.tempo}
-                />
+
+                <div className="relative w-full aspect-video rounded-2xl overflow-hidden bg-black flex items-center justify-center shadow-inner">
+                  <video
+                    ref={video2Ref}
+                    src={getExerciseVideoUrl(exercise2.slug, exercise2.primaryMuscle, exercise2.movementPattern)}
+                    autoPlay
+                    loop
+                    muted={isMuted}
+                    playsInline
+                    className="w-full h-full object-contain bg-black"
+                  />
+                </div>
               </div>
             </div>
           )}
 
+          {/* Cards & Matrix Table */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Card 1 */}
             <div className="p-6 sm:p-8 rounded-3xl bg-slate-900 border border-emerald-500/30 space-y-4 shadow-2xl">
               <div className="flex items-center justify-between">
                 <span className="px-3 py-1 rounded-full bg-emerald-500/15 text-emerald-400 text-xs font-bold uppercase">
-                  Option A
+                  Option A Summary
                 </span>
                 <span className="text-xs font-mono text-slate-400">{exercise1.difficulty}</span>
               </div>
@@ -176,7 +250,7 @@ function ExerciseCompareContent() {
                 href={`/exercises/${exercise1.slug}`}
                 className="inline-flex items-center gap-1.5 text-xs font-bold text-emerald-400 hover:underline"
               >
-                <span>Full Form Breakdown</span>
+                <span>Full Form Breakdown & Guide</span>
                 <ArrowRight className="w-3.5 h-3.5" />
               </Link>
             </div>
@@ -185,7 +259,7 @@ function ExerciseCompareContent() {
             <div className="p-6 sm:p-8 rounded-3xl bg-slate-900 border border-cyan-500/30 space-y-4 shadow-2xl">
               <div className="flex items-center justify-between">
                 <span className="px-3 py-1 rounded-full bg-cyan-500/15 text-cyan-400 text-xs font-bold uppercase">
-                  Option B
+                  Option B Summary
                 </span>
                 <span className="text-xs font-mono text-slate-400">{exercise2.difficulty}</span>
               </div>
@@ -195,7 +269,7 @@ function ExerciseCompareContent() {
                 href={`/exercises/${exercise2.slug}`}
                 className="inline-flex items-center gap-1.5 text-xs font-bold text-cyan-400 hover:underline"
               >
-                <span>Full Form Breakdown</span>
+                <span>Full Form Breakdown & Guide</span>
                 <ArrowRight className="w-3.5 h-3.5" />
               </Link>
             </div>

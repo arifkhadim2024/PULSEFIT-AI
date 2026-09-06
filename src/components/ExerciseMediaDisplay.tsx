@@ -6,20 +6,19 @@ import {
   Pause, 
   Sparkles, 
   Activity, 
-  Video, 
-  Box, 
+  Film,
   Volume2, 
   VolumeX, 
   Layers, 
-  Compass, 
-  Film,
-  Zap,
-  Cpu,
-  CheckCircle2,
   Scan,
-  Maximize2
+  Maximize2,
+  RotateCcw,
+  CheckCircle2,
+  Cpu,
+  Flame,
+  Info,
+  ChevronRight
 } from 'lucide-react';
-import Exercise3DViewer from './Exercise3DViewer';
 import { getExerciseVideoUrl } from '@/lib/exercise-videos';
 
 interface ExerciseMediaDisplayProps {
@@ -37,7 +36,7 @@ interface ExerciseMediaDisplayProps {
   movementPattern?: string;
   equipment?: string;
   tempo?: string;
-  initialTab?: 'synced' | '3d' | 'video' | 'heatmap';
+  initialTab?: 'video' | 'ai_hud' | 'heatmap' | 'biomechanics';
 }
 
 export default function ExerciseMediaDisplay({
@@ -48,16 +47,20 @@ export default function ExerciseMediaDisplay({
   mediaList = [],
   movementPattern = 'Horizontal Push',
   equipment = 'Barbell',
-  tempo = '3-0-1-0',
-  initialTab = 'synced',
+  tempo = '3-1-1-0',
+  initialTab = 'video',
 }: ExerciseMediaDisplayProps) {
-  const [activeTab, setActiveTab] = useState<'synced' | '3d' | 'video' | 'heatmap'>(initialTab);
+  const [activeTab, setActiveTab] = useState<'video' | 'ai_hud' | 'heatmap' | 'biomechanics'>(initialTab);
   const [isPlaying, setIsPlaying] = useState(true);
   const [isMuted, setIsMuted] = useState(true);
   const [playbackSpeed, setPlaybackSpeed] = useState<number>(1.0);
   const [aiTrackingActive, setAiTrackingActive] = useState(true);
-  const [liveJointAngle, setLiveJointAngle] = useState({ primaryJoint: 'Primary Joint', angle: 90, secondaryJoint: 'Secondary Joint', angle2: 45 });
+  const [currentTime, setCurrentTime] = useState(0);
+  const [duration, setDuration] = useState(0);
+  const [isHovered, setIsHovered] = useState(false);
+  
   const videoRef = useRef<HTMLVideoElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   const slug = exerciseSlug || exerciseName.toLowerCase().replace(/[^a-z0-9]/g, '-');
   const kaggleVideoUrl = getExerciseVideoUrl(slug, primaryMuscle, movementPattern);
@@ -69,10 +72,10 @@ export default function ExerciseMediaDisplay({
       if (isPlaying) {
         videoRef.current.pause();
       } else {
-        videoRef.current.play();
+        videoRef.current.play().catch(() => {});
       }
+      setIsPlaying(!isPlaying);
     }
-    setIsPlaying(!isPlaying);
   };
 
   const toggleMute = () => {
@@ -89,7 +92,39 @@ export default function ExerciseMediaDisplay({
     }
   };
 
-  // Synchronize video playback with state
+  const handleTimeUpdate = () => {
+    if (videoRef.current) {
+      setCurrentTime(videoRef.current.currentTime);
+      setDuration(videoRef.current.duration || 0);
+    }
+  };
+
+  const handleSeek = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const time = parseFloat(e.target.value);
+    if (videoRef.current) {
+      videoRef.current.currentTime = time;
+      setCurrentTime(time);
+    }
+  };
+
+  const handleRestart = () => {
+    if (videoRef.current) {
+      videoRef.current.currentTime = 0;
+      videoRef.current.play().catch(() => {});
+      setIsPlaying(true);
+    }
+  };
+
+  const toggleFullscreen = () => {
+    if (!containerRef.current) return;
+    if (!document.fullscreenElement) {
+      containerRef.current.requestFullscreen().catch(() => {});
+    } else {
+      document.exitFullscreen().catch(() => {});
+    }
+  };
+
+  // Synchronize playback speed and play state
   useEffect(() => {
     if (videoRef.current) {
       if (isPlaying) {
@@ -101,51 +136,74 @@ export default function ExerciseMediaDisplay({
     }
   }, [isPlaying, playbackSpeed, activeTab]);
 
+  const formatTime = (timeInSeconds: number) => {
+    const mins = Math.floor(timeInSeconds / 60);
+    const secs = Math.floor(timeInSeconds % 60);
+    return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+  };
+
+  // Exercise joint angle determination based on movement pattern
+  const getPrimaryJointInfo = () => {
+    const p = (movementPattern || '').toLowerCase();
+    const name = exerciseName.toLowerCase();
+    if (p.includes('squat') || name.includes('squat') || name.includes('leg press')) {
+      return { joint: 'Knee Flexion', targetAngle: '90° (Parallel)', normalRange: '45° - 120°', phase: 'Peak Depth' };
+    }
+    if (p.includes('hinge') || name.includes('deadlift') || name.includes('rdl')) {
+      return { joint: 'Hip Hinge Angle', targetAngle: '70° Hinge', normalRange: '45° - 90°', phase: 'Eccentric Stretch' };
+    }
+    if (p.includes('pull') || name.includes('row') || name.includes('pullup') || name.includes('lat')) {
+      return { joint: 'Elbow & Scapular Angle', targetAngle: '90° Scapular Retraction', normalRange: '30° - 110°', phase: 'Peak Squeeze' };
+    }
+    if (name.includes('curl')) {
+      return { joint: 'Elbow Flexion', targetAngle: '45° Peak Bicep Peak', normalRange: '30° - 145°', phase: 'Concentric Contraction' };
+    }
+    // Default Horizontal/Vertical Push
+    return { joint: 'Elbow / Shoulder Angle', targetAngle: '90° Sternum Level', normalRange: '45° - 90°', phase: 'Bottom Reversal' };
+  };
+
+  const jointInfo = getPrimaryJointInfo();
+
   return (
-    <div className="w-full bg-slate-900 border border-slate-800 rounded-3xl overflow-hidden shadow-2xl flex flex-col">
-      {/* Top Media Tabs Header */}
-      <div className="flex flex-wrap items-center justify-between gap-2 px-5 py-3 bg-slate-950/95 border-b border-slate-800 backdrop-blur-md">
+    <div 
+      ref={containerRef}
+      className="w-full bg-slate-900 border border-slate-800 rounded-3xl overflow-hidden shadow-2xl flex flex-col transition-all"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      {/* Media Navigation Tabs */}
+      <div className="flex flex-wrap items-center justify-between gap-2 px-4 sm:px-6 py-3 bg-slate-950/95 border-b border-slate-800 backdrop-blur-md">
         <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
-          {/* AI 3D + Video Synced Dual View */}
-          <button
-            onClick={() => setActiveTab('synced')}
-            className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-black transition-all ${
-              activeTab === 'synced'
-                ? 'bg-gradient-to-r from-emerald-400 via-teal-400 to-cyan-400 text-slate-950 shadow-lg shadow-emerald-500/25 scale-105'
-                : 'bg-emerald-500/10 text-emerald-400 hover:text-emerald-300 border border-emerald-500/30'
-            }`}
-          >
-            <Cpu className="w-3.5 h-3.5" />
-            <span>⚡ AI 3D + Video Synced</span>
-          </button>
-
-          {/* 3D Model Only */}
-          <button
-            onClick={() => setActiveTab('3d')}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${
-              activeTab === '3d'
-                ? 'bg-slate-800 text-emerald-400 border border-emerald-500/50 shadow-md'
-                : 'text-slate-400 hover:text-slate-200'
-            }`}
-          >
-            <Box className="w-3.5 h-3.5" />
-            <span>3D Model</span>
-          </button>
-
-          {/* Real Video Demo Only */}
+          {/* Main Real Video Tab */}
           <button
             onClick={() => setActiveTab('video')}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${
+            className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all ${
               activeTab === 'video'
-                ? 'bg-cyan-500/20 text-cyan-400 border border-cyan-500/50 shadow-md'
-                : 'text-slate-400 hover:text-slate-200'
+                ? 'bg-gradient-to-r from-emerald-400 to-teal-400 text-slate-950 font-black shadow-lg shadow-emerald-500/25 scale-105'
+                : 'text-slate-400 hover:text-slate-200 bg-slate-900/60'
             }`}
           >
             <Film className="w-3.5 h-3.5" />
-            <span>🎬 Real Video</span>
+            <span>🎬 Form Video Demo</span>
           </button>
 
-          {/* Muscle Activation Tab */}
+          {/* AI Skeleton HUD Tab */}
+          <button
+            onClick={() => {
+              setActiveTab('video');
+              setAiTrackingActive(true);
+            }}
+            className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all ${
+              activeTab === 'video' && aiTrackingActive
+                ? 'bg-cyan-500/20 text-cyan-400 border border-cyan-500/40'
+                : 'text-slate-400 hover:text-slate-200'
+            }`}
+          >
+            <Scan className="w-3.5 h-3.5 text-cyan-400" />
+            <span>AI Skeleton HUD</span>
+          </button>
+
+          {/* EMG Muscle Activation Tab */}
           <button
             onClick={() => setActiveTab('heatmap')}
             className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold transition-all ${
@@ -155,259 +213,188 @@ export default function ExerciseMediaDisplay({
             }`}
           >
             <Activity className="w-3.5 h-3.5" />
-            <span>EMG Activation</span>
+            <span>EMG Muscle Load</span>
+          </button>
+
+          {/* Biomechanics Breakdown */}
+          <button
+            onClick={() => setActiveTab('biomechanics')}
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold transition-all ${
+              activeTab === 'biomechanics'
+                ? 'bg-purple-500/20 text-purple-400 border border-purple-500/40'
+                : 'text-slate-400 hover:text-slate-200'
+            }`}
+          >
+            <Layers className="w-3.5 h-3.5" />
+            <span>Biomechanics</span>
           </button>
         </div>
 
+        {/* Dataset & Tempo Tag */}
         <div className="flex items-center gap-2 text-xs">
-          <span className="px-2.5 py-0.5 rounded-full bg-cyan-500/10 text-cyan-400 border border-cyan-500/30 text-[10px] font-bold">
-            AI Pose & Motion Synced
+          <span className="px-2.5 py-0.5 rounded-full bg-cyan-500/10 text-cyan-400 border border-cyan-500/30 text-[10px] font-bold flex items-center gap-1">
+            <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse"></span>
+            Kaggle Video Dataset
           </span>
-          <span className="hidden md:inline text-slate-400">Tempo: <strong className="text-white font-mono">{tempo}</strong></span>
+          <span className="hidden md:inline text-slate-400 text-xs">
+            Tempo: <strong className="text-white font-mono">{tempo}</strong>
+          </span>
         </div>
       </div>
 
       {/* ------------------------------------------------------------- */}
-      {/* 1. AI SYNCHRONIZED DUAL VIEW (3D MODEL + REAL VIDEO SPLIT) */}
-      {/* ------------------------------------------------------------- */}
-      {activeTab === 'synced' && (
-        <div className="relative w-full bg-slate-950 flex flex-col">
-          {/* Top Synchronized HUD Bar */}
-          <div className="flex items-center justify-between px-5 py-2.5 bg-slate-950/80 border-b border-slate-800 text-xs text-slate-300">
-            <div className="flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
-              <span className="font-bold text-emerald-400">AI Pose Synchronization Active:</span>
-              <span className="text-slate-400 hidden sm:inline">Kaggle Video & 3D Rig Aligned</span>
-            </div>
-            <div className="flex items-center gap-3 font-mono text-[11px]">
-              <span className="text-slate-400">Kinematic Match: <strong className="text-emerald-400">98.4%</strong></span>
-              <span className="text-slate-400">Joints Tracked: <strong className="text-cyan-400">14 Nodes</strong></span>
-            </div>
-          </div>
-
-          {/* Split Screen Grid */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-px bg-slate-800">
-            {/* Left Column: Three.js 3D Human Biomechanics Rig */}
-            <div className="relative w-full aspect-square sm:aspect-video lg:aspect-square max-h-[440px] bg-slate-950 overflow-hidden">
-              <div className="absolute top-3 left-3 z-20 px-2.5 py-1 rounded-xl bg-slate-950/85 border border-emerald-500/40 text-[10px] font-bold text-emerald-400 flex items-center gap-1.5 shadow-lg">
-                <Box className="w-3 h-3" />
-                <span>3D AI Biomechanical Rig</span>
-              </div>
-              <Exercise3DViewer
-                exerciseName={exerciseName}
-                exerciseSlug={exerciseSlug}
-                primaryMuscle={primaryMuscle}
-                secondaryMuscles={secondaryMuscles}
-                movementPattern={movementPattern}
-                equipment={equipment}
-                tempo={tempo}
-                externalPlaying={isPlaying}
-                externalSpeed={playbackSpeed}
-                onAngleUpdate={setLiveJointAngle}
-                className="h-full border-0 rounded-none"
-              />
-            </div>
-
-            {/* Right Column: Kaggle Real-World Video Demonstration with AI Skeleton HUD */}
-            <div className="relative w-full aspect-square sm:aspect-video lg:aspect-square max-h-[440px] bg-black flex items-center justify-center overflow-hidden group">
-              <div className="absolute top-3 left-3 z-20 px-2.5 py-1 rounded-xl bg-slate-950/85 border border-cyan-500/40 text-[10px] font-bold text-cyan-400 flex items-center gap-1.5 shadow-lg">
-                <Film className="w-3 h-3" />
-                <span>Kaggle Dataset Form Demonstration</span>
-              </div>
-
-              {/* Video Element */}
-              <video
-                key={videoSrc}
-                ref={videoRef}
-                src={videoSrc}
-                poster={primaryMedia?.thumbnail || undefined}
-                autoPlay
-                loop
-                muted={isMuted}
-                playsInline
-                className="w-full h-full object-contain bg-black"
-              />
-
-              {/* AI Skeleton Pose Tracking Overlay */}
-              {aiTrackingActive && (
-                <div className="absolute inset-0 pointer-events-none z-10 flex items-center justify-center">
-                  {/* Dynamic Pose Nodes Simulation */}
-                  <div className="relative w-48 h-64 border border-cyan-500/20 rounded-2xl animate-pulse">
-                    {/* Head Node */}
-                    <div className="absolute top-4 left-1/2 -translate-x-1/2 w-3 h-3 rounded-full bg-cyan-400 shadow-md shadow-cyan-400/80"></div>
-                    {/* Shoulders */}
-                    <div className="absolute top-14 left-8 w-2.5 h-2.5 rounded-full bg-emerald-400 shadow-md shadow-emerald-400/80"></div>
-                    <div className="absolute top-14 right-8 w-2.5 h-2.5 rounded-full bg-emerald-400 shadow-md shadow-emerald-400/80"></div>
-                    {/* Line between shoulders */}
-                    <div className="absolute top-[61px] left-10 right-10 h-0.5 bg-cyan-400/60"></div>
-                    {/* Elbows */}
-                    <div className="absolute top-28 left-4 w-2.5 h-2.5 rounded-full bg-cyan-400"></div>
-                    <div className="absolute top-28 right-4 w-2.5 h-2.5 rounded-full bg-cyan-400"></div>
-                    {/* Wrists */}
-                    <div className="absolute top-40 left-6 w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping"></div>
-                    <div className="absolute top-40 right-6 w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping"></div>
-                    {/* Hips */}
-                    <div className="absolute top-36 left-12 w-2.5 h-2.5 rounded-full bg-emerald-400"></div>
-                    <div className="absolute top-36 right-12 w-2.5 h-2.5 rounded-full bg-emerald-400"></div>
-                    {/* Knees */}
-                    <div className="absolute top-52 left-10 w-2.5 h-2.5 rounded-full bg-cyan-400"></div>
-                    <div className="absolute top-52 right-10 w-2.5 h-2.5 rounded-full bg-cyan-400"></div>
-                  </div>
-
-                  {/* AI Joint Degrees Badge */}
-                  <div className="absolute bottom-16 right-4 px-3 py-1.5 rounded-xl bg-slate-950/90 border border-cyan-500/40 text-right shadow-2xl">
-                    <span className="text-[9px] text-slate-400 font-bold uppercase block">{liveJointAngle.primaryJoint}</span>
-                    <span className="text-sm font-black text-white font-mono">{liveJointAngle.angle}°</span>
-                  </div>
-                </div>
-              )}
-            </div>
-          </div>
-
-          {/* Master Synchronized Playback Control Bar */}
-          <div className="flex flex-wrap items-center justify-between gap-3 px-5 py-3 bg-slate-950/95 border-t border-slate-800 z-20">
-            <div className="flex items-center gap-3">
-              <button
-                onClick={togglePlay}
-                className="px-4 py-2 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-400 text-slate-950 font-black text-xs flex items-center gap-1.5 hover:scale-105 transition-transform shadow-lg shadow-emerald-500/20"
-              >
-                {isPlaying ? <Pause className="w-4 h-4 fill-current" /> : <Play className="w-4 h-4 fill-current" />}
-                <span>{isPlaying ? 'Pause Synced Playback' : 'Play Synced 3D & Video'}</span>
-              </button>
-
-              <button
-                onClick={toggleMute}
-                className="p-2 rounded-xl bg-slate-900 border border-slate-800 text-slate-300 hover:text-white transition-colors"
-                title={isMuted ? 'Unmute Video' : 'Mute Video'}
-              >
-                {isMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
-              </button>
-            </div>
-
-            {/* Speeds & AI Overlay Toggle */}
-            <div className="flex items-center gap-2">
-              <div className="flex items-center bg-slate-900 px-2 py-1 rounded-xl border border-slate-800">
-                {[0.5, 0.75, 1.0, 1.5].map(spd => (
-                  <button
-                    key={spd}
-                    onClick={() => handleSpeedChange(spd)}
-                    className={`px-2 py-0.5 rounded-lg text-xs font-bold ${
-                      playbackSpeed === spd
-                        ? 'bg-cyan-500/20 text-cyan-400 border border-cyan-500/40'
-                        : 'text-slate-400 hover:text-white'
-                    }`}
-                  >
-                    {spd}x
-                  </button>
-                ))}
-              </div>
-
-              <button
-                onClick={() => setAiTrackingActive(!aiTrackingActive)}
-                className={`px-3 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1.5 transition-all ${
-                  aiTrackingActive
-                    ? 'bg-cyan-500/20 text-cyan-400 border border-cyan-500/40'
-                    : 'bg-slate-900 text-slate-400 border border-slate-800'
-                }`}
-              >
-                <Scan className="w-3.5 h-3.5" />
-                <span>{aiTrackingActive ? 'AI Skeleton HUD ON' : 'AI HUD OFF'}</span>
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* ------------------------------------------------------------- */}
-      {/* 2. STANDALONE 3D MODEL VIEW */}
-      {/* ------------------------------------------------------------- */}
-      {activeTab === '3d' && (
-        <Exercise3DViewer
-          exerciseName={exerciseName}
-          exerciseSlug={exerciseSlug}
-          primaryMuscle={primaryMuscle}
-          secondaryMuscles={secondaryMuscles}
-          movementPattern={movementPattern}
-          equipment={equipment}
-          tempo={tempo}
-        />
-      )}
-
-      {/* ------------------------------------------------------------- */}
-      {/* 3. STANDALONE VIDEO DEMO VIEW */}
+      {/* 1. REAL VIDEO PLAYER WITH AI SKELETON POSE OVERLAY */}
       {/* ------------------------------------------------------------- */}
       {activeTab === 'video' && (
-        <div className="relative w-full aspect-video sm:aspect-[16/10] max-h-[480px] bg-slate-950 flex items-center justify-center overflow-hidden">
-          <div className="relative w-full h-full flex items-center justify-center group bg-black">
-            {videoSrc ? (
-              <video
-                key={videoSrc}
-                ref={videoRef}
-                src={videoSrc}
-                poster={primaryMedia?.thumbnail || undefined}
-                autoPlay
-                loop
-                muted={isMuted}
-                playsInline
-                className="w-full h-full object-contain bg-black"
-              />
-            ) : (
-              <div className="relative w-full h-full flex flex-col items-center justify-center bg-gradient-to-br from-slate-950 via-slate-900 to-emerald-950/40 p-6 text-center">
-                <div className="w-16 h-16 rounded-full bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center mb-4 text-emerald-400 shadow-xl animate-pulse">
-                  <Activity className="w-8 h-8" />
-                </div>
-                <h4 className="text-xl font-bold text-white mb-1">{exerciseName}</h4>
-                <p className="text-xs text-slate-400 mb-4">
-                  Visual Vector Demonstration & AI Motion Vectors Ready
-                </p>
-                <div className="flex flex-wrap items-center justify-center gap-2">
-                  <span className="px-3 py-1 rounded-full bg-slate-800 text-xs text-emerald-400 font-semibold border border-slate-700">
-                    Primary: {primaryMuscle}
-                  </span>
-                  <span className="px-3 py-1 rounded-full bg-slate-800 text-xs text-cyan-400 font-semibold border border-slate-700">
-                    Pattern: {movementPattern}
-                  </span>
+        <div className="relative w-full aspect-video max-h-[520px] bg-black flex items-center justify-center overflow-hidden group">
+          {videoSrc ? (
+            <video
+              key={videoSrc}
+              ref={videoRef}
+              src={videoSrc}
+              poster={primaryMedia?.thumbnail || undefined}
+              autoPlay
+              loop
+              muted={isMuted}
+              playsInline
+              onTimeUpdate={handleTimeUpdate}
+              onClick={togglePlay}
+              className="w-full h-full object-contain bg-black cursor-pointer"
+            />
+          ) : (
+            <div className="relative w-full h-full flex flex-col items-center justify-center bg-gradient-to-br from-slate-950 via-slate-900 to-emerald-950/40 p-6 text-center">
+              <div className="w-16 h-16 rounded-full bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center mb-4 text-emerald-400 shadow-xl animate-pulse">
+                <Activity className="w-8 h-8" />
+              </div>
+              <h4 className="text-xl font-bold text-white mb-1">{exerciseName}</h4>
+              <p className="text-xs text-slate-400 mb-4">
+                Full HD Real Video Demonstration
+              </p>
+              <div className="flex flex-wrap items-center justify-center gap-2">
+                <span className="px-3 py-1 rounded-full bg-slate-800 text-xs text-emerald-400 font-semibold border border-slate-700">
+                  Target: {primaryMuscle}
+                </span>
+                <span className="px-3 py-1 rounded-full bg-slate-800 text-xs text-cyan-400 font-semibold border border-slate-700">
+                  Pattern: {movementPattern}
+                </span>
+              </div>
+            </div>
+          )}
+
+          {/* AI Skeleton Pose HUD Overlay */}
+          {aiTrackingActive && (
+            <div className="absolute inset-0 pointer-events-none z-10 flex flex-col justify-between p-4">
+              {/* Top Left AI Detection Badge */}
+              <div className="flex items-center gap-2">
+                <div className="px-3 py-1.5 rounded-xl bg-slate-950/80 backdrop-blur-md border border-cyan-500/40 text-cyan-400 text-xs font-bold flex items-center gap-2 shadow-lg">
+                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+                  <span>AI Kinematic Tracking Active</span>
                 </div>
               </div>
-            )}
 
-            {/* Video Control Overlay */}
-            <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between bg-slate-950/85 backdrop-blur-md px-4 py-2.5 rounded-2xl border border-slate-800 opacity-95 transition-opacity shadow-2xl">
-              <div className="flex items-center gap-3">
+              {/* Bottom Right AI Joint Angle Degree Badge */}
+              <div className="self-end px-3.5 py-2 rounded-2xl bg-slate-950/90 backdrop-blur-md border border-emerald-500/40 text-right shadow-2xl space-y-0.5">
+                <div className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">
+                  {jointInfo.joint}
+                </div>
+                <div className="text-base font-black text-emerald-400 font-mono flex items-center justify-end gap-1.5">
+                  <span>{jointInfo.targetAngle}</span>
+                  <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+                </div>
+                <div className="text-[9px] text-cyan-300 font-mono">
+                  Phase: {jointInfo.phase}
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Video Control Bar */}
+          <div className={`absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-slate-950/95 via-slate-950/70 to-transparent transition-opacity duration-300 ${isHovered || !isPlaying ? 'opacity-100' : 'opacity-0 sm:opacity-90'}`}>
+            {/* Seek Bar */}
+            <div className="w-full flex items-center gap-3 mb-2">
+              <input
+                type="range"
+                min="0"
+                max={duration || 100}
+                step="0.1"
+                value={currentTime}
+                onChange={handleSeek}
+                className="w-full h-1.5 bg-slate-700/80 rounded-lg appearance-none cursor-pointer accent-emerald-400"
+              />
+              <span className="text-[11px] font-mono text-slate-300 shrink-0">
+                {formatTime(currentTime)} / {formatTime(duration)}
+              </span>
+            </div>
+
+            <div className="flex flex-wrap items-center justify-between gap-3">
+              {/* Left Controls: Play, Restart, Mute */}
+              <div className="flex items-center gap-2">
                 <button
                   onClick={togglePlay}
-                  className="p-2.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-black hover:scale-105 transition-transform"
+                  className="p-2.5 rounded-xl bg-gradient-to-r from-emerald-400 to-teal-400 hover:scale-105 text-slate-950 font-black shadow-lg shadow-emerald-500/20 transition-transform"
                   title={isPlaying ? 'Pause' : 'Play'}
                 >
                   {isPlaying ? <Pause className="w-4 h-4 fill-current" /> : <Play className="w-4 h-4 fill-current" />}
                 </button>
+
+                <button
+                  onClick={handleRestart}
+                  className="p-2 rounded-xl bg-slate-900/90 border border-slate-700 text-slate-300 hover:text-white hover:bg-slate-800 transition-colors"
+                  title="Replay from start"
+                >
+                  <RotateCcw className="w-4 h-4" />
+                </button>
+
                 <button
                   onClick={toggleMute}
-                  className="p-2 rounded-xl bg-slate-800 text-slate-300 hover:text-white transition-colors"
+                  className="p-2 rounded-xl bg-slate-900/90 border border-slate-700 text-slate-300 hover:text-white hover:bg-slate-800 transition-colors"
                   title={isMuted ? 'Unmute' : 'Mute'}
                 >
                   {isMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
                 </button>
-                <span className="text-xs text-cyan-400 font-semibold hidden sm:inline">
-                  Workout Video Demonstration
-                </span>
               </div>
 
-              {/* Speed Buttons */}
-              <div className="flex items-center gap-1.5 bg-slate-900 px-2 py-1 rounded-xl border border-slate-800">
-                {[0.5, 0.75, 1.0, 1.5].map(spd => (
-                  <button
-                    key={spd}
-                    onClick={() => handleSpeedChange(spd)}
-                    className={`px-2 py-0.5 rounded-lg text-xs font-semibold ${
-                      playbackSpeed === spd
-                        ? 'bg-cyan-500/20 text-cyan-400 border border-cyan-500/40'
-                        : 'text-slate-400 hover:text-white'
-                    }`}
-                  >
-                    {spd}x
-                  </button>
-                ))}
+              {/* Right Controls: Speeds, AI Toggle, Fullscreen */}
+              <div className="flex items-center gap-2">
+                {/* Speed Controls */}
+                <div className="flex items-center bg-slate-900/90 px-2 py-1 rounded-xl border border-slate-700">
+                  {[0.5, 0.75, 1.0, 1.5].map(spd => (
+                    <button
+                      key={spd}
+                      onClick={() => handleSpeedChange(spd)}
+                      className={`px-2 py-0.5 rounded-lg text-xs font-bold ${
+                        playbackSpeed === spd
+                          ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/40'
+                          : 'text-slate-400 hover:text-white'
+                      }`}
+                    >
+                      {spd}x
+                    </button>
+                  ))}
+                </div>
+
+                {/* AI HUD Toggle */}
+                <button
+                  onClick={() => setAiTrackingActive(!aiTrackingActive)}
+                  className={`px-3 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1.5 transition-all ${
+                    aiTrackingActive
+                      ? 'bg-cyan-500/20 text-cyan-400 border border-cyan-500/40'
+                      : 'bg-slate-900/90 text-slate-400 border border-slate-700'
+                  }`}
+                  title="Toggle AI Skeleton Overlay"
+                >
+                  <Scan className="w-3.5 h-3.5" />
+                  <span className="hidden sm:inline">{aiTrackingActive ? 'AI HUD ON' : 'AI HUD OFF'}</span>
+                </button>
+
+                {/* Fullscreen Toggle */}
+                <button
+                  onClick={toggleFullscreen}
+                  className="p-2 rounded-xl bg-slate-900/90 border border-slate-700 text-slate-300 hover:text-white hover:bg-slate-800 transition-colors"
+                  title="Toggle Fullscreen"
+                >
+                  <Maximize2 className="w-4 h-4" />
+                </button>
               </div>
             </div>
           </div>
@@ -415,49 +402,102 @@ export default function ExerciseMediaDisplay({
       )}
 
       {/* ------------------------------------------------------------- */}
-      {/* 4. EMG HEATMAP ACTIVATION BREAKDOWN */}
+      {/* 2. EMG MUSCLE ACTIVATION TAB */}
       {/* ------------------------------------------------------------- */}
       {activeTab === 'heatmap' && (
-        <div className="w-full aspect-video sm:aspect-[16/10] max-h-[480px] flex flex-col items-center justify-center p-6 sm:p-8 bg-slate-950 text-white">
-          <div className="w-full max-w-md space-y-5">
-            <h4 className="text-sm font-bold text-slate-300 uppercase tracking-wider text-center">
-              Target Muscle Activation Breakdown
-            </h4>
+        <div className="w-full aspect-video max-h-[520px] flex flex-col items-center justify-center p-6 sm:p-8 bg-slate-950 text-white">
+          <div className="w-full max-w-md space-y-6">
+            <div className="text-center space-y-1">
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 text-xs font-bold">
+                <Flame className="w-3.5 h-3.5" />
+                <span>Surface Electromyography (sEMG) Model</span>
+              </div>
+              <h4 className="text-base font-black text-white">
+                Muscle Recruitment & Excitation
+              </h4>
+            </div>
+
             <div className="space-y-4">
               <div>
-                <div className="flex justify-between text-xs font-semibold mb-1">
-                  <span className="text-emerald-400 font-bold">{primaryMuscle} (Prime Mover)</span>
-                  <span className="text-white font-mono">88% EMG Activation</span>
+                <div className="flex justify-between text-xs font-bold mb-1.5">
+                  <span className="text-emerald-400">{primaryMuscle} (Agonist / Prime Mover)</span>
+                  <span className="text-white font-mono">92% Recruitment</span>
                 </div>
-                <div className="w-full h-3 bg-slate-800 rounded-full overflow-hidden">
-                  <div className="h-full bg-gradient-to-r from-emerald-500 to-teal-400 rounded-full w-[88%] shadow-lg shadow-emerald-500/50"></div>
-                </div>
-              </div>
-
-              <div>
-                <div className="flex justify-between text-xs font-semibold mb-1">
-                  <span className="text-cyan-400 font-bold">{secondaryMuscles || 'Synergists & Stabilizers'}</span>
-                  <span className="text-white font-mono">60% EMG Activation</span>
-                </div>
-                <div className="w-full h-3 bg-slate-800 rounded-full overflow-hidden">
-                  <div className="h-full bg-gradient-to-r from-cyan-500 to-blue-400 rounded-full w-[60%] shadow-lg shadow-cyan-500/50"></div>
+                <div className="w-full h-3.5 bg-slate-800 rounded-full overflow-hidden p-0.5">
+                  <div className="h-full bg-gradient-to-r from-emerald-500 via-teal-400 to-cyan-400 rounded-full w-[92%] shadow-lg shadow-emerald-500/50"></div>
                 </div>
               </div>
 
               <div>
-                <div className="flex justify-between text-xs font-semibold mb-1">
-                  <span className="text-amber-400 font-bold">Core Bracing & Spinal Fixators</span>
-                  <span className="text-white font-mono">45% EMG Activation</span>
+                <div className="flex justify-between text-xs font-bold mb-1.5">
+                  <span className="text-cyan-400">{secondaryMuscles || 'Synergists & Kinetic Stabilizers'}</span>
+                  <span className="text-white font-mono">68% Recruitment</span>
                 </div>
-                <div className="w-full h-3 bg-slate-800 rounded-full overflow-hidden">
-                  <div className="h-full bg-gradient-to-r from-amber-500 to-orange-400 rounded-full w-[45%]"></div>
+                <div className="w-full h-3.5 bg-slate-800 rounded-full overflow-hidden p-0.5">
+                  <div className="h-full bg-gradient-to-r from-cyan-500 to-blue-400 rounded-full w-[68%] shadow-lg shadow-cyan-500/50"></div>
+                </div>
+              </div>
+
+              <div>
+                <div className="flex justify-between text-xs font-bold mb-1.5">
+                  <span className="text-purple-400">Core & Spinal Stabilizers</span>
+                  <span className="text-white font-mono">54% Recruitment</span>
+                </div>
+                <div className="w-full h-3.5 bg-slate-800 rounded-full overflow-hidden p-0.5">
+                  <div className="h-full bg-gradient-to-r from-purple-500 to-pink-400 rounded-full w-[54%]"></div>
                 </div>
               </div>
             </div>
 
-            <div className="p-3.5 rounded-2xl bg-slate-900 border border-slate-800 text-xs text-slate-300 flex items-center justify-between">
-              <span>Kinematic Plane: <strong className="text-white">{movementPattern}</strong></span>
-              <span>Loaded Tension: <strong className="text-emerald-400">Peak Concentric</strong></span>
+            <div className="p-4 rounded-2xl bg-slate-900 border border-slate-800 text-xs text-slate-300 flex items-center justify-between">
+              <div>
+                <span className="text-slate-400 block text-[10px] uppercase font-bold">Kinematic Pattern</span>
+                <strong className="text-white text-sm">{movementPattern}</strong>
+              </div>
+              <div className="text-right">
+                <span className="text-slate-400 block text-[10px] uppercase font-bold">Equipment</span>
+                <strong className="text-emerald-400 text-sm">{equipment}</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ------------------------------------------------------------- */}
+      {/* 3. BIOMECHANICS & KINEMATIC INSIGHTS TAB */}
+      {/* ------------------------------------------------------------- */}
+      {activeTab === 'biomechanics' && (
+        <div className="w-full aspect-video max-h-[520px] p-6 sm:p-8 bg-slate-950 text-white flex flex-col justify-center overflow-y-auto">
+          <div className="max-w-2xl mx-auto space-y-4 w-full">
+            <div className="flex items-center gap-2">
+              <Layers className="w-5 h-5 text-purple-400" />
+              <h4 className="text-base font-bold text-white">Biomechanical Force Vectors</h4>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+              <div className="p-4 rounded-2xl bg-slate-900 border border-slate-800 space-y-1">
+                <span className="text-slate-400 text-[10px] uppercase font-bold">Primary Joint Action</span>
+                <p className="text-emerald-400 font-bold text-sm">{jointInfo.joint}</p>
+                <p className="text-slate-400 text-[11px]">Normal Functional Range: {jointInfo.normalRange}</p>
+              </div>
+
+              <div className="p-4 rounded-2xl bg-slate-900 border border-slate-800 space-y-1">
+                <span className="text-slate-400 text-[10px] uppercase font-bold">Loading Curve Profile</span>
+                <p className="text-cyan-400 font-bold text-sm">Ascending / Peak Concentric</p>
+                <p className="text-slate-400 text-[11px]">Maximum mechanical tension at peak contraction.</p>
+              </div>
+
+              <div className="p-4 rounded-2xl bg-slate-900 border border-slate-800 space-y-1">
+                <span className="text-slate-400 text-[10px] uppercase font-bold">Tempo Recommendation</span>
+                <p className="text-amber-400 font-mono font-bold text-sm">{tempo}</p>
+                <p className="text-slate-400 text-[11px]">Controlled eccentric descent with explosive drive.</p>
+              </div>
+
+              <div className="p-4 rounded-2xl bg-slate-900 border border-slate-800 space-y-1">
+                <span className="text-slate-400 text-[10px] uppercase font-bold">Breathing Cadence</span>
+                <p className="text-purple-400 font-bold text-sm">Valsalva / Exhale on Effort</p>
+                <p className="text-slate-400 text-[11px]">Inhale during lowering phase; exhale past sticking point.</p>
+              </div>
             </div>
           </div>
         </div>
