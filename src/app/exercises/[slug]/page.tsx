@@ -141,6 +141,7 @@ export default function ExerciseDetailPage() {
         <div className="lg:col-span-7 space-y-6">
           <ExerciseMediaDisplay
             exerciseName={exercise.name}
+            exerciseSlug={exercise.slug}
             primaryMuscle={exercise.primaryMuscle}
             secondaryMuscles={exercise.secondaryMuscles}
             mediaList={exercise.media || []}

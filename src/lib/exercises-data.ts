@@ -1,4 +1,6 @@
 // Auto-generated comprehensive 117+ exercise biomechanics dataset
+import { getExerciseVideoUrl } from './exercise-videos';
+
 export interface ExerciseData {
   id?: string;
   name: string;
@@ -3425,7 +3427,7 @@ export const EXERCISES: ExerciseData[] = EXERCISES_DATA.map((ex, index) => ({
     {
       id: 'media-' + (index + 1),
       type: 'VIDEO',
-      url: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
+      url: getExerciseVideoUrl(ex.slug, ex.primaryMuscle, ex.movementPattern),
       thumbnail: 'https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?w=800&auto=format&fit=crop&q=80',
       provider: 'EXTERNAL',
       durationSec: 15,

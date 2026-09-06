@@ -3,9 +3,11 @@
 import React, { useState, useRef } from 'react';
 import { Play, Pause, Sparkles, Activity, Video, Box, Volume2, VolumeX, Layers, Compass } from 'lucide-react';
 import Exercise3DViewer from './Exercise3DViewer';
+import { getExerciseVideoUrl } from '@/lib/exercise-videos';
 
 interface ExerciseMediaDisplayProps {
   exerciseName: string;
+  exerciseSlug?: string;
   primaryMuscle: string;
   secondaryMuscles?: string;
   mediaList?: {
@@ -22,6 +24,7 @@ interface ExerciseMediaDisplayProps {
 
 export default function ExerciseMediaDisplay({
   exerciseName,
+  exerciseSlug,
   primaryMuscle,
   secondaryMuscles = '',
   mediaList = [],
@@ -35,7 +38,10 @@ export default function ExerciseMediaDisplay({
   const [playbackSpeed, setPlaybackSpeed] = useState<number>(1.0);
   const videoRef = useRef<HTMLVideoElement>(null);
 
+  const slug = exerciseSlug || exerciseName.toLowerCase().replace(/[^a-z0-9]/g, '-');
+  const kaggleVideoUrl = getExerciseVideoUrl(slug, primaryMuscle, movementPattern);
   const primaryMedia = mediaList.find(m => m.type === 'VIDEO') || mediaList[0];
+  const videoSrc = (primaryMedia?.url && !primaryMedia.url.includes('ForBiggerBlazes')) ? primaryMedia.url : kaggleVideoUrl;
 
   const togglePlay = () => {
     if (videoRef.current) {
@@ -128,11 +134,12 @@ export default function ExerciseMediaDisplay({
       {activeTab === 'video' && (
         <div className="relative w-full aspect-video sm:aspect-[16/10] max-h-[460px] bg-slate-950 flex items-center justify-center overflow-hidden">
           <div className="relative w-full h-full flex items-center justify-center group">
-            {primaryMedia?.url?.endsWith('.mp4') || primaryMedia?.url?.endsWith('.webm') ? (
+            {videoSrc ? (
               <video
+                key={videoSrc}
                 ref={videoRef}
-                src={primaryMedia.url}
-                poster={primaryMedia.thumbnail || undefined}
+                src={videoSrc}
+                poster={primaryMedia?.thumbnail || undefined}
                 autoPlay
                 loop
                 muted={isMuted}
