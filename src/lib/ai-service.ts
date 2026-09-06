@@ -48,6 +48,9 @@ export class AIService {
     // If OpenAI/Gemini/Anthropic API key is provided and provider is not 'local', call remote API
     if (this.apiKey && this.provider !== 'local') {
       try {
+        if (this.provider === 'gemini') {
+          return await this.generateWorkoutGemini(input);
+        }
         if (this.provider === 'openai') {
           return await this.generateWorkoutOpenAI(input);
         }
@@ -82,15 +85,24 @@ export class AIService {
     }
 
     // If external AI is active
-    if (this.apiKey && this.provider === 'openai') {
+    if (this.apiKey) {
       try {
-        const response = await this.chatWithOpenAI(question, userContext);
-        return {
-          answer: response,
-          isMedicalWarning: false,
-        };
+        if (this.provider === 'gemini') {
+          const response = await this.chatWithGemini(question, userContext);
+          return {
+            answer: response,
+            isMedicalWarning: false,
+          };
+        }
+        if (this.provider === 'openai') {
+          const response = await this.chatWithOpenAI(question, userContext);
+          return {
+            answer: response,
+            isMedicalWarning: false,
+          };
+        }
       } catch (e) {
-        console.warn('Falling back to local knowledge engine');
+        console.warn('Falling back to local knowledge engine:', e);
       }
     }
 
@@ -402,4 +414,79 @@ Return ONLY a JSON object matching this structure:
     const data = await res.json();
     return data.choices[0].message.content;
   }
+
+  /**
+   * Google Gemini API Handlers
+   */
+  private static async generateWorkoutGemini(input: GenerateWorkoutInput): Promise<GeneratedProgram> {
+    const prompt = `You are an elite CSCS Strength & Conditioning specialist.
+Generate a structured workout plan in JSON format based on:
+Level: ${input.fitnessLevel}
+Goal: ${input.goal}
+Days/week: ${input.daysPerWeek}
+Duration: ${input.durationMinutes} mins
+Equipment: ${input.equipment}
+Target Muscles: ${input.targetMuscles?.join(', ') || 'Balanced'}
+Avoid: ${input.avoidMusclesOrInjuries?.join(', ') || 'None'}
+
+Return ONLY a raw valid JSON object without markdown fences, matching this structure:
+{
+  "programName": "string",
+  "summary": "string",
+  "weeklySchedule": [
+    {
+      "dayName": "string",
+      "focus": "string",
+      "warmup": ["string"],
+      "exercises": [
+        {
+          "name": "string",
+          "primaryMuscle": "string",
+          "sets": 3,
+          "reps": "8-12",
+          "restSec": 90,
+          "tempo": "3-0-1-0",
+          "notes": "string"
+        }
+      ],
+      "cooldown": ["string"]
+    }
+  ],
+  "progressionTip": "string",
+  "recoveryGuidance": "string"
+}`;
+
+    const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${this.apiKey}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        contents: [{ parts: [{ text: prompt }] }],
+        generationConfig: { temperature: 0.2 }
+      })
+    });
+
+    const data = await res.json();
+    let text = data.candidates?.[0]?.content?.parts?.[0]?.text || '';
+    text = text.replace(/```json/g, '').replace(/```/g, '').trim();
+    return JSON.parse(text);
+  }
+
+  private static async chatWithGemini(question: string, context?: any): Promise<string> {
+    const prompt = `System: You are FitAI, an elite exercise science & biomechanics AI coach. Give clear, evidence-based fitness advice with biomechanical rationale. NEVER diagnose injuries or disease; include a medical disclaimer if symptoms are reported.
+
+User: ${question}`;
+
+    const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${this.apiKey}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        contents: [{ parts: [{ text: prompt }] }],
+        generationConfig: { temperature: 0.4 }
+      })
+    });
+
+    const data = await res.json();
+    return data.candidates?.[0]?.content?.parts?.[0]?.text || '';
+  }
 }
+

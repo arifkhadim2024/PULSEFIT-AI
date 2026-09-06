@@ -18,7 +18,8 @@ import {
   ZoomOut,
   Flame,
   Zap,
-  Cpu
+  Cpu,
+  Bot
 } from 'lucide-react';
 
 interface Exercise3DViewerProps {
@@ -117,9 +118,7 @@ export default function Exercise3DViewer({
     const slug = (exerciseSlug || exerciseName || '').toLowerCase();
     const p = primaryMuscle.toLowerCase();
     const pattern = movementPattern.toLowerCase();
-    const eq = equipment.toLowerCase();
 
-    // 1. Specific slug keywords from Kaggle dataset
     if (slug.includes('decline')) return 'decline_bench';
     if (slug.includes('incline')) return 'incline_bench';
     if (slug.includes('push-up') || slug.includes('pushup')) return 'pushup';
@@ -144,7 +143,6 @@ export default function Exercise3DViewer({
     if (slug.includes('russian-twist') || slug.includes('woodchopper')) return 'russian_twist';
     if (slug.includes('calf') || slug.includes('calves')) return 'calves';
 
-    // 2. Pattern and Muscle Fallbacks
     if (p.includes('chest') || pattern.includes('horizontal push')) return 'bench';
     if (p.includes('quad') || pattern.includes('squat')) return 'squat';
     if (p.includes('hamstring') || pattern.includes('hinge')) return 'rdl';
@@ -156,16 +154,16 @@ export default function Exercise3DViewer({
     if (p.includes('abs') || p.includes('core')) return 'plank';
 
     return 'bench';
-  }, [exerciseSlug, exerciseName, primaryMuscle, movementPattern, equipment]);
+  }, [exerciseSlug, exerciseName, primaryMuscle, movementPattern]);
 
   useEffect(() => {
     const container = containerRef.current;
     if (!container) return;
 
-    // 1. Create Three.js Scene
+    // 1. Create Three.js Scene with Premium Studio Atmosphere
     const scene = new THREE.Scene();
-    scene.background = new THREE.Color(0x040810);
-    scene.fog = new THREE.FogExp2(0x040810, 0.08);
+    scene.background = new THREE.Color(0x060a12);
+    scene.fog = new THREE.FogExp2(0x060a12, 0.07);
     sceneState.current.scene = scene;
 
     // 2. Camera Setup
@@ -174,54 +172,68 @@ export default function Exercise3DViewer({
     sceneState.current.camera = camera;
     updateCameraPosition();
 
-    // 3. WebGL Renderer
+    // 3. High-Performance WebGL Renderer
     const renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: 'high-performance' });
     renderer.setSize(container.clientWidth, container.clientHeight);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.shadowMap.enabled = true;
     renderer.shadowMap.type = THREE.PCFSoftShadowMap;
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    renderer.toneMappingExposure = 1.25;
+    renderer.toneMappingExposure = 1.35;
     container.replaceChildren(renderer.domElement);
     sceneState.current.renderer = renderer;
 
-    // 4. Studio Lighting & Cyber Atmosphere
-    const ambientLight = new THREE.AmbientLight(0x1a2e3b, 1.3);
+    // 4. Studio Lighting Rig: Rim Cyan, Fill Emerald, Key Sunlight
+    const ambientLight = new THREE.AmbientLight(0x243b53, 1.4);
     scene.add(ambientLight);
 
-    const keyLight = new THREE.DirectionalLight(0xffffff, 2.2);
-    keyLight.position.set(4, 6, 4);
+    const keyLight = new THREE.DirectionalLight(0xffffff, 2.5);
+    keyLight.position.set(4, 7, 5);
     keyLight.castShadow = true;
+    keyLight.shadow.mapSize.width = 1024;
+    keyLight.shadow.mapSize.height = 1024;
     scene.add(keyLight);
 
-    const rimLightCyan = new THREE.DirectionalLight(0x06b6d4, 2.8);
-    rimLightCyan.position.set(-5, 4, -4);
+    const rimLightCyan = new THREE.DirectionalLight(0x06b6d4, 3.2);
+    rimLightCyan.position.set(-6, 5, -5);
     scene.add(rimLightCyan);
 
-    const fillLightEmerald = new THREE.DirectionalLight(0x10b981, 2.0);
-    fillLightEmerald.position.set(0, -3, 3);
+    const fillLightEmerald = new THREE.DirectionalLight(0x10b981, 2.2);
+    fillLightEmerald.position.set(0, -4, 4);
     scene.add(fillLightEmerald);
 
-    // 5. Grid Platform with glowing ring
+    // 5. Gym Rubber Flooring with Illuminated Ring
+    const floorGeo = new THREE.PlaneGeometry(12, 12);
+    const floorMat = new THREE.MeshStandardMaterial({
+      color: 0x090d16,
+      roughness: 0.85,
+      metalness: 0.1,
+    });
+    const floor = new THREE.Mesh(floorGeo, floorMat);
+    floor.rotation.x = -Math.PI / 2;
+    floor.position.y = -1.8;
+    floor.receiveShadow = true;
+    scene.add(floor);
+
     const gridHelper = new THREE.GridHelper(10, 20, 0x10b981, 0x1e293b);
-    gridHelper.position.y = -1.8;
+    gridHelper.position.y = -1.79;
     scene.add(gridHelper);
 
-    const ringGeo = new THREE.RingGeometry(1.8, 1.85, 64);
-    const ringMat = new THREE.MeshBasicMaterial({ color: 0x10b981, side: THREE.DoubleSide, transparent: true, opacity: 0.6 });
+    const ringGeo = new THREE.RingGeometry(2.0, 2.06, 64);
+    const ringMat = new THREE.MeshBasicMaterial({ color: 0x10b981, side: THREE.DoubleSide, transparent: true, opacity: 0.7 });
     const ringMesh = new THREE.Mesh(ringGeo, ringMat);
     ringMesh.rotation.x = Math.PI / 2;
-    ringMesh.position.y = -1.79;
+    ringMesh.position.y = -1.78;
     scene.add(ringMesh);
 
-    // 6. Build the 3D Anatomical Human Rig
-    const rig = buildHumanAnatomicalRig(primaryMuscle, secondaryMuscles, renderMode);
+    // 6. Build the Lifelike Anatomical Human Athlete
+    const rig = buildHumanAthleteRig(primaryMuscle, secondaryMuscles, renderMode);
     scene.add(rig.root);
     sceneState.current.rigRoot = rig.root;
     sceneState.current.muscleMeshes = rig.muscleMeshes;
     sceneState.current.jointMarkers = rig.jointMarkers;
 
-    // 7. Build Equipment
+    // 7. Build Equipment matching the exercise
     const eqGroup = buildEquipment(motionType, equipment);
     scene.add(eqGroup);
     sceneState.current.equipmentGroup = eqGroup;
@@ -245,7 +257,7 @@ export default function Exercise3DViewer({
 
     sceneState.current.reqId = requestAnimationFrame(animate);
 
-    // 9. Mouse / Touch Orbit Interaction
+    // 9. Mouse Orbit Interaction
     const handleMouseDown = (e: MouseEvent) => {
       sceneState.current.isDragging = true;
       sceneState.current.prevMousePos = { x: e.clientX, y: e.clientY };
@@ -339,9 +351,9 @@ export default function Exercise3DViewer({
   };
 
   // -------------------------------------------------------------
-  // THREE.JS RIG BUILDER & ANATOMY GEOMETRY
+  // HIGH-DEFINITION LIFELIKE HUMAN ATHLETE RIG
   // -------------------------------------------------------------
-  function buildHumanAnatomicalRig(primary: string, secondary: string, mode: 'heatmap' | 'hologram' | 'anatomical') {
+  function buildHumanAthleteRig(primary: string, secondary: string, mode: 'heatmap' | 'hologram' | 'anatomical') {
     const root = new THREE.Group();
     const muscleMeshes: { name: string; mesh: THREE.Mesh; baseColor: number; isPrimary: boolean; isSecondary: boolean }[] = [];
     const jointMarkers: THREE.Mesh[] = [];
@@ -349,34 +361,39 @@ export default function Exercise3DViewer({
     const normPrimary = primary.toLowerCase();
     const normSec = secondary.toLowerCase();
 
-    const getMuscleMaterial = (name: string, defaultColor: number = 0x334155) => {
+    // Realistic Anatomical Human Skin / Muscle Shaders
+    const skinToneColor = 0xd4a373; // Natural warm athletic skin tone
+    const shortsColor = 0x0f172a;    // Stealth compression shorts
+    const sneakerColor = 0x1e293b;
+
+    const getMuscleMaterial = (name: string, defaultColor: number = skinToneColor) => {
       const isPrimary = normPrimary.includes(name.toLowerCase());
       const isSecondary = normSec.includes(name.toLowerCase());
 
       let color = defaultColor;
       let emissive = 0x000000;
       let emissiveIntensity = 0.0;
-      let opacity = mode === 'hologram' ? 0.7 : 0.95;
+      let opacity = mode === 'hologram' ? 0.75 : 1.0;
       let wireframe = mode === 'hologram';
 
       if (isPrimary) {
-        color = 0x10b981; // Vibrant Emerald EMG Peak
+        color = 0x10b981; // High EMG excitation Emerald
         emissive = 0x059669;
-        emissiveIntensity = 0.8;
+        emissiveIntensity = 0.75;
       } else if (isSecondary) {
         color = 0x06b6d4; // Cyan Synergist
         emissive = 0x0891b2;
         emissiveIntensity = 0.4;
       } else if (mode === 'anatomical') {
-        color = 0x475569;
+        color = 0x94a3b8;
       }
 
       const mat = new THREE.MeshStandardMaterial({
         color,
         emissive,
         emissiveIntensity,
-        roughness: 0.35,
-        metalness: 0.2,
+        roughness: 0.45,
+        metalness: 0.15,
         transparent: mode === 'hologram',
         opacity,
         wireframe,
@@ -387,6 +404,8 @@ export default function Exercise3DViewer({
 
     const registerMesh = (mesh: THREE.Mesh, name: string) => {
       const { isPrimary, isSecondary } = getMuscleMaterial(name);
+      mesh.castShadow = true;
+      mesh.receiveShadow = true;
       muscleMeshes.push({
         name,
         mesh,
@@ -397,177 +416,198 @@ export default function Exercise3DViewer({
       return mesh;
     };
 
-    // --- SPINE / PELVIS BASE ---
+    // --- PELVIS / GLUTES / COMPRESSION SHORTS ---
     const pelvisGroup = new THREE.Group();
     pelvisGroup.position.y = 0;
     root.add(pelvisGroup);
 
-    const pelvisMat = getMuscleMaterial('Glutes', 0x334155).mat;
-    const pelvis = registerMesh(new THREE.Mesh(new THREE.CylinderGeometry(0.32, 0.28, 0.35, 16), pelvisMat), 'Glutes');
-    pelvisGroup.add(pelvis);
+    const shortsMat = new THREE.MeshStandardMaterial({ color: shortsColor, roughness: 0.8 });
+    const pelvisMesh = registerMesh(new THREE.Mesh(new THREE.CylinderGeometry(0.34, 0.30, 0.38, 24), shortsMat), 'Glutes');
+    pelvisGroup.add(pelvisMesh);
 
-    // --- TORSO / CHEST / LATS ---
+    // --- TORSO HIERARCHY ---
     const torsoGroup = new THREE.Group();
-    torsoGroup.position.y = 0.25;
+    torsoGroup.position.y = 0.22;
     pelvisGroup.add(torsoGroup);
 
-    // Abs / Core
-    const absMat = getMuscleMaterial('Abs', 0x334155).mat;
-    const absMesh = registerMesh(new THREE.Mesh(new THREE.CylinderGeometry(0.34, 0.3, 0.55, 16), absMat), 'Abs');
-    absMesh.position.y = 0.25;
+    // 1. Abdominal Core & Obliques
+    const absMat = getMuscleMaterial('Abs').mat;
+    const absMesh = registerMesh(new THREE.Mesh(new THREE.CylinderGeometry(0.35, 0.31, 0.52, 24), absMat), 'Abs');
+    absMesh.position.y = 0.26;
     torsoGroup.add(absMesh);
 
-    // Upper Torso / Chest / Back
-    const chestMat = getMuscleMaterial('Chest', 0x334155).mat;
-    const chestMesh = registerMesh(new THREE.Mesh(new THREE.BoxGeometry(0.85, 0.6, 0.45), chestMat), 'Chest');
-    chestMesh.position.y = 0.75;
-    torsoGroup.add(chestMesh);
+    // Sculpted Six-Pack Ribs
+    for (let r = 0; r < 3; r++) {
+      const packL = registerMesh(new THREE.Mesh(new THREE.BoxGeometry(0.12, 0.11, 0.05), absMat), 'Abs');
+      packL.position.set(-0.08, 0.16 + r * 0.13, 0.29);
+      torsoGroup.add(packL);
 
-    // Pectoral Muscle Plates (Left & Right)
-    const pecLeft = registerMesh(new THREE.Mesh(new THREE.BoxGeometry(0.36, 0.32, 0.08), chestMat), 'Chest');
-    pecLeft.position.set(-0.2, 0.78, 0.24);
-    torsoGroup.add(pecLeft);
+      const packR = registerMesh(new THREE.Mesh(new THREE.BoxGeometry(0.12, 0.11, 0.05), absMat), 'Abs');
+      packR.position.set(0.08, 0.16 + r * 0.13, 0.29);
+      torsoGroup.add(packR);
+    }
 
-    const pecRight = registerMesh(new THREE.Mesh(new THREE.BoxGeometry(0.36, 0.32, 0.08), chestMat), 'Chest');
-    pecRight.position.set(0.2, 0.78, 0.24);
-    torsoGroup.add(pecRight);
+    // 2. Chest (Pectoralis Major) & Clavicle Bar
+    const chestMat = getMuscleMaterial('Chest').mat;
+    const upperTorso = registerMesh(new THREE.Mesh(new THREE.BoxGeometry(0.86, 0.58, 0.44), chestMat), 'Chest');
+    upperTorso.position.y = 0.74;
+    torsoGroup.add(upperTorso);
 
-    // Lats / Upper Back Wing Plates
-    const backMat = getMuscleMaterial('Back', 0x334155).mat;
-    const latLeft = registerMesh(new THREE.Mesh(new THREE.BoxGeometry(0.38, 0.5, 0.08), backMat), 'Back');
-    latLeft.position.set(-0.25, 0.65, -0.24);
-    latLeft.rotation.y = 0.2;
-    torsoGroup.add(latLeft);
+    const pecL = registerMesh(new THREE.Mesh(new THREE.BoxGeometry(0.38, 0.34, 0.12), chestMat), 'Chest');
+    pecL.position.set(-0.21, 0.78, 0.24);
+    pecL.rotation.z = -0.05;
+    torsoGroup.add(pecL);
 
-    const latRight = registerMesh(new THREE.Mesh(new THREE.BoxGeometry(0.38, 0.5, 0.08), backMat), 'Back');
-    latRight.position.set(0.25, 0.65, -0.24);
-    latRight.rotation.y = -0.2;
-    torsoGroup.add(latRight);
+    const pecR = registerMesh(new THREE.Mesh(new THREE.BoxGeometry(0.38, 0.34, 0.12), chestMat), 'Chest');
+    pecR.position.set(0.21, 0.78, 0.24);
+    pecR.rotation.z = 0.05;
+    torsoGroup.add(pecR);
+
+    // 3. Back & Latissimus Dorsi Wings
+    const backMat = getMuscleMaterial('Back').mat;
+    const latL = registerMesh(new THREE.Mesh(new THREE.BoxGeometry(0.36, 0.52, 0.12), backMat), 'Back');
+    latL.position.set(-0.27, 0.65, -0.22);
+    latL.rotation.y = 0.25;
+    torsoGroup.add(latL);
+
+    const latR = registerMesh(new THREE.Mesh(new THREE.BoxGeometry(0.36, 0.52, 0.12), backMat), 'Back');
+    latR.position.set(0.27, 0.65, -0.22);
+    latR.rotation.y = -0.25;
+    torsoGroup.add(latR);
 
     // --- NECK & HEAD ---
-    const neck = new THREE.Mesh(new THREE.CylinderGeometry(0.12, 0.14, 0.2, 16), new THREE.MeshStandardMaterial({ color: 0x334155 }));
-    neck.position.y = 1.15;
+    const neckMat = new THREE.MeshStandardMaterial({ color: skinToneColor, roughness: 0.5 });
+    const neck = new THREE.Mesh(new THREE.CylinderGeometry(0.13, 0.16, 0.22, 20), neckMat);
+    neck.position.y = 1.14;
+    neck.castShadow = true;
     torsoGroup.add(neck);
 
     const headGroup = new THREE.Group();
-    headGroup.position.y = 1.45;
+    headGroup.position.y = 1.44;
     torsoGroup.add(headGroup);
 
-    const headMesh = new THREE.Mesh(new THREE.SphereGeometry(0.24, 24, 24), new THREE.MeshStandardMaterial({ color: 0x1e293b, roughness: 0.3 }));
+    const headMesh = new THREE.Mesh(new THREE.SphereGeometry(0.24, 24, 24), neckMat);
+    headMesh.castShadow = true;
     headGroup.add(headMesh);
 
-    // Visor
-    const visor = new THREE.Mesh(new THREE.BoxGeometry(0.26, 0.08, 0.15), new THREE.MeshStandardMaterial({ color: 0x06b6d4, emissive: 0x06b6d4, emissiveIntensity: 1.2 }));
+    // High-tech Visor
+    const visor = new THREE.Mesh(
+      new THREE.BoxGeometry(0.28, 0.08, 0.16),
+      new THREE.MeshStandardMaterial({ color: 0x06b6d4, emissive: 0x06b6d4, emissiveIntensity: 1.4 })
+    );
     visor.position.set(0, 0.02, 0.18);
     headGroup.add(visor);
 
     // --- SHOULDERS & ARMS ---
-    const shoulderMat = getMuscleMaterial('Shoulders', 0x334155).mat;
-    const bicepMat = getMuscleMaterial('Biceps', 0x334155).mat;
-    const tricepMat = getMuscleMaterial('Triceps', 0x334155).mat;
-    const forearmMat = getMuscleMaterial('Forearms', 0x334155).mat;
+    const shoulderMat = getMuscleMaterial('Shoulders').mat;
+    const bicepMat = getMuscleMaterial('Biceps').mat;
+    const tricepMat = getMuscleMaterial('Triceps').mat;
+    const forearmMat = getMuscleMaterial('Forearms').mat;
 
-    // Left Arm Hierarchy
+    // Left Arm
     const leftShoulder = new THREE.Group();
-    leftShoulder.position.set(-0.52, 0.95, 0);
+    leftShoulder.position.set(-0.54, 0.96, 0);
     torsoGroup.add(leftShoulder);
 
-    const leftDelt = registerMesh(new THREE.Mesh(new THREE.SphereGeometry(0.18, 16, 16), shoulderMat), 'Shoulders');
+    const leftDelt = registerMesh(new THREE.Mesh(new THREE.SphereGeometry(0.19, 20, 20), shoulderMat), 'Shoulders');
     leftShoulder.add(leftDelt);
 
     const leftUpperArm = new THREE.Group();
-    leftUpperArm.position.y = -0.15;
+    leftUpperArm.position.y = -0.16;
     leftShoulder.add(leftUpperArm);
 
-    const leftBicep = registerMesh(new THREE.Mesh(new THREE.CylinderGeometry(0.13, 0.11, 0.45, 16), bicepMat), 'Biceps');
-    leftBicep.position.y = -0.22;
+    const leftBicep = registerMesh(new THREE.Mesh(new THREE.CylinderGeometry(0.14, 0.12, 0.46, 20), bicepMat), 'Biceps');
+    leftBicep.position.y = -0.23;
     leftUpperArm.add(leftBicep);
 
     const leftElbow = new THREE.Group();
-    leftElbow.position.y = -0.45;
+    leftElbow.position.y = -0.46;
     leftUpperArm.add(leftElbow);
 
-    const leftForearm = registerMesh(new THREE.Mesh(new THREE.CylinderGeometry(0.11, 0.09, 0.45, 16), forearmMat), 'Forearms');
+    const leftForearm = registerMesh(new THREE.Mesh(new THREE.CylinderGeometry(0.12, 0.09, 0.44, 20), forearmMat), 'Forearms');
     leftForearm.position.y = -0.22;
     leftElbow.add(leftForearm);
 
-    const leftHand = new THREE.Mesh(new THREE.SphereGeometry(0.1, 12, 12), new THREE.MeshStandardMaterial({ color: 0x0f172a }));
-    leftHand.position.y = -0.48;
+    const leftHand = new THREE.Mesh(new THREE.SphereGeometry(0.1, 14, 14), neckMat);
+    leftHand.position.y = -0.47;
     leftElbow.add(leftHand);
 
-    // Right Arm Hierarchy
+    // Right Arm
     const rightShoulder = new THREE.Group();
-    rightShoulder.position.set(0.52, 0.95, 0);
+    rightShoulder.position.set(0.54, 0.96, 0);
     torsoGroup.add(rightShoulder);
 
-    const rightDelt = registerMesh(new THREE.Mesh(new THREE.SphereGeometry(0.18, 16, 16), shoulderMat), 'Shoulders');
+    const rightDelt = registerMesh(new THREE.Mesh(new THREE.SphereGeometry(0.19, 20, 20), shoulderMat), 'Shoulders');
     rightShoulder.add(rightDelt);
 
     const rightUpperArm = new THREE.Group();
-    rightUpperArm.position.y = -0.15;
+    rightUpperArm.position.y = -0.16;
     rightShoulder.add(rightUpperArm);
 
-    const rightBicep = registerMesh(new THREE.Mesh(new THREE.CylinderGeometry(0.13, 0.11, 0.45, 16), bicepMat), 'Biceps');
-    rightBicep.position.y = -0.22;
+    const rightBicep = registerMesh(new THREE.Mesh(new THREE.CylinderGeometry(0.14, 0.12, 0.46, 20), bicepMat), 'Biceps');
+    rightBicep.position.y = -0.23;
     rightUpperArm.add(rightBicep);
 
     const rightElbow = new THREE.Group();
-    rightElbow.position.y = -0.45;
+    rightElbow.position.y = -0.46;
     rightUpperArm.add(rightElbow);
 
-    const rightForearm = registerMesh(new THREE.Mesh(new THREE.CylinderGeometry(0.11, 0.09, 0.45, 16), forearmMat), 'Forearms');
+    const rightForearm = registerMesh(new THREE.Mesh(new THREE.CylinderGeometry(0.12, 0.09, 0.44, 20), forearmMat), 'Forearms');
     rightForearm.position.y = -0.22;
     rightElbow.add(rightForearm);
 
-    const rightHand = new THREE.Mesh(new THREE.SphereGeometry(0.1, 12, 12), new THREE.MeshStandardMaterial({ color: 0x0f172a }));
-    rightHand.position.y = -0.48;
+    const rightHand = new THREE.Mesh(new THREE.SphereGeometry(0.1, 14, 14), neckMat);
+    rightHand.position.y = -0.47;
     rightElbow.add(rightHand);
 
     // --- LEGS & HIPS ---
-    const quadMat = getMuscleMaterial('Quadriceps', 0x334155).mat;
-    const hamMat = getMuscleMaterial('Hamstrings', 0x334155).mat;
-    const calfMat = getMuscleMaterial('Calves', 0x334155).mat;
+    const quadMat = getMuscleMaterial('Quadriceps').mat;
+    const hamMat = getMuscleMaterial('Hamstrings').mat;
+    const calfMat = getMuscleMaterial('Calves').mat;
+    const sneakerMat = new THREE.MeshStandardMaterial({ color: sneakerColor, roughness: 0.6 });
 
     // Left Leg
     const leftHip = new THREE.Group();
-    leftHip.position.set(-0.22, -0.15, 0);
+    leftHip.position.set(-0.23, -0.16, 0);
     pelvisGroup.add(leftHip);
 
-    const leftThigh = registerMesh(new THREE.Mesh(new THREE.CylinderGeometry(0.16, 0.13, 0.65, 16), quadMat), 'Quadriceps');
-    leftThigh.position.y = -0.32;
+    const leftThigh = registerMesh(new THREE.Mesh(new THREE.CylinderGeometry(0.18, 0.14, 0.68, 20), quadMat), 'Quadriceps');
+    leftThigh.position.y = -0.34;
     leftHip.add(leftThigh);
 
     const leftKnee = new THREE.Group();
-    leftKnee.position.y = -0.65;
+    leftKnee.position.y = -0.68;
     leftHip.add(leftKnee);
 
-    const leftCalf = registerMesh(new THREE.Mesh(new THREE.CylinderGeometry(0.13, 0.09, 0.65, 16), calfMat), 'Calves');
-    leftCalf.position.y = -0.32;
+    const leftCalf = registerMesh(new THREE.Mesh(new THREE.CylinderGeometry(0.14, 0.10, 0.66, 20), calfMat), 'Calves');
+    leftCalf.position.y = -0.33;
     leftKnee.add(leftCalf);
 
-    const leftFoot = new THREE.Mesh(new THREE.BoxGeometry(0.14, 0.1, 0.32), new THREE.MeshStandardMaterial({ color: 0x0f172a }));
-    leftFoot.position.set(0, -0.68, 0.08);
+    const leftFoot = new THREE.Mesh(new THREE.BoxGeometry(0.15, 0.12, 0.34), sneakerMat);
+    leftFoot.position.set(0, -0.69, 0.09);
+    leftFoot.castShadow = true;
     leftKnee.add(leftFoot);
 
     // Right Leg
     const rightHip = new THREE.Group();
-    rightHip.position.set(0.22, -0.15, 0);
+    rightHip.position.set(0.23, -0.16, 0);
     pelvisGroup.add(rightHip);
 
-    const rightThigh = registerMesh(new THREE.Mesh(new THREE.CylinderGeometry(0.16, 0.13, 0.65, 16), quadMat), 'Quadriceps');
-    rightThigh.position.y = -0.32;
+    const rightThigh = registerMesh(new THREE.Mesh(new THREE.CylinderGeometry(0.18, 0.14, 0.68, 20), quadMat), 'Quadriceps');
+    rightThigh.position.y = -0.34;
     rightHip.add(rightThigh);
 
     const rightKnee = new THREE.Group();
-    rightKnee.position.y = -0.65;
+    rightKnee.position.y = -0.68;
     rightHip.add(rightKnee);
 
-    const rightCalf = registerMesh(new THREE.Mesh(new THREE.CylinderGeometry(0.13, 0.09, 0.65, 16), calfMat), 'Calves');
-    rightCalf.position.y = -0.32;
+    const rightCalf = registerMesh(new THREE.Mesh(new THREE.CylinderGeometry(0.14, 0.10, 0.66, 20), calfMat), 'Calves');
+    rightCalf.position.y = -0.33;
     rightKnee.add(rightCalf);
 
-    const rightFoot = new THREE.Mesh(new THREE.BoxGeometry(0.14, 0.1, 0.32), new THREE.MeshStandardMaterial({ color: 0x0f172a }));
-    rightFoot.position.set(0, -0.68, 0.08);
+    const rightFoot = new THREE.Mesh(new THREE.BoxGeometry(0.15, 0.12, 0.34), sneakerMat);
+    rightFoot.position.set(0, -0.69, 0.09);
+    rightFoot.castShadow = true;
     rightKnee.add(rightFoot);
 
     return {
@@ -592,45 +632,50 @@ export default function Exercise3DViewer({
   }
 
   // -------------------------------------------------------------
-  // PROCEDURAL 3D EQUIPMENT BUILDER
+  // REALISTIC GYM EQUIPMENT BUILDER
   // -------------------------------------------------------------
   function buildEquipment(type: ExerciseMotionType, eqType: string) {
     const group = new THREE.Group();
-    const chromeMat = new THREE.MeshStandardMaterial({ color: 0xd1d5db, metalness: 0.9, roughness: 0.15 });
-    const rubberMat = new THREE.MeshStandardMaterial({ color: 0x111827, roughness: 0.7 });
-    const redPlateMat = new THREE.MeshStandardMaterial({ color: 0xef4444, metalness: 0.4, roughness: 0.3 });
-    const benchPadMat = new THREE.MeshStandardMaterial({ color: 0x0f172a, roughness: 0.8 });
+    const chromeMat = new THREE.MeshStandardMaterial({ color: 0xe2e8f0, metalness: 0.95, roughness: 0.1 });
+    const blackSteelMat = new THREE.MeshStandardMaterial({ color: 0x18181b, metalness: 0.6, roughness: 0.4 });
+    const benchPadMat = new THREE.MeshStandardMaterial({ color: 0x09090b, roughness: 0.7 });
+    const bluePlateMat = new THREE.MeshStandardMaterial({ color: 0x2563eb, metalness: 0.3, roughness: 0.3 });
+    const redPlateMat = new THREE.MeshStandardMaterial({ color: 0xdc2626, metalness: 0.3, roughness: 0.3 });
 
     if (type === 'bench' || type === 'incline_bench' || type === 'decline_bench' || type === 'hip_thrust') {
-      const bench = new THREE.Mesh(new THREE.BoxGeometry(0.6, 0.1, 1.8), benchPadMat);
+      const bench = new THREE.Mesh(new THREE.BoxGeometry(0.62, 0.12, 1.85), benchPadMat);
       bench.position.set(0, -0.35, 0);
-      if (type === 'incline_bench') bench.rotation.x = -0.4;
-      if (type === 'decline_bench') bench.rotation.x = 0.3;
+      bench.castShadow = true;
+      if (type === 'incline_bench') bench.rotation.x = -0.42;
+      if (type === 'decline_bench') bench.rotation.x = 0.32;
       group.add(bench);
 
-      const benchLegs = new THREE.Mesh(new THREE.CylinderGeometry(0.04, 0.04, 1.4), chromeMat);
-      benchLegs.position.set(0, -1.05, 0.6);
-      group.add(benchLegs);
-
-      const benchLegs2 = new THREE.Mesh(new THREE.CylinderGeometry(0.04, 0.04, 1.4), chromeMat);
-      benchLegs2.position.set(0, -1.05, -0.6);
-      group.add(benchLegs2);
+      const frameF = new THREE.Mesh(new THREE.CylinderGeometry(0.045, 0.045, 1.4), blackSteelMat);
+      frameF.position.set(0, -1.05, 0.6);
+      frameF.castShadow = true;
+      const frameB = new THREE.Mesh(new THREE.CylinderGeometry(0.045, 0.045, 1.4), blackSteelMat);
+      frameB.position.set(0, -1.05, -0.6);
+      frameB.castShadow = true;
+      group.add(frameF, frameB);
 
       // Barbell
       const barbell = new THREE.Group();
       barbell.name = 'dynamicBarbell';
       const bar = new THREE.Mesh(new THREE.CylinderGeometry(0.02, 0.02, 2.2), chromeMat);
       bar.rotation.z = Math.PI / 2;
+      bar.castShadow = true;
       barbell.add(bar);
 
-      const plateL = new THREE.Mesh(new THREE.CylinderGeometry(0.35, 0.35, 0.08, 32), redPlateMat);
+      const plateL = new THREE.Mesh(new THREE.CylinderGeometry(0.38, 0.38, 0.08, 32), redPlateMat);
       plateL.rotation.z = Math.PI / 2;
       plateL.position.x = -0.95;
+      plateL.castShadow = true;
       barbell.add(plateL);
 
-      const plateR = new THREE.Mesh(new THREE.CylinderGeometry(0.35, 0.35, 0.08, 32), redPlateMat);
+      const plateR = new THREE.Mesh(new THREE.CylinderGeometry(0.38, 0.38, 0.08, 32), redPlateMat);
       plateR.rotation.z = Math.PI / 2;
       plateR.position.x = 0.95;
+      plateR.castShadow = true;
       barbell.add(plateR);
 
       barbell.position.set(0, 0.65, 0);
@@ -640,29 +685,33 @@ export default function Exercise3DViewer({
       barbell.name = 'dynamicBarbell';
       const bar = new THREE.Mesh(new THREE.CylinderGeometry(0.02, 0.02, 2.2), chromeMat);
       bar.rotation.z = Math.PI / 2;
+      bar.castShadow = true;
       barbell.add(bar);
 
-      const plateL = new THREE.Mesh(new THREE.CylinderGeometry(0.38, 0.38, 0.08, 32), redPlateMat);
+      const plateL = new THREE.Mesh(new THREE.CylinderGeometry(0.38, 0.38, 0.08, 32), bluePlateMat);
       plateL.rotation.z = Math.PI / 2;
       plateL.position.x = -0.95;
+      plateL.castShadow = true;
       barbell.add(plateL);
 
-      const plateR = new THREE.Mesh(new THREE.CylinderGeometry(0.38, 0.38, 0.08, 32), redPlateMat);
+      const plateR = new THREE.Mesh(new THREE.CylinderGeometry(0.38, 0.38, 0.08, 32), bluePlateMat);
       plateR.rotation.z = Math.PI / 2;
       plateR.position.x = 0.95;
+      plateR.castShadow = true;
       barbell.add(plateR);
 
       group.add(barbell);
     } else if (type === 'pullup' || type === 'lat_pulldown') {
-      const pullBar = new THREE.Mesh(new THREE.CylinderGeometry(0.03, 0.03, 2.4), chromeMat);
+      const pullBar = new THREE.Mesh(new THREE.CylinderGeometry(0.032, 0.032, 2.4), chromeMat);
       pullBar.rotation.z = Math.PI / 2;
       pullBar.position.set(0, 2.1, 0);
+      pullBar.castShadow = true;
       group.add(pullBar);
     } else if (type === 'dips') {
-      const barL = new THREE.Mesh(new THREE.CylinderGeometry(0.03, 0.03, 1.2), chromeMat);
+      const barL = new THREE.Mesh(new THREE.CylinderGeometry(0.035, 0.035, 1.3), chromeMat);
       barL.rotation.x = Math.PI / 2;
       barL.position.set(-0.6, 0.2, 0);
-      const barR = new THREE.Mesh(new THREE.CylinderGeometry(0.03, 0.03, 1.2), chromeMat);
+      const barR = new THREE.Mesh(new THREE.CylinderGeometry(0.035, 0.035, 1.3), chromeMat);
       barR.rotation.x = Math.PI / 2;
       barR.position.set(0.6, 0.2, 0);
       group.add(barL, barR);
@@ -670,9 +719,9 @@ export default function Exercise3DViewer({
       const dbL = new THREE.Group();
       dbL.name = 'dumbbellLeft';
       const handleL = new THREE.Mesh(new THREE.CylinderGeometry(0.02, 0.02, 0.3), chromeMat);
-      const headL1 = new THREE.Mesh(new THREE.CylinderGeometry(0.12, 0.12, 0.08, 6), rubberMat);
+      const headL1 = new THREE.Mesh(new THREE.CylinderGeometry(0.12, 0.12, 0.08, 6), blackSteelMat);
       headL1.position.y = 0.15;
-      const headL2 = new THREE.Mesh(new THREE.CylinderGeometry(0.12, 0.12, 0.08, 6), rubberMat);
+      const headL2 = new THREE.Mesh(new THREE.CylinderGeometry(0.12, 0.12, 0.08, 6), blackSteelMat);
       headL2.position.y = -0.15;
       dbL.add(handleL, headL1, headL2);
       group.add(dbL);
@@ -680,9 +729,9 @@ export default function Exercise3DViewer({
       const dbR = new THREE.Group();
       dbR.name = 'dumbbellRight';
       const handleR = new THREE.Mesh(new THREE.CylinderGeometry(0.02, 0.02, 0.3), chromeMat);
-      const headR1 = new THREE.Mesh(new THREE.CylinderGeometry(0.12, 0.12, 0.08, 6), rubberMat);
+      const headR1 = new THREE.Mesh(new THREE.CylinderGeometry(0.12, 0.12, 0.08, 6), blackSteelMat);
       headR1.position.y = 0.15;
-      const headR2 = new THREE.Mesh(new THREE.CylinderGeometry(0.12, 0.12, 0.08, 6), rubberMat);
+      const headR2 = new THREE.Mesh(new THREE.CylinderGeometry(0.12, 0.12, 0.08, 6), blackSteelMat);
       headR2.position.y = -0.15;
       dbR.add(handleR, headR1, headR2);
       group.add(dbR);
@@ -760,7 +809,7 @@ export default function Exercise3DViewer({
     } else if (type === 'dips') {
       const dipDepth = (1 - cycle) * 0.4;
       rig.root.position.y = 0.3 - dipDepth;
-      rig.torsoGroup.rotation.x = 0.3; // forward chest lean
+      rig.torsoGroup.rotation.x = 0.3;
 
       const elbowDip = (1 - cycle) * 1.5;
       rig.leftShoulder.rotation.set(-0.2, 0, -0.3);
@@ -997,7 +1046,7 @@ export default function Exercise3DViewer({
       };
     } else if (type === 'russian_twist') {
       rig.root.position.set(0, -1.2, 0);
-      rig.torsoGroup.rotation.x = 0.6; // 45 lean back
+      rig.torsoGroup.rotation.x = 0.6;
       const twist = Math.sin(time * 3) * 0.7;
       rig.torsoGroup.rotation.y = twist;
 
