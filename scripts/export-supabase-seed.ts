@@ -1,6 +1,7 @@
 import { prisma } from '../src/lib/prisma';
 import * as fs from 'fs';
 import * as path from 'path';
+import { getExerciseVideoUrl } from '../src/lib/exercise-videos';
 
 async function generateSupabaseSql() {
   console.log('Fetching exercises and templates from local database...');
@@ -246,9 +247,8 @@ INSERT INTO "Exercise" (
   "executionSteps" = EXCLUDED."executionSteps",
   "commonMistakes" = EXCLUDED."commonMistakes";
 `;
-    for (const m of ex.media) {
-      sql += `INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES (${escapeSql(m.id)}, ${escapeSql(m.exerciseId)}, ${escapeSql(m.type)}, ${escapeSql(m.url)}, ${escapeSql(m.provider)}, ${m.isPrimary}) ON CONFLICT ("id") DO NOTHING;\n`;
-    }
+    const videoUrl = getExerciseVideoUrl(ex.slug, ex.primaryMuscle, ex.movementPattern);
+    sql += `INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('media-${ex.slug}', ${escapeSql(ex.id)}, 'VIDEO', '${videoUrl}', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;\n`;
   }
 
   // Workouts and workout exercises

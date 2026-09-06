@@ -211,7 +211,7 @@ INSERT INTO "Exercise" (
   "commonMistakes", "safetyTips", "beginnerAlternative", "intermediateAlternative", "advancedAlternative",
   "tags", "caloriesBurnPerHour", "isCustom"
 ) VALUES (
-  '34c6ba28-52e8-49dc-bdc6-b7f2f80e4bd9', 'Barbell Bench Press', 'barbell-bench-press', 'The definitive upper-body horizontal pushing exercise for developing the pectoralis major, anterior deltoids, and triceps.',
+  '0a937555-24fa-41c5-947c-f747b72bf9cc', 'Barbell Bench Press', 'barbell-bench-press', 'The definitive upper-body horizontal pushing exercise for developing the pectoralis major, anterior deltoids, and triceps.',
   'Chest', 'Triceps, Front Deltoids, Serratus Anterior', 'Chest',
   'Barbell', 'Intermediate', 'Horizontal Push',
   'Lie on a flat bench, grip the barbell slightly wider than shoulder-width, lower the bar with control to your mid-chest, and press forcefully back up to full extension.', '["Lie flat on the bench with eyes positioned directly beneath the racked barbell.","Grip the bar slightly wider than shoulder-width with a firm, closed grip.","Retract and depress your scapulae, planting your feet firmly on the floor.","Unrack the bar and stabilize it directly over your chest with locked elbows."]', '["Inhale, brace your core, and lower the barbell in a slight arc toward your lower-mid sternum.","Maintain tucked elbows at roughly a 45-to-70-degree angle relative to your torso.","Lightly touch the chest without bouncing.","Drive your feet into the floor and press the bar upwards in a slight J-curve back over your shoulders while exhaling."]',
@@ -224,7 +224,7 @@ INSERT INTO "Exercise" (
   "setupSteps" = EXCLUDED."setupSteps",
   "executionSteps" = EXCLUDED."executionSteps",
   "commonMistakes" = EXCLUDED."commonMistakes";
-INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('c06cc4b9-f868-4c0d-863c-ba29d5a84306', '34c6ba28-52e8-49dc-bdc6-b7f2f80e4bd9', 'VIDEO', 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
+INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('media-barbell-bench-press', '0a937555-24fa-41c5-947c-f747b72bf9cc', 'VIDEO', '/videos/exercises/bench-press.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
 
 INSERT INTO "Exercise" (
   "id", "name", "slug", "description", "primaryMuscle", "secondaryMuscles", "bodyPart",
@@ -233,7 +233,7 @@ INSERT INTO "Exercise" (
   "commonMistakes", "safetyTips", "beginnerAlternative", "intermediateAlternative", "advancedAlternative",
   "tags", "caloriesBurnPerHour", "isCustom"
 ) VALUES (
-  'a06f11b3-8088-4896-b1bb-0203fc902b29', 'Incline Dumbbell Press', 'incline-dumbbell-press', 'An exceptional compound exercise emphasizing the clavicular (upper) head of the pectoralis major and anterior deltoids with free range of motion.',
+  '588192fc-72aa-444f-88e2-72ee4c8b5fb8', 'Incline Dumbbell Press', 'incline-dumbbell-press', 'An exceptional compound exercise emphasizing the clavicular (upper) head of the pectoralis major and anterior deltoids with free range of motion.',
   'Chest', 'Front Deltoids, Triceps', 'Chest',
   'Dumbbell', 'Intermediate', 'Horizontal Push',
   'Set an adjustable bench to a 30-degree incline, press dumbbells up in a converging arc, and lower under control to chest level.', '["Adjust bench to a 30-45 degree incline.","Sit down with dumbbells resting upright on your thighs.","Kick the dumbbells up one at a time to shoulder level as you lean back.","Retract your shoulder blades and place feet flat on the ground."]', '["Lower dumbbells slowly until you feel a deep stretch in your upper chest.","Keep wrists stacked directly above elbows.","Press dumbbells upward in a slight converging arc without banging them together at the top."]',
@@ -246,7 +246,7 @@ INSERT INTO "Exercise" (
   "setupSteps" = EXCLUDED."setupSteps",
   "executionSteps" = EXCLUDED."executionSteps",
   "commonMistakes" = EXCLUDED."commonMistakes";
-INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('a170499f-ca68-49be-b81e-7101d4e2c148', 'a06f11b3-8088-4896-b1bb-0203fc902b29', 'VIDEO', 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
+INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('media-incline-dumbbell-press', '588192fc-72aa-444f-88e2-72ee4c8b5fb8', 'VIDEO', '/videos/exercises/incline-bench-press.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
 
 INSERT INTO "Exercise" (
   "id", "name", "slug", "description", "primaryMuscle", "secondaryMuscles", "bodyPart",
@@ -255,7 +255,7 @@ INSERT INTO "Exercise" (
   "commonMistakes", "safetyTips", "beginnerAlternative", "intermediateAlternative", "advancedAlternative",
   "tags", "caloriesBurnPerHour", "isCustom"
 ) VALUES (
-  'eaee4513-eaa6-4be1-800a-f9549948c3d1', 'Dumbbell Bench Press', 'dumbbell-bench-press', 'Flat bench pressing with dumbbells allowing greater range of motion, independent unilateral limb control, and deep chest stretch.',
+  '5f68823a-1183-4c87-b65f-3c12e6f03ccd', 'Dumbbell Bench Press', 'dumbbell-bench-press', 'Flat bench pressing with dumbbells allowing greater range of motion, independent unilateral limb control, and deep chest stretch.',
   'Chest', 'Triceps, Front Deltoids', 'Chest',
   'Dumbbell', 'Beginner', 'Horizontal Push',
   'Lie on a flat bench holding dumbbells at chest level, press upwards until arms are extended, and lower slowly.', '["Sit on bench with dumbbells on knees, kick back and position weights at mid-chest level."]', '["Press upwards smoothly, lower until elbows reach parallel or slightly below bench level."]',
@@ -268,7 +268,7 @@ INSERT INTO "Exercise" (
   "setupSteps" = EXCLUDED."setupSteps",
   "executionSteps" = EXCLUDED."executionSteps",
   "commonMistakes" = EXCLUDED."commonMistakes";
-INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('e7ffff52-9420-4a7c-9c89-0f27503ad205', 'eaee4513-eaa6-4be1-800a-f9549948c3d1', 'VIDEO', 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
+INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('media-dumbbell-bench-press', '5f68823a-1183-4c87-b65f-3c12e6f03ccd', 'VIDEO', '/videos/exercises/bench-press.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
 
 INSERT INTO "Exercise" (
   "id", "name", "slug", "description", "primaryMuscle", "secondaryMuscles", "bodyPart",
@@ -277,7 +277,7 @@ INSERT INTO "Exercise" (
   "commonMistakes", "safetyTips", "beginnerAlternative", "intermediateAlternative", "advancedAlternative",
   "tags", "caloriesBurnPerHour", "isCustom"
 ) VALUES (
-  '9140cbf1-5160-4f60-a047-d13d2c187245', 'Cable Chest Fly', 'cable-chest-fly', 'Constant tension isolation movement designed to maximize hypertrophy and peak contraction of the sternal chest fibers.',
+  '86127372-0739-4bb3-8db2-596ec3f5e79b', 'Cable Chest Fly', 'cable-chest-fly', 'Constant tension isolation movement designed to maximize hypertrophy and peak contraction of the sternal chest fibers.',
   'Chest', 'Front Deltoids, Biceps (stabilizer)', 'Chest',
   'Cable', 'Beginner', 'Isolation',
   'Set cable pulleys to chest height, grasp handles, take a staggered step forward, and bring hands together in a wide hugging arc.', '["Position pulleys at mid/chest height, grab both handles and take one step forward into a split stance."]', '["Maintain a slight bend in your elbows.","Bring hands together in front of your chest in a hugging motion.","Squeeze the pectorals hard for 1 second, then return with control."]',
@@ -290,7 +290,7 @@ INSERT INTO "Exercise" (
   "setupSteps" = EXCLUDED."setupSteps",
   "executionSteps" = EXCLUDED."executionSteps",
   "commonMistakes" = EXCLUDED."commonMistakes";
-INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('946b3c40-5892-47ac-8086-d34cbbfbc692', '9140cbf1-5160-4f60-a047-d13d2c187245', 'VIDEO', 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
+INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('media-cable-chest-fly', '86127372-0739-4bb3-8db2-596ec3f5e79b', 'VIDEO', '/videos/exercises/chest-fly-machine.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
 
 INSERT INTO "Exercise" (
   "id", "name", "slug", "description", "primaryMuscle", "secondaryMuscles", "bodyPart",
@@ -299,7 +299,7 @@ INSERT INTO "Exercise" (
   "commonMistakes", "safetyTips", "beginnerAlternative", "intermediateAlternative", "advancedAlternative",
   "tags", "caloriesBurnPerHour", "isCustom"
 ) VALUES (
-  '2bbbd169-511c-48d9-bda2-dd44800b5735', 'Push-Ups', 'push-ups', 'The fundamental calisthenic horizontal push exercise targeting chest, triceps, anterior deltoids, and core stability.',
+  '8330b0b4-4080-467f-8ab6-2ff6abe2b35f', 'Push-Ups', 'push-ups', 'The fundamental calisthenic horizontal push exercise targeting chest, triceps, anterior deltoids, and core stability.',
   'Chest', 'Triceps, Front Deltoids, Abs', 'Chest',
   'Bodyweight', 'Beginner', 'Horizontal Push',
   'Place hands slightly wider than shoulder-width, maintain a rigid plank from head to heels, lower chest to floor, and push back up.', '["Start in high plank position with hands beneath shoulders, fingers spread, core braced."]', '["Lower body until chest is an inch off the floor, keep elbows at 45 degrees, press up firmly."]',
@@ -312,7 +312,7 @@ INSERT INTO "Exercise" (
   "setupSteps" = EXCLUDED."setupSteps",
   "executionSteps" = EXCLUDED."executionSteps",
   "commonMistakes" = EXCLUDED."commonMistakes";
-INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('2456e3ee-2d52-46d7-8d5e-addc5b6ae636', '2bbbd169-511c-48d9-bda2-dd44800b5735', 'VIDEO', 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
+INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('media-push-ups', '8330b0b4-4080-467f-8ab6-2ff6abe2b35f', 'VIDEO', '/videos/exercises/push-up.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
 
 INSERT INTO "Exercise" (
   "id", "name", "slug", "description", "primaryMuscle", "secondaryMuscles", "bodyPart",
@@ -321,7 +321,7 @@ INSERT INTO "Exercise" (
   "commonMistakes", "safetyTips", "beginnerAlternative", "intermediateAlternative", "advancedAlternative",
   "tags", "caloriesBurnPerHour", "isCustom"
 ) VALUES (
-  '54375292-f9e7-4c64-8f6d-7a3e790aa836', 'Chest Dips', 'chest-dips', 'Powerful bodyweight compound movement emphasizing the lower pectoral fibers and triceps with forward torso lean.',
+  'f2283e91-9e7e-41e2-a310-8fc945b011b4', 'Chest Dips', 'chest-dips', 'Powerful bodyweight compound movement emphasizing the lower pectoral fibers and triceps with forward torso lean.',
   'Chest', 'Triceps, Front Deltoids', 'Chest',
   'Bodyweight', 'Intermediate', 'Vertical Push',
   'Mount parallel bars, lean torso forward at roughly 30 degrees, flare elbows slightly outward, lower until 90 degree elbow bend, and push up.', '["Mount parallel bars, lock arms, lean chest forward and bend knees slightly."]', '["Lower down until upper arms are parallel to floor, drive through palms to return to top."]',
@@ -334,7 +334,7 @@ INSERT INTO "Exercise" (
   "setupSteps" = EXCLUDED."setupSteps",
   "executionSteps" = EXCLUDED."executionSteps",
   "commonMistakes" = EXCLUDED."commonMistakes";
-INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('96624f6e-33ca-4113-98d7-4cd140fb3c89', '54375292-f9e7-4c64-8f6d-7a3e790aa836', 'VIDEO', 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
+INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('media-chest-dips', 'f2283e91-9e7e-41e2-a310-8fc945b011b4', 'VIDEO', '/videos/exercises/tricep-dips.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
 
 INSERT INTO "Exercise" (
   "id", "name", "slug", "description", "primaryMuscle", "secondaryMuscles", "bodyPart",
@@ -343,7 +343,7 @@ INSERT INTO "Exercise" (
   "commonMistakes", "safetyTips", "beginnerAlternative", "intermediateAlternative", "advancedAlternative",
   "tags", "caloriesBurnPerHour", "isCustom"
 ) VALUES (
-  '3bc761a7-8883-40a3-9540-28c7b513323e', 'Pec Deck Machine', 'pec-deck-machine', 'Machine fly delivering strict chest isolation, eliminating balance demands, and providing continuous resistance.',
+  '75ef3c57-4af2-4aa1-9e89-3c20b605a4cc', 'Pec Deck Machine', 'pec-deck-machine', 'Machine fly delivering strict chest isolation, eliminating balance demands, and providing continuous resistance.',
   'Chest', 'Front Deltoids', 'Chest',
   'Machine', 'Beginner', 'Isolation',
   'Sit against back pad, align handles with mid-chest, pull levers together until pads touch, squeeze, and return under control.', '["Adjust seat height so handles align directly with middle chest level."]', '["Bring handles together smoothly, hold contraction for 1 second, control the eccentric."]',
@@ -356,7 +356,7 @@ INSERT INTO "Exercise" (
   "setupSteps" = EXCLUDED."setupSteps",
   "executionSteps" = EXCLUDED."executionSteps",
   "commonMistakes" = EXCLUDED."commonMistakes";
-INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('26382e9e-3540-4e83-91de-4a6361f2b090', '3bc761a7-8883-40a3-9540-28c7b513323e', 'VIDEO', 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
+INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('media-pec-deck-machine', '75ef3c57-4af2-4aa1-9e89-3c20b605a4cc', 'VIDEO', '/videos/exercises/chest-fly-machine.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
 
 INSERT INTO "Exercise" (
   "id", "name", "slug", "description", "primaryMuscle", "secondaryMuscles", "bodyPart",
@@ -365,7 +365,7 @@ INSERT INTO "Exercise" (
   "commonMistakes", "safetyTips", "beginnerAlternative", "intermediateAlternative", "advancedAlternative",
   "tags", "caloriesBurnPerHour", "isCustom"
 ) VALUES (
-  '3882993e-7be9-4a3b-bef3-5700cad30d63', 'Decline Barbell Bench Press', 'decline-barbell-bench-press', 'Decline variation targeting lower pectoral muscle fibers while reducing stress on the shoulder joints.',
+  'd09dc90e-17c3-482f-a0bc-d138b85edf26', 'Decline Barbell Bench Press', 'decline-barbell-bench-press', 'Decline variation targeting lower pectoral muscle fibers while reducing stress on the shoulder joints.',
   'Chest', 'Triceps, Front Deltoids', 'Chest',
   'Barbell', 'Intermediate', 'Horizontal Push',
   'Secure legs in decline bench, unrack bar over lower chest, lower to sternum and press vertically.', '["Hook shins securely under pads, lie back and unrack bar."]', '["Lower bar with control to lower chest line, press up to arm lockout."]',
@@ -378,7 +378,7 @@ INSERT INTO "Exercise" (
   "setupSteps" = EXCLUDED."setupSteps",
   "executionSteps" = EXCLUDED."executionSteps",
   "commonMistakes" = EXCLUDED."commonMistakes";
-INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('21a1ae61-5f5c-4412-9918-5a178509e2c1', '3882993e-7be9-4a3b-bef3-5700cad30d63', 'VIDEO', 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
+INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('media-decline-barbell-bench-press', 'd09dc90e-17c3-482f-a0bc-d138b85edf26', 'VIDEO', '/videos/exercises/decline-bench-press.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
 
 INSERT INTO "Exercise" (
   "id", "name", "slug", "description", "primaryMuscle", "secondaryMuscles", "bodyPart",
@@ -387,7 +387,7 @@ INSERT INTO "Exercise" (
   "commonMistakes", "safetyTips", "beginnerAlternative", "intermediateAlternative", "advancedAlternative",
   "tags", "caloriesBurnPerHour", "isCustom"
 ) VALUES (
-  '9a4dda9e-633f-468e-bfa4-a4bbe28c4d5a', 'Machine Chest Press', 'machine-chest-press', 'Guided horizontal press machine offering maximum stability for safely loading chest to high fatigue.',
+  '40fe3187-5ef3-446a-b4f8-a7ea27023624', 'Machine Chest Press', 'machine-chest-press', 'Guided horizontal press machine offering maximum stability for safely loading chest to high fatigue.',
   'Chest', 'Triceps, Front Deltoids', 'Chest',
   'Machine', 'Beginner', 'Horizontal Push',
   'Adjust seat height so handles line up with mid-chest, press handles forward to lockout, and return slowly.', '["Sit back against pad, feet planted, adjust seat height to mid-chest."]', '["Press handles outward until arms are straight, return with a 3-second negative."]',
@@ -400,7 +400,7 @@ INSERT INTO "Exercise" (
   "setupSteps" = EXCLUDED."setupSteps",
   "executionSteps" = EXCLUDED."executionSteps",
   "commonMistakes" = EXCLUDED."commonMistakes";
-INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('b82a6991-eff3-41bc-aeac-cc498298854d', '9a4dda9e-633f-468e-bfa4-a4bbe28c4d5a', 'VIDEO', 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
+INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('media-machine-chest-press', '40fe3187-5ef3-446a-b4f8-a7ea27023624', 'VIDEO', '/videos/exercises/bench-press.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
 
 INSERT INTO "Exercise" (
   "id", "name", "slug", "description", "primaryMuscle", "secondaryMuscles", "bodyPart",
@@ -409,7 +409,7 @@ INSERT INTO "Exercise" (
   "commonMistakes", "safetyTips", "beginnerAlternative", "intermediateAlternative", "advancedAlternative",
   "tags", "caloriesBurnPerHour", "isCustom"
 ) VALUES (
-  '07305642-13c4-4e75-b828-f97f2ce84307', 'Incline Barbell Bench Press', 'incline-barbell-bench-press', 'Standard barbell exercise for developing upper chest mass and pressing strength.',
+  '5fc75463-ed09-4d62-ada5-64766fe8c579', 'Incline Barbell Bench Press', 'incline-barbell-bench-press', 'Standard barbell exercise for developing upper chest mass and pressing strength.',
   'Chest', 'Front Deltoids, Triceps', 'Chest',
   'Barbell', 'Intermediate', 'Horizontal Push',
   'Lie on an incline bench, grip barbell shoulder-width, lower bar to upper chest under chin, and press upward.', '["Lie on 30-45 degree incline bench, grip bar with medium grip."]', '["Lower bar controlled to clavicle region, press up to full arm extension."]',
@@ -422,7 +422,7 @@ INSERT INTO "Exercise" (
   "setupSteps" = EXCLUDED."setupSteps",
   "executionSteps" = EXCLUDED."executionSteps",
   "commonMistakes" = EXCLUDED."commonMistakes";
-INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('8dee956f-c861-4e6b-9ec0-f23896f6330b', '07305642-13c4-4e75-b828-f97f2ce84307', 'VIDEO', 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
+INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('media-incline-barbell-bench-press', '5fc75463-ed09-4d62-ada5-64766fe8c579', 'VIDEO', '/videos/exercises/incline-bench-press.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
 
 INSERT INTO "Exercise" (
   "id", "name", "slug", "description", "primaryMuscle", "secondaryMuscles", "bodyPart",
@@ -431,7 +431,7 @@ INSERT INTO "Exercise" (
   "commonMistakes", "safetyTips", "beginnerAlternative", "intermediateAlternative", "advancedAlternative",
   "tags", "caloriesBurnPerHour", "isCustom"
 ) VALUES (
-  '3e7a14d1-9486-408b-b5d5-43f34947e0d5', 'Smith Machine Bench Press', 'smith-machine-bench-press', 'Fixed bar path pressing that allows intense muscular focus and safe failure without a spotter.',
+  'd4a2c92a-84fd-4295-bb4e-1e8380de23f0', 'Smith Machine Bench Press', 'smith-machine-bench-press', 'Fixed bar path pressing that allows intense muscular focus and safe failure without a spotter.',
   'Chest', 'Triceps, Front Deltoids', 'Chest',
   'Smith Machine', 'Beginner', 'Horizontal Push',
   'Align flat bench under the Smith bar, unhook the catches, lower bar to chest, and drive up.', '["Center bench under Smith machine, set safety stops at chest level."]', '["Unhook bar by rotating wrists, lower to mid-chest, press upward smoothly."]',
@@ -444,7 +444,7 @@ INSERT INTO "Exercise" (
   "setupSteps" = EXCLUDED."setupSteps",
   "executionSteps" = EXCLUDED."executionSteps",
   "commonMistakes" = EXCLUDED."commonMistakes";
-INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('2f8d5503-8e08-41cd-a26c-aef662214430', '3e7a14d1-9486-408b-b5d5-43f34947e0d5', 'VIDEO', 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
+INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('media-smith-machine-bench-press', 'd4a2c92a-84fd-4295-bb4e-1e8380de23f0', 'VIDEO', '/videos/exercises/bench-press.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
 
 INSERT INTO "Exercise" (
   "id", "name", "slug", "description", "primaryMuscle", "secondaryMuscles", "bodyPart",
@@ -453,7 +453,7 @@ INSERT INTO "Exercise" (
   "commonMistakes", "safetyTips", "beginnerAlternative", "intermediateAlternative", "advancedAlternative",
   "tags", "caloriesBurnPerHour", "isCustom"
 ) VALUES (
-  'ea0e4ba5-d524-436e-9fbc-5fde341a99c8', 'Dumbbell Pullover', 'dumbbell-pullover', 'Unique movement expanding rib cage mechanics and working both the chest and lats simultaneously.',
+  '0d175328-c749-4539-b2bf-2b37ab189ee8', 'Dumbbell Pullover', 'dumbbell-pullover', 'Unique movement expanding rib cage mechanics and working both the chest and lats simultaneously.',
   'Chest', 'Back, Triceps, Serratus Anterior', 'Chest',
   'Dumbbell', 'Intermediate', 'Isolation',
   'Lie across a flat bench, hold a dumbbell over chest with both hands in diamond grip, lower weight back over head, and pull back.', '["Lie perpendicular across bench supporting upper back, hips slightly dropped."]', '["Lower dumbbell backward in an arc until deep stretch in chest and lats, pull back over face."]',
@@ -466,7 +466,7 @@ INSERT INTO "Exercise" (
   "setupSteps" = EXCLUDED."setupSteps",
   "executionSteps" = EXCLUDED."executionSteps",
   "commonMistakes" = EXCLUDED."commonMistakes";
-INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('84b4df33-1e7d-4558-9812-9d94bc4b0972', 'ea0e4ba5-d524-436e-9fbc-5fde341a99c8', 'VIDEO', 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
+INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('media-dumbbell-pullover', '0d175328-c749-4539-b2bf-2b37ab189ee8', 'VIDEO', '/videos/exercises/bench-press.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
 
 INSERT INTO "Exercise" (
   "id", "name", "slug", "description", "primaryMuscle", "secondaryMuscles", "bodyPart",
@@ -475,7 +475,7 @@ INSERT INTO "Exercise" (
   "commonMistakes", "safetyTips", "beginnerAlternative", "intermediateAlternative", "advancedAlternative",
   "tags", "caloriesBurnPerHour", "isCustom"
 ) VALUES (
-  'd454eb4f-c05d-403b-bd95-a8904c7fe41d', 'Conventional Deadlift', 'conventional-deadlift', 'The king of posterior chain compound movements, building unparalleled back, glute, hamstring, and grip power.',
+  'e35321b2-c8ab-422c-a8fa-3e11a85d5bf4', 'Conventional Deadlift', 'conventional-deadlift', 'The king of posterior chain compound movements, building unparalleled back, glute, hamstring, and grip power.',
   'Back', 'Glutes, Hamstrings, Traps, Forearms, Core', 'Back',
   'Barbell', 'Advanced', 'Hinge',
   'Stand with feet hip-width under bar, hinge at hips, grasp bar, brace core, and drive through the floor to stand fully erect.', '["Stand with mid-foot under the bar, shins roughly 1 inch away.","Hinge hips back and grip the bar outside knees with double overhand or hook grip.","Pull chest up, pull slack out of the bar, engage lats (\"protect armpits\"), brace core."]', '["Push floor away with legs while keeping bar tight against shins.","Extend hips and knees simultaneously to lock out standing tall.","Hinge at hips to return bar under control to the ground."]',
@@ -488,7 +488,7 @@ INSERT INTO "Exercise" (
   "setupSteps" = EXCLUDED."setupSteps",
   "executionSteps" = EXCLUDED."executionSteps",
   "commonMistakes" = EXCLUDED."commonMistakes";
-INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('fd53f6a6-d7ea-4abc-89e4-e2a43f82018e', 'd454eb4f-c05d-403b-bd95-a8904c7fe41d', 'VIDEO', 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
+INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('media-conventional-deadlift', 'e35321b2-c8ab-422c-a8fa-3e11a85d5bf4', 'VIDEO', '/videos/exercises/deadlift.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
 
 INSERT INTO "Exercise" (
   "id", "name", "slug", "description", "primaryMuscle", "secondaryMuscles", "bodyPart",
@@ -497,7 +497,7 @@ INSERT INTO "Exercise" (
   "commonMistakes", "safetyTips", "beginnerAlternative", "intermediateAlternative", "advancedAlternative",
   "tags", "caloriesBurnPerHour", "isCustom"
 ) VALUES (
-  'deab73d0-ab02-4561-bd46-686f0e803a16', 'Pull-Ups', 'pull-ups', 'The premier vertical pulling calisthenics exercise for broadening the latissimus dorsi, upper back, and biceps.',
+  'ea8f8dfc-3d76-4108-b46e-b83a5124c086', 'Pull-Ups', 'pull-ups', 'The premier vertical pulling calisthenics exercise for broadening the latissimus dorsi, upper back, and biceps.',
   'Back', 'Biceps, Forearms, Traps', 'Back',
   'Bodyweight', 'Intermediate', 'Vertical Pull',
   'Hang from pull-up bar with overhand grip wider than shoulders, pull chest up toward the bar until chin clears, lower to full hang.', '["Grip bar with overhand grip just outside shoulder-width, hang with arms fully extended."]', '["Depress scapulae, pull elbows down and back to ribs, touch upper chest to bar, lower with control."]',
@@ -510,7 +510,7 @@ INSERT INTO "Exercise" (
   "setupSteps" = EXCLUDED."setupSteps",
   "executionSteps" = EXCLUDED."executionSteps",
   "commonMistakes" = EXCLUDED."commonMistakes";
-INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('13f5d86c-7969-4055-9040-17559602dcfb', 'deab73d0-ab02-4561-bd46-686f0e803a16', 'VIDEO', 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
+INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('media-pull-ups', 'ea8f8dfc-3d76-4108-b46e-b83a5124c086', 'VIDEO', '/videos/exercises/pull-up.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
 
 INSERT INTO "Exercise" (
   "id", "name", "slug", "description", "primaryMuscle", "secondaryMuscles", "bodyPart",
@@ -519,7 +519,7 @@ INSERT INTO "Exercise" (
   "commonMistakes", "safetyTips", "beginnerAlternative", "intermediateAlternative", "advancedAlternative",
   "tags", "caloriesBurnPerHour", "isCustom"
 ) VALUES (
-  'de656105-0f2b-4a7c-ad8b-5790c1430faf', 'Barbell Bent-Over Row', 'barbell-bent-over-row', 'Heavy compound horizontal row targeting total back thickness, rhomboids, rear delts, and spinal erectors.',
+  'd66c0516-d07f-4d78-ba89-a9e198556f6d', 'Barbell Bent-Over Row', 'barbell-bent-over-row', 'Heavy compound horizontal row targeting total back thickness, rhomboids, rear delts, and spinal erectors.',
   'Back', 'Biceps, Traps, Forearms, Lower Back', 'Back',
   'Barbell', 'Intermediate', 'Horizontal Pull',
   'Hinge at hips with torso around 45 degrees, grip bar overhand, pull bar to your lower ribcage/navel, and lower controlled.', '["Hinge hips at 45 degrees with flat back, grip bar slightly wider than shoulder-width."]', '["Drive elbows up and back, pull bar to lower abdomen, squeeze shoulder blades together, lower."]',
@@ -532,7 +532,7 @@ INSERT INTO "Exercise" (
   "setupSteps" = EXCLUDED."setupSteps",
   "executionSteps" = EXCLUDED."executionSteps",
   "commonMistakes" = EXCLUDED."commonMistakes";
-INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('220ab6a3-9d09-45f2-a614-23c0f5530b25', 'de656105-0f2b-4a7c-ad8b-5790c1430faf', 'VIDEO', 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
+INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('media-barbell-bent-over-row', 'd66c0516-d07f-4d78-ba89-a9e198556f6d', 'VIDEO', '/videos/exercises/t-bar-row.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
 
 INSERT INTO "Exercise" (
   "id", "name", "slug", "description", "primaryMuscle", "secondaryMuscles", "bodyPart",
@@ -541,7 +541,7 @@ INSERT INTO "Exercise" (
   "commonMistakes", "safetyTips", "beginnerAlternative", "intermediateAlternative", "advancedAlternative",
   "tags", "caloriesBurnPerHour", "isCustom"
 ) VALUES (
-  '03381b92-41d3-43fb-a70f-e3728e53c5e1', 'Lat Pulldown', 'lat-pulldown', 'Machine cable vertical pulling exercise allowing precise hypertrophy focus on the latissimus dorsi.',
+  '402ef5b7-def8-4177-acbd-b3f3d7567e67', 'Lat Pulldown', 'lat-pulldown', 'Machine cable vertical pulling exercise allowing precise hypertrophy focus on the latissimus dorsi.',
   'Back', 'Biceps, Forearms', 'Back',
   'Cable', 'Beginner', 'Vertical Pull',
   'Sit under knee pads, grip wide bar, pull bar smoothly down to upper chest while leaning back slightly, and release slowly.', '["Lock thighs under pads, grip bar with wide overhand grip, sit tall."]', '["Drive elbows down toward your pockets, pull bar to collarbone, squeeze lats, return to full stretch."]',
@@ -554,7 +554,7 @@ INSERT INTO "Exercise" (
   "setupSteps" = EXCLUDED."setupSteps",
   "executionSteps" = EXCLUDED."executionSteps",
   "commonMistakes" = EXCLUDED."commonMistakes";
-INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('926e45fc-340c-405e-8e41-20f4166d609e', '03381b92-41d3-43fb-a70f-e3728e53c5e1', 'VIDEO', 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
+INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('media-lat-pulldown', '402ef5b7-def8-4177-acbd-b3f3d7567e67', 'VIDEO', '/videos/exercises/lat-pulldown.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
 
 INSERT INTO "Exercise" (
   "id", "name", "slug", "description", "primaryMuscle", "secondaryMuscles", "bodyPart",
@@ -563,7 +563,7 @@ INSERT INTO "Exercise" (
   "commonMistakes", "safetyTips", "beginnerAlternative", "intermediateAlternative", "advancedAlternative",
   "tags", "caloriesBurnPerHour", "isCustom"
 ) VALUES (
-  '9013c0d1-7b72-46c4-b843-e497c9ddfc64', 'Seated Cable Row', 'seated-cable-row', 'Horizontal cable row allowing constant tension across the entire middle back, rhomboids, and lower lats.',
+  'c7bb9353-0870-4905-899e-26205d57f133', 'Seated Cable Row', 'seated-cable-row', 'Horizontal cable row allowing constant tension across the entire middle back, rhomboids, and lower lats.',
   'Back', 'Biceps, Traps, Rear Deltoids', 'Back',
   'Cable', 'Beginner', 'Horizontal Pull',
   'Sit with feet on footplates, knees slightly bent, pull V-handle to abdomen with chest tall, and return under control.', '["Sit with upright posture, slight knee flexion, hold handle with arms extended."]', '["Pull handle into stomach, pull shoulder blades back, squeeze 1s, extend arms fully with slight stretch."]',
@@ -576,7 +576,7 @@ INSERT INTO "Exercise" (
   "setupSteps" = EXCLUDED."setupSteps",
   "executionSteps" = EXCLUDED."executionSteps",
   "commonMistakes" = EXCLUDED."commonMistakes";
-INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('0370a010-59cb-447b-af2b-158f5f0a485d', '9013c0d1-7b72-46c4-b843-e497c9ddfc64', 'VIDEO', 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
+INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('media-seated-cable-row', 'c7bb9353-0870-4905-899e-26205d57f133', 'VIDEO', '/videos/exercises/t-bar-row.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
 
 INSERT INTO "Exercise" (
   "id", "name", "slug", "description", "primaryMuscle", "secondaryMuscles", "bodyPart",
@@ -585,7 +585,7 @@ INSERT INTO "Exercise" (
   "commonMistakes", "safetyTips", "beginnerAlternative", "intermediateAlternative", "advancedAlternative",
   "tags", "caloriesBurnPerHour", "isCustom"
 ) VALUES (
-  '51266845-bb6d-4567-9e40-3f5d61f9943e', 'Single-Arm Dumbbell Row', 'single-arm-dumbbell-row', 'Unilateral free weight row providing full range of motion, lat stretch, and core anti-rotation stability.',
+  'd3497ea8-82d6-4ad8-812e-3db9f37f47e3', 'Single-Arm Dumbbell Row', 'single-arm-dumbbell-row', 'Unilateral free weight row providing full range of motion, lat stretch, and core anti-rotation stability.',
   'Back', 'Biceps, Rear Deltoids, Forearms', 'Back',
   'Dumbbell', 'Beginner', 'Horizontal Pull',
   'Place one knee and hand on flat bench, hold dumbbell in other hand, pull elbow up toward hip, and lower fully.', '["Support body on bench with one hand and knee, spine flat, dumbbell hanging directly down."]', '["Pull dumbbell back toward hip in an arc, squeeze lat at top, lower slowly to full stretch."]',
@@ -598,7 +598,7 @@ INSERT INTO "Exercise" (
   "setupSteps" = EXCLUDED."setupSteps",
   "executionSteps" = EXCLUDED."executionSteps",
   "commonMistakes" = EXCLUDED."commonMistakes";
-INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('a0d5de22-0baa-4c34-ad52-f164c20a6170', '51266845-bb6d-4567-9e40-3f5d61f9943e', 'VIDEO', 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
+INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('media-single-arm-dumbbell-row', 'd3497ea8-82d6-4ad8-812e-3db9f37f47e3', 'VIDEO', '/videos/exercises/t-bar-row.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
 
 INSERT INTO "Exercise" (
   "id", "name", "slug", "description", "primaryMuscle", "secondaryMuscles", "bodyPart",
@@ -607,7 +607,7 @@ INSERT INTO "Exercise" (
   "commonMistakes", "safetyTips", "beginnerAlternative", "intermediateAlternative", "advancedAlternative",
   "tags", "caloriesBurnPerHour", "isCustom"
 ) VALUES (
-  '69ec24c6-61bd-49a8-9db6-231a8a52cccc', 'T-Bar Row', 't-bar-row', 'Classic heavy back thickness builder utilizing a landmine or fixed pivot T-bar platform.',
+  '7e5a73e1-446c-4fd3-b80e-6f4b8765461d', 'T-Bar Row', 't-bar-row', 'Classic heavy back thickness builder utilizing a landmine or fixed pivot T-bar platform.',
   'Back', 'Traps, Rear Delts, Biceps, Lower Back', 'Back',
   'Barbell', 'Intermediate', 'Horizontal Pull',
   'Straddle the T-bar, grip handles, maintain flat back at 45 degrees, pull weight to chest, and lower.', '["Straddle bar, hinge at hips, grip handles with flat back."]', '["Drive elbows up and back, pull weight to upper abdomen, pause and lower under control."]',
@@ -620,7 +620,7 @@ INSERT INTO "Exercise" (
   "setupSteps" = EXCLUDED."setupSteps",
   "executionSteps" = EXCLUDED."executionSteps",
   "commonMistakes" = EXCLUDED."commonMistakes";
-INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('beed202d-c93a-4d26-879d-bc403edad2ba', '69ec24c6-61bd-49a8-9db6-231a8a52cccc', 'VIDEO', 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
+INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('media-t-bar-row', '7e5a73e1-446c-4fd3-b80e-6f4b8765461d', 'VIDEO', '/videos/exercises/t-bar-row.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
 
 INSERT INTO "Exercise" (
   "id", "name", "slug", "description", "primaryMuscle", "secondaryMuscles", "bodyPart",
@@ -629,7 +629,7 @@ INSERT INTO "Exercise" (
   "commonMistakes", "safetyTips", "beginnerAlternative", "intermediateAlternative", "advancedAlternative",
   "tags", "caloriesBurnPerHour", "isCustom"
 ) VALUES (
-  'fc18c8a8-7840-46b7-9ac6-ff7465d6d870', 'Straight-Arm Cable Pulldown', 'straight-arm-cable-pulldown', 'Pure lat isolation movement bypassing biceps to develop width and lat engagement.',
+  '031d2548-094c-43a8-9841-974e4318546a', 'Straight-Arm Cable Pulldown', 'straight-arm-cable-pulldown', 'Pure lat isolation movement bypassing biceps to develop width and lat engagement.',
   'Back', 'Triceps (long head), Abs, Serratus', 'Back',
   'Cable', 'Beginner', 'Isolation',
   'Stand facing high pulley with straight bar, arms nearly straight, pull bar in an arc down to thighs, and return slowly.', '["Stand facing cable, slight hip hinge, grab bar with overhand grip and slight elbow bend."]', '["Sweep bar down toward upper thighs using only lats, squeeze 1s, return back up to shoulder height."]',
@@ -642,7 +642,7 @@ INSERT INTO "Exercise" (
   "setupSteps" = EXCLUDED."setupSteps",
   "executionSteps" = EXCLUDED."executionSteps",
   "commonMistakes" = EXCLUDED."commonMistakes";
-INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('532e942c-5fc5-49af-9512-98cc6d62924d', 'fc18c8a8-7840-46b7-9ac6-ff7465d6d870', 'VIDEO', 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
+INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('media-straight-arm-cable-pulldown', '031d2548-094c-43a8-9841-974e4318546a', 'VIDEO', '/videos/exercises/lat-pulldown.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
 
 INSERT INTO "Exercise" (
   "id", "name", "slug", "description", "primaryMuscle", "secondaryMuscles", "bodyPart",
@@ -651,7 +651,7 @@ INSERT INTO "Exercise" (
   "commonMistakes", "safetyTips", "beginnerAlternative", "intermediateAlternative", "advancedAlternative",
   "tags", "caloriesBurnPerHour", "isCustom"
 ) VALUES (
-  'c442b69f-ad78-439c-a0b4-ab6c7014fd2f', 'Chin-Ups', 'chin-ups', 'Underhand grip vertical pull heavily activating lats and biceps with superior mechanical leverage.',
+  '85d27207-bab3-48f4-a178-1845b5d8bb9a', 'Chin-Ups', 'chin-ups', 'Underhand grip vertical pull heavily activating lats and biceps with superior mechanical leverage.',
   'Back', 'Biceps, Forearms', 'Back',
   'Bodyweight', 'Intermediate', 'Vertical Pull',
   'Grip bar with palms facing you shoulder-width, pull chest up until chin clears bar, lower to full dead hang.', '["Grip bar with supinated (underhand) grip shoulder-width apart."]', '["Pull up driving elbows down, touch chest to bar, lower with control."]',
@@ -664,7 +664,7 @@ INSERT INTO "Exercise" (
   "setupSteps" = EXCLUDED."setupSteps",
   "executionSteps" = EXCLUDED."executionSteps",
   "commonMistakes" = EXCLUDED."commonMistakes";
-INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('8c158467-be5a-4293-a323-3b603d648b7b', 'c442b69f-ad78-439c-a0b4-ab6c7014fd2f', 'VIDEO', 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
+INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('media-chin-ups', '85d27207-bab3-48f4-a178-1845b5d8bb9a', 'VIDEO', '/videos/exercises/pull-up.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
 
 INSERT INTO "Exercise" (
   "id", "name", "slug", "description", "primaryMuscle", "secondaryMuscles", "bodyPart",
@@ -673,7 +673,7 @@ INSERT INTO "Exercise" (
   "commonMistakes", "safetyTips", "beginnerAlternative", "intermediateAlternative", "advancedAlternative",
   "tags", "caloriesBurnPerHour", "isCustom"
 ) VALUES (
-  '2f037155-c9eb-4786-a35c-5fc969d673eb', 'Chest-Supported Row', 'chest-supported-row', 'Incline bench dumbbell or machine row eliminating spinal loading for pure mid-back isolation.',
+  '8abdd624-e195-46ea-a7c6-7242f30900aa', 'Chest-Supported Row', 'chest-supported-row', 'Incline bench dumbbell or machine row eliminating spinal loading for pure mid-back isolation.',
   'Back', 'Rear Deltoids, Rhomboids, Biceps', 'Back',
   'Dumbbell', 'Beginner', 'Horizontal Pull',
   'Lie prone on 30-degree incline bench holding dumbbells, row weights up squeezing upper back, and lower slowly.', '["Set bench to 30 degrees, lie chest-down, dumbbells hanging naturally."]', '["Row dumbbells upward driving elbows back, squeeze scapulae, lower to full stretch."]',
@@ -686,7 +686,7 @@ INSERT INTO "Exercise" (
   "setupSteps" = EXCLUDED."setupSteps",
   "executionSteps" = EXCLUDED."executionSteps",
   "commonMistakes" = EXCLUDED."commonMistakes";
-INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('19c4a3d2-2b7e-4c0a-8f30-c6373de077c3', '2f037155-c9eb-4786-a35c-5fc969d673eb', 'VIDEO', 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
+INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('media-chest-supported-row', '8abdd624-e195-46ea-a7c6-7242f30900aa', 'VIDEO', '/videos/exercises/t-bar-row.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
 
 INSERT INTO "Exercise" (
   "id", "name", "slug", "description", "primaryMuscle", "secondaryMuscles", "bodyPart",
@@ -695,7 +695,7 @@ INSERT INTO "Exercise" (
   "commonMistakes", "safetyTips", "beginnerAlternative", "intermediateAlternative", "advancedAlternative",
   "tags", "caloriesBurnPerHour", "isCustom"
 ) VALUES (
-  '43fed9bd-ef1a-4897-bf9a-6fdb23782809', 'Rack Pull', 'rack-pull', 'Partial range deadlift off pins targeting upper back, traps, erectors, and lockout grip strength.',
+  'b288607f-59b0-4064-9683-10bee3f5c2f0', 'Rack Pull', 'rack-pull', 'Partial range deadlift off pins targeting upper back, traps, erectors, and lockout grip strength.',
   'Back', 'Traps, Glutes, Forearms', 'Back',
   'Barbell', 'Intermediate', 'Hinge',
   'Set pins just below knees, hinge and grip bar, drive hips forward to lockout standing tall.', '["Position bar in power rack pins at mid-shin or below knee height."]', '["Brace core, drag bar up thighs to lockout hips, lower under control."]',
@@ -708,7 +708,7 @@ INSERT INTO "Exercise" (
   "setupSteps" = EXCLUDED."setupSteps",
   "executionSteps" = EXCLUDED."executionSteps",
   "commonMistakes" = EXCLUDED."commonMistakes";
-INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('1d178957-721e-41ea-85ff-7c8659f79037', '43fed9bd-ef1a-4897-bf9a-6fdb23782809', 'VIDEO', 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
+INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('media-rack-pull', 'b288607f-59b0-4064-9683-10bee3f5c2f0', 'VIDEO', '/videos/exercises/romanian-deadlift.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
 
 INSERT INTO "Exercise" (
   "id", "name", "slug", "description", "primaryMuscle", "secondaryMuscles", "bodyPart",
@@ -717,7 +717,7 @@ INSERT INTO "Exercise" (
   "commonMistakes", "safetyTips", "beginnerAlternative", "intermediateAlternative", "advancedAlternative",
   "tags", "caloriesBurnPerHour", "isCustom"
 ) VALUES (
-  '78677a3f-469b-4c33-a74e-1b8dc4899d05', 'Machine Seated Row', 'machine-seated-row', 'Pin-loaded machine row providing guided path and chest pad for focused back hypertrophy.',
+  'a87edc27-3c9a-4004-a278-4eb764d18ebc', 'Machine Seated Row', 'machine-seated-row', 'Pin-loaded machine row providing guided path and chest pad for focused back hypertrophy.',
   'Back', 'Biceps, Rear Deltoids', 'Back',
   'Machine', 'Beginner', 'Horizontal Pull',
   'Adjust chest pad, grip handles, pull back squeezing shoulder blades, and return under control.', '["Set seat height so handles align with mid-torso, chest against pad."]', '["Pull handles back smoothly, pause for 1 second, control the weight return."]',
@@ -730,7 +730,7 @@ INSERT INTO "Exercise" (
   "setupSteps" = EXCLUDED."setupSteps",
   "executionSteps" = EXCLUDED."executionSteps",
   "commonMistakes" = EXCLUDED."commonMistakes";
-INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('6586df69-445a-4808-afd8-424d20beff78', '78677a3f-469b-4c33-a74e-1b8dc4899d05', 'VIDEO', 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
+INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('media-machine-seated-row', 'a87edc27-3c9a-4004-a278-4eb764d18ebc', 'VIDEO', '/videos/exercises/t-bar-row.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
 
 INSERT INTO "Exercise" (
   "id", "name", "slug", "description", "primaryMuscle", "secondaryMuscles", "bodyPart",
@@ -739,7 +739,7 @@ INSERT INTO "Exercise" (
   "commonMistakes", "safetyTips", "beginnerAlternative", "intermediateAlternative", "advancedAlternative",
   "tags", "caloriesBurnPerHour", "isCustom"
 ) VALUES (
-  '48a209b7-d81f-45c8-aa5d-32db9d8df77d', 'Inverted Bodyweight Row', 'inverted-bodyweight-row', 'Calisthenics horizontal pull using a Smith machine bar or gymnastics rings to build back and core control.',
+  '1a8109a8-52b9-4465-9ccd-5d2c6326d3a8', 'Inverted Bodyweight Row', 'inverted-bodyweight-row', 'Calisthenics horizontal pull using a Smith machine bar or gymnastics rings to build back and core control.',
   'Back', 'Biceps, Rear Delts, Core', 'Back',
   'Bodyweight', 'Beginner', 'Horizontal Pull',
   'Hang under a waist-height bar with heels on floor, pull chest to bar keeping straight body line, and lower.', '["Set bar at waist height, lie underneath, grip overhand shoulder-width."]', '["Keep body straight like a plank, pull chest up to touch bar, lower under control."]',
@@ -752,7 +752,7 @@ INSERT INTO "Exercise" (
   "setupSteps" = EXCLUDED."setupSteps",
   "executionSteps" = EXCLUDED."executionSteps",
   "commonMistakes" = EXCLUDED."commonMistakes";
-INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('390742da-9b26-4a23-bf55-0298327137bb', '48a209b7-d81f-45c8-aa5d-32db9d8df77d', 'VIDEO', 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
+INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('media-inverted-bodyweight-row', '1a8109a8-52b9-4465-9ccd-5d2c6326d3a8', 'VIDEO', '/videos/exercises/t-bar-row.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
 
 INSERT INTO "Exercise" (
   "id", "name", "slug", "description", "primaryMuscle", "secondaryMuscles", "bodyPart",
@@ -761,7 +761,7 @@ INSERT INTO "Exercise" (
   "commonMistakes", "safetyTips", "beginnerAlternative", "intermediateAlternative", "advancedAlternative",
   "tags", "caloriesBurnPerHour", "isCustom"
 ) VALUES (
-  'ee84a506-0065-4a7d-a0e4-675f3e8244b2', 'Overhead Press (OHP)', 'overhead-press', 'The foundational standing barbell vertical pressing compound for building broad deltoids, upper chest, and core stability.',
+  'dc939741-9609-46df-b06c-318410fc0479', 'Overhead Press (OHP)', 'overhead-press', 'The foundational standing barbell vertical pressing compound for building broad deltoids, upper chest, and core stability.',
   'Shoulders', 'Triceps, Upper Chest, Traps, Core', 'Shoulders',
   'Barbell', 'Intermediate', 'Vertical Push',
   'Stand tall with barbell at collarbone height, grip just outside shoulders, press bar vertically overhead locking arms out.', '["Rack bar at collarbone height, grip slightly wider than shoulders.","Unrack, take 2 steps back, feet shoulder-width, squeeze glutes and abs.","Elbows slightly forward of the bar in the front rack position."]', '["Tilt head slightly back to clear bar path, press bar vertically upward.","Once bar clears forehead, move head forward into neutral alignment (\"push head through window\").","Lock out arms overhead with shrug, lower controlled back to collarbones."]',
@@ -774,7 +774,7 @@ INSERT INTO "Exercise" (
   "setupSteps" = EXCLUDED."setupSteps",
   "executionSteps" = EXCLUDED."executionSteps",
   "commonMistakes" = EXCLUDED."commonMistakes";
-INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('fe0f785d-7645-4302-bd5c-f88ec34ae6dc', 'ee84a506-0065-4a7d-a0e4-675f3e8244b2', 'VIDEO', 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
+INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('media-overhead-press', 'dc939741-9609-46df-b06c-318410fc0479', 'VIDEO', '/videos/exercises/shoulder-press.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
 
 INSERT INTO "Exercise" (
   "id", "name", "slug", "description", "primaryMuscle", "secondaryMuscles", "bodyPart",
@@ -783,7 +783,7 @@ INSERT INTO "Exercise" (
   "commonMistakes", "safetyTips", "beginnerAlternative", "intermediateAlternative", "advancedAlternative",
   "tags", "caloriesBurnPerHour", "isCustom"
 ) VALUES (
-  '62a85cb8-d903-49fa-8a26-5f242ab35918', 'Dumbbell Lateral Raise', 'dumbbell-lateral-raise', 'The supreme isolation exercise for targeting the lateral (side) deltoid to build wide shoulder caps.',
+  'f43a9787-ecc5-4073-8913-60f59b536b02', 'Dumbbell Lateral Raise', 'dumbbell-lateral-raise', 'The supreme isolation exercise for targeting the lateral (side) deltoid to build wide shoulder caps.',
   'Shoulders', 'Traps, Forearms', 'Shoulders',
   'Dumbbell', 'Beginner', 'Isolation',
   'Stand with dumbbells at sides, raise arms outward to shoulder height leading with elbows, and lower slowly.', '["Stand tall with slight torso lean, hold dumbbells with neutral grip."]', '["Raise dumbbells out to sides until parallel to floor, lead with elbows, pause 1s, lower under control."]',
@@ -796,7 +796,7 @@ INSERT INTO "Exercise" (
   "setupSteps" = EXCLUDED."setupSteps",
   "executionSteps" = EXCLUDED."executionSteps",
   "commonMistakes" = EXCLUDED."commonMistakes";
-INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('daf4012a-5105-472c-a42e-26ac149a93a9', '62a85cb8-d903-49fa-8a26-5f242ab35918', 'VIDEO', 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
+INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('media-dumbbell-lateral-raise', 'f43a9787-ecc5-4073-8913-60f59b536b02', 'VIDEO', '/videos/exercises/lateral-raise.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
 
 INSERT INTO "Exercise" (
   "id", "name", "slug", "description", "primaryMuscle", "secondaryMuscles", "bodyPart",
@@ -805,7 +805,7 @@ INSERT INTO "Exercise" (
   "commonMistakes", "safetyTips", "beginnerAlternative", "intermediateAlternative", "advancedAlternative",
   "tags", "caloriesBurnPerHour", "isCustom"
 ) VALUES (
-  '7a402d35-39da-43ff-8a3b-50bac747791a', 'Arnold Press', 'arnold-press', 'Dumbbell shoulder press incorporating wrist rotation to activate all three deltoid heads through full range.',
+  '1b588638-00f2-4cfc-a942-b065116939ea', 'Arnold Press', 'arnold-press', 'Dumbbell shoulder press incorporating wrist rotation to activate all three deltoid heads through full range.',
   'Shoulders', 'Triceps, Upper Chest', 'Shoulders',
   'Dumbbell', 'Intermediate', 'Vertical Push',
   'Hold dumbbells at chin height with palms facing in, rotate palms outward as you press overhead, and reverse upon return.', '["Sit on bench with back support, start with dumbbells at collarbones, palms facing your chest."]', '["Press overhead while rotating wrists so palms face forward at top lockout, reverse smoothly."]',
@@ -818,7 +818,7 @@ INSERT INTO "Exercise" (
   "setupSteps" = EXCLUDED."setupSteps",
   "executionSteps" = EXCLUDED."executionSteps",
   "commonMistakes" = EXCLUDED."commonMistakes";
-INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('ae2224dd-8426-4d23-b56d-db605d5cfc11', '7a402d35-39da-43ff-8a3b-50bac747791a', 'VIDEO', 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
+INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('media-arnold-press', '1b588638-00f2-4cfc-a942-b065116939ea', 'VIDEO', '/videos/exercises/shoulder-press.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
 
 INSERT INTO "Exercise" (
   "id", "name", "slug", "description", "primaryMuscle", "secondaryMuscles", "bodyPart",
@@ -827,7 +827,7 @@ INSERT INTO "Exercise" (
   "commonMistakes", "safetyTips", "beginnerAlternative", "intermediateAlternative", "advancedAlternative",
   "tags", "caloriesBurnPerHour", "isCustom"
 ) VALUES (
-  'bec2160b-fbcf-40f4-8aaf-d6389393a521', 'Cable Lateral Raise', 'cable-lateral-raise', 'Lateral raise using low pulley cable for continuous tension at the bottom of the movement where dumbbells provide zero load.',
+  'f13af441-89ee-4267-8d6a-9c6ad6f0e49a', 'Cable Lateral Raise', 'cable-lateral-raise', 'Lateral raise using low pulley cable for continuous tension at the bottom of the movement where dumbbells provide zero load.',
   'Shoulders', 'Traps', 'Shoulders',
   'Cable', 'Beginner', 'Isolation',
   'Set cable to bottom, hold handle across body, raise arm out to side to shoulder height, and lower slowly.', '["Set pulley at lowest position, stand sideways, grab handle with opposite hand behind or in front of body."]', '["Raise arm outward until parallel to floor, pause 1s at peak contraction, lower with 3s tempo."]',
@@ -840,7 +840,7 @@ INSERT INTO "Exercise" (
   "setupSteps" = EXCLUDED."setupSteps",
   "executionSteps" = EXCLUDED."executionSteps",
   "commonMistakes" = EXCLUDED."commonMistakes";
-INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('018034d4-bec9-49b9-bcda-f4ba3105764e', 'bec2160b-fbcf-40f4-8aaf-d6389393a521', 'VIDEO', 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
+INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('media-cable-lateral-raise', 'f13af441-89ee-4267-8d6a-9c6ad6f0e49a', 'VIDEO', '/videos/exercises/lateral-raise.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
 
 INSERT INTO "Exercise" (
   "id", "name", "slug", "description", "primaryMuscle", "secondaryMuscles", "bodyPart",
@@ -849,7 +849,7 @@ INSERT INTO "Exercise" (
   "commonMistakes", "safetyTips", "beginnerAlternative", "intermediateAlternative", "advancedAlternative",
   "tags", "caloriesBurnPerHour", "isCustom"
 ) VALUES (
-  '5f118fe5-96a7-4970-aa9b-4698c8e2422e', 'Face Pull', 'face-pull', 'Crucial postural and shoulder health exercise targeting rear deltoids, rotator cuff, and lower trapezius.',
+  '11694d31-448d-4f1a-bbe1-193cb92d78dc', 'Face Pull', 'face-pull', 'Crucial postural and shoulder health exercise targeting rear deltoids, rotator cuff, and lower trapezius.',
   'Shoulders', 'Traps, Rear Deltoids, Rhomboids', 'Shoulders',
   'Cable', 'Beginner', 'Horizontal Pull',
   'Attach rope to high cable, grip with thumbs back, pull rope directly to forehead/eyes while separating hands and externally rotating.', '["Set rope at eye/forehead height, step back into split stance with arms extended."]', '["Pull rope to bridge of nose, pull knuckles backward into external rotation, squeeze rear delts, return."]',
@@ -862,7 +862,7 @@ INSERT INTO "Exercise" (
   "setupSteps" = EXCLUDED."setupSteps",
   "executionSteps" = EXCLUDED."executionSteps",
   "commonMistakes" = EXCLUDED."commonMistakes";
-INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('0d918d0d-ce1f-406f-a7cd-ba93780889b4', '5f118fe5-96a7-4970-aa9b-4698c8e2422e', 'VIDEO', 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
+INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('media-face-pull', '11694d31-448d-4f1a-bbe1-193cb92d78dc', 'VIDEO', '/videos/exercises/t-bar-row.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
 
 INSERT INTO "Exercise" (
   "id", "name", "slug", "description", "primaryMuscle", "secondaryMuscles", "bodyPart",
@@ -871,7 +871,7 @@ INSERT INTO "Exercise" (
   "commonMistakes", "safetyTips", "beginnerAlternative", "intermediateAlternative", "advancedAlternative",
   "tags", "caloriesBurnPerHour", "isCustom"
 ) VALUES (
-  '2495a8d2-47a9-4389-9698-c151888aacd9', 'Rear Delt Dumbbell Fly', 'rear-delt-dumbbell-fly', 'Bent-over reverse fly isolating posterior deltoids and rhomboids for 3D shoulder shape.',
+  '879e7f6f-a4fc-4dac-9385-ba5443166683', 'Rear Delt Dumbbell Fly', 'rear-delt-dumbbell-fly', 'Bent-over reverse fly isolating posterior deltoids and rhomboids for 3D shoulder shape.',
   'Shoulders', 'Traps, Rhomboids', 'Shoulders',
   'Dumbbell', 'Beginner', 'Isolation',
   'Hinge at hips with torso parallel to ground, raise dumbbells out to sides with slight elbow bend, and squeeze rear delts.', '["Hinge forward at hips with flat back, dumbbells hanging beneath chest."]', '["Sweep arms outward and upward like wings, squeeze rear delts at top, lower slowly."]',
@@ -884,7 +884,7 @@ INSERT INTO "Exercise" (
   "setupSteps" = EXCLUDED."setupSteps",
   "executionSteps" = EXCLUDED."executionSteps",
   "commonMistakes" = EXCLUDED."commonMistakes";
-INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('277b62cf-5749-491e-ba2d-c6df12bf9d04', '2495a8d2-47a9-4389-9698-c151888aacd9', 'VIDEO', 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
+INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('media-rear-delt-dumbbell-fly', '879e7f6f-a4fc-4dac-9385-ba5443166683', 'VIDEO', '/videos/exercises/lateral-raise.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
 
 INSERT INTO "Exercise" (
   "id", "name", "slug", "description", "primaryMuscle", "secondaryMuscles", "bodyPart",
@@ -893,7 +893,7 @@ INSERT INTO "Exercise" (
   "commonMistakes", "safetyTips", "beginnerAlternative", "intermediateAlternative", "advancedAlternative",
   "tags", "caloriesBurnPerHour", "isCustom"
 ) VALUES (
-  '6ea4c52b-46da-4fb5-b7d3-80c8d2c26377', 'Reverse Pec Deck Fly', 'reverse-pec-deck-fly', 'Machine reverse fly providing strict isolation for the posterior deltoid with constant tension.',
+  'e6e333fb-e00e-4ceb-911f-06b7d66a5edb', 'Reverse Pec Deck Fly', 'reverse-pec-deck-fly', 'Machine reverse fly providing strict isolation for the posterior deltoid with constant tension.',
   'Shoulders', 'Traps, Rhomboids', 'Shoulders',
   'Machine', 'Beginner', 'Isolation',
   'Sit facing the machine pad, grip handles at shoulder level, sweep arms backward in a wide arc, and return slowly.', '["Adjust seat so handles are at shoulder level, sit chest against pad."]', '["Drive arms backward, squeeze rear deltoids, pause 1s, return with 2s negative."]',
@@ -906,7 +906,7 @@ INSERT INTO "Exercise" (
   "setupSteps" = EXCLUDED."setupSteps",
   "executionSteps" = EXCLUDED."executionSteps",
   "commonMistakes" = EXCLUDED."commonMistakes";
-INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('0f4683cb-8c62-44d2-bacd-2ef07c99d546', '6ea4c52b-46da-4fb5-b7d3-80c8d2c26377', 'VIDEO', 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
+INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('media-reverse-pec-deck-fly', 'e6e333fb-e00e-4ceb-911f-06b7d66a5edb', 'VIDEO', '/videos/exercises/shoulder-press.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
 
 INSERT INTO "Exercise" (
   "id", "name", "slug", "description", "primaryMuscle", "secondaryMuscles", "bodyPart",
@@ -915,7 +915,7 @@ INSERT INTO "Exercise" (
   "commonMistakes", "safetyTips", "beginnerAlternative", "intermediateAlternative", "advancedAlternative",
   "tags", "caloriesBurnPerHour", "isCustom"
 ) VALUES (
-  '613b5e3e-1c0d-4b58-b3d7-bfec86c54dfe', 'Dumbbell Front Raise', 'dumbbell-front-raise', 'Isolation exercise focusing on the anterior (front) head of the deltoid muscle.',
+  '95445d1c-50f6-4d7f-8fcd-5e0ac2382d4b', 'Dumbbell Front Raise', 'dumbbell-front-raise', 'Isolation exercise focusing on the anterior (front) head of the deltoid muscle.',
   'Shoulders', 'Upper Chest', 'Shoulders',
   'Dumbbell', 'Beginner', 'Isolation',
   'Stand tall with dumbbells in front of thighs, raise one or both dumbbells forward to eye level, and lower slowly.', '["Hold dumbbells in front of thighs with overhand grip, stand tall with core braced."]', '["Lift weight forward in front of you until parallel to floor, pause, lower slowly."]',
@@ -928,7 +928,7 @@ INSERT INTO "Exercise" (
   "setupSteps" = EXCLUDED."setupSteps",
   "executionSteps" = EXCLUDED."executionSteps",
   "commonMistakes" = EXCLUDED."commonMistakes";
-INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('ead47185-7f01-4597-9b25-90c802b51d17', '613b5e3e-1c0d-4b58-b3d7-bfec86c54dfe', 'VIDEO', 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
+INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('media-dumbbell-front-raise', '95445d1c-50f6-4d7f-8fcd-5e0ac2382d4b', 'VIDEO', '/videos/exercises/lateral-raise.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
 
 INSERT INTO "Exercise" (
   "id", "name", "slug", "description", "primaryMuscle", "secondaryMuscles", "bodyPart",
@@ -937,7 +937,7 @@ INSERT INTO "Exercise" (
   "commonMistakes", "safetyTips", "beginnerAlternative", "intermediateAlternative", "advancedAlternative",
   "tags", "caloriesBurnPerHour", "isCustom"
 ) VALUES (
-  '0945836e-66e9-46fa-bbf7-23fc67a968f2', 'Dumbbell Shoulder Press', 'dumbbell-shoulder-press', 'Seated or standing compound press allowing independent shoulder mobility and natural arc.',
+  '1ebcaac1-1e0e-4464-b8b6-4fd8a52c5b3e', 'Dumbbell Shoulder Press', 'dumbbell-shoulder-press', 'Seated or standing compound press allowing independent shoulder mobility and natural arc.',
   'Shoulders', 'Triceps, Upper Chest', 'Shoulders',
   'Dumbbell', 'Beginner', 'Vertical Push',
   'Sit on upright bench, bring dumbbells to ear height, press overhead in a slight inward arc, and lower.', '["Sit on bench with back support, dumbbells at ear height with palms facing forward."]', '["Press weights upward until arms are extended, lower with control to ear height."]',
@@ -950,7 +950,7 @@ INSERT INTO "Exercise" (
   "setupSteps" = EXCLUDED."setupSteps",
   "executionSteps" = EXCLUDED."executionSteps",
   "commonMistakes" = EXCLUDED."commonMistakes";
-INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('94f9fe2a-9e0b-471e-b6ea-adee7ecdf3fa', '0945836e-66e9-46fa-bbf7-23fc67a968f2', 'VIDEO', 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
+INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('media-dumbbell-shoulder-press', '1ebcaac1-1e0e-4464-b8b6-4fd8a52c5b3e', 'VIDEO', '/videos/exercises/shoulder-press.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
 
 INSERT INTO "Exercise" (
   "id", "name", "slug", "description", "primaryMuscle", "secondaryMuscles", "bodyPart",
@@ -959,7 +959,7 @@ INSERT INTO "Exercise" (
   "commonMistakes", "safetyTips", "beginnerAlternative", "intermediateAlternative", "advancedAlternative",
   "tags", "caloriesBurnPerHour", "isCustom"
 ) VALUES (
-  '7bc8c67e-c6eb-4558-8462-4768d240ef2c', 'Barbell Upright Row', 'barbell-upright-row', 'Compound pull targeting lateral deltoids and upper trapezius.',
+  '316f8072-0dee-4992-a042-e074fc55986c', 'Barbell Upright Row', 'barbell-upright-row', 'Compound pull targeting lateral deltoids and upper trapezius.',
   'Shoulders', 'Traps, Biceps, Forearms', 'Shoulders',
   'Barbell', 'Intermediate', 'Vertical Pull',
   'Hold bar with shoulder-width grip, pull bar vertically up to mid-chest leading with elbows, and lower.', '["Stand tall holding bar at arm length with shoulder-width grip (avoid overly narrow grip)."]', '["Pull elbows up and out, raising bar to chest level, lower under control."]',
@@ -972,7 +972,7 @@ INSERT INTO "Exercise" (
   "setupSteps" = EXCLUDED."setupSteps",
   "executionSteps" = EXCLUDED."executionSteps",
   "commonMistakes" = EXCLUDED."commonMistakes";
-INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('e3fcaf17-2997-4897-a1c2-fcfb1835a6d1', '7bc8c67e-c6eb-4558-8462-4768d240ef2c', 'VIDEO', 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
+INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('media-barbell-upright-row', '316f8072-0dee-4992-a042-e074fc55986c', 'VIDEO', '/videos/exercises/t-bar-row.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
 
 INSERT INTO "Exercise" (
   "id", "name", "slug", "description", "primaryMuscle", "secondaryMuscles", "bodyPart",
@@ -981,7 +981,7 @@ INSERT INTO "Exercise" (
   "commonMistakes", "safetyTips", "beginnerAlternative", "intermediateAlternative", "advancedAlternative",
   "tags", "caloriesBurnPerHour", "isCustom"
 ) VALUES (
-  '89f7d659-870e-4dce-a42c-101ebc4ed388', 'Barbell Bicep Curl', 'barbell-bicep-curl', 'The premier mass-building exercise for overall bicep brachii thickness and peak loading.',
+  '9dbbf9f2-c349-4398-b122-de0d946d96e9', 'Barbell Bicep Curl', 'barbell-bicep-curl', 'The premier mass-building exercise for overall bicep brachii thickness and peak loading.',
   'Biceps', 'Forearms, Front Deltoids (stabilizer)', 'Arms',
   'Barbell', 'Beginner', 'Isolation',
   'Stand tall holding barbell underhand shoulder-width, curl bar upward toward chest while keeping elbows pinned to sides, lower slowly.', '["Stand with feet hip-width, grip barbell underhand shoulder-width, elbows by sides."]', '["Curl bar up in an arc, squeeze biceps at top, lower slowly with 3-second negative."]',
@@ -994,7 +994,7 @@ INSERT INTO "Exercise" (
   "setupSteps" = EXCLUDED."setupSteps",
   "executionSteps" = EXCLUDED."executionSteps",
   "commonMistakes" = EXCLUDED."commonMistakes";
-INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('e0a60c49-46c7-41c8-86cf-16f914e6a85e', '89f7d659-870e-4dce-a42c-101ebc4ed388', 'VIDEO', 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
+INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('media-barbell-bicep-curl', '9dbbf9f2-c349-4398-b122-de0d946d96e9', 'VIDEO', '/videos/exercises/barbell-biceps-curl.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
 
 INSERT INTO "Exercise" (
   "id", "name", "slug", "description", "primaryMuscle", "secondaryMuscles", "bodyPart",
@@ -1003,7 +1003,7 @@ INSERT INTO "Exercise" (
   "commonMistakes", "safetyTips", "beginnerAlternative", "intermediateAlternative", "advancedAlternative",
   "tags", "caloriesBurnPerHour", "isCustom"
 ) VALUES (
-  '946ffe89-cac2-4063-ac97-1ee398278b8e', 'Incline Dumbbell Curl', 'incline-dumbbell-curl', 'Bench curl placing the long head of the biceps under extreme stretch for maximum bicep peak development.',
+  '658a2000-e0e7-4b3d-97e2-5ea6a9909436', 'Incline Dumbbell Curl', 'incline-dumbbell-curl', 'Bench curl placing the long head of the biceps under extreme stretch for maximum bicep peak development.',
   'Biceps', 'Forearms', 'Arms',
   'Dumbbell', 'Intermediate', 'Isolation',
   'Lie back on 45-60 degree incline bench, let arms hang straight down, curl dumbbells up supinating wrists at top.', '["Set bench to 45-60 degrees, sit back with arms hanging fully extended behind torso plane."]', '["Curl dumbbells upward while keeping elbows back, squeeze biceps, lower to full stretch."]',
@@ -1016,7 +1016,7 @@ INSERT INTO "Exercise" (
   "setupSteps" = EXCLUDED."setupSteps",
   "executionSteps" = EXCLUDED."executionSteps",
   "commonMistakes" = EXCLUDED."commonMistakes";
-INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('3045383a-332f-49db-a06c-9ee0271e9319', '946ffe89-cac2-4063-ac97-1ee398278b8e', 'VIDEO', 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
+INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('media-incline-dumbbell-curl', '658a2000-e0e7-4b3d-97e2-5ea6a9909436', 'VIDEO', '/videos/exercises/barbell-biceps-curl.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
 
 INSERT INTO "Exercise" (
   "id", "name", "slug", "description", "primaryMuscle", "secondaryMuscles", "bodyPart",
@@ -1025,7 +1025,7 @@ INSERT INTO "Exercise" (
   "commonMistakes", "safetyTips", "beginnerAlternative", "intermediateAlternative", "advancedAlternative",
   "tags", "caloriesBurnPerHour", "isCustom"
 ) VALUES (
-  'b37127c5-7124-49f4-aeef-5624328e539c', 'Preacher Curl', 'preacher-curl', 'Arm curl on preacher bench eliminating all shoulder involvement and isolating the short head of the biceps.',
+  'fe65de9d-907b-41bd-85f4-b828f8c4bf68', 'Preacher Curl', 'preacher-curl', 'Arm curl on preacher bench eliminating all shoulder involvement and isolating the short head of the biceps.',
   'Biceps', 'Forearms', 'Arms',
   'Barbell', 'Beginner', 'Isolation',
   'Rest upper arms flat on preacher pad, hold EZ-bar, curl bar up to vertical, and lower controlled to near full extension.', '["Adjust seat so armpits nestle into top of pad, arms flat against slope, grip EZ-bar."]', '["Curl weight up toward face, pause, lower under control stopping just before full lockout."]',
@@ -1038,7 +1038,7 @@ INSERT INTO "Exercise" (
   "setupSteps" = EXCLUDED."setupSteps",
   "executionSteps" = EXCLUDED."executionSteps",
   "commonMistakes" = EXCLUDED."commonMistakes";
-INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('1d17ae37-7dc6-49b7-ac81-872353b0630f', 'b37127c5-7124-49f4-aeef-5624328e539c', 'VIDEO', 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
+INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('media-preacher-curl', 'fe65de9d-907b-41bd-85f4-b828f8c4bf68', 'VIDEO', '/videos/exercises/barbell-biceps-curl.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
 
 INSERT INTO "Exercise" (
   "id", "name", "slug", "description", "primaryMuscle", "secondaryMuscles", "bodyPart",
@@ -1047,7 +1047,7 @@ INSERT INTO "Exercise" (
   "commonMistakes", "safetyTips", "beginnerAlternative", "intermediateAlternative", "advancedAlternative",
   "tags", "caloriesBurnPerHour", "isCustom"
 ) VALUES (
-  '7ba75311-6032-46a7-9a0e-c032e1a36fa2', 'Hammer Curl', 'hammer-curl', 'Neutral grip curl targeting the brachialis and brachioradialis for upper arm thickness and forearm strength.',
+  '8a36f483-468f-43a6-b6b0-53b7773adc82', 'Hammer Curl', 'hammer-curl', 'Neutral grip curl targeting the brachialis and brachioradialis for upper arm thickness and forearm strength.',
   'Biceps', 'Forearms, Brachialis', 'Arms',
   'Dumbbell', 'Beginner', 'Isolation',
   'Stand tall holding dumbbells with palms facing each other (neutral grip), curl weights up, and lower slowly.', '["Stand with dumbbells at sides, palms facing each other, core braced."]', '["Curl dumbbells upward keeping neutral grip, squeeze brachialis at top, lower controlled."]',
@@ -1060,7 +1060,7 @@ INSERT INTO "Exercise" (
   "setupSteps" = EXCLUDED."setupSteps",
   "executionSteps" = EXCLUDED."executionSteps",
   "commonMistakes" = EXCLUDED."commonMistakes";
-INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('51dd7850-e6c0-49ea-ab69-336e09da10c4', '7ba75311-6032-46a7-9a0e-c032e1a36fa2', 'VIDEO', 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
+INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('media-hammer-curl', '8a36f483-468f-43a6-b6b0-53b7773adc82', 'VIDEO', '/videos/exercises/hammer-curl.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
 
 INSERT INTO "Exercise" (
   "id", "name", "slug", "description", "primaryMuscle", "secondaryMuscles", "bodyPart",
@@ -1069,7 +1069,7 @@ INSERT INTO "Exercise" (
   "commonMistakes", "safetyTips", "beginnerAlternative", "intermediateAlternative", "advancedAlternative",
   "tags", "caloriesBurnPerHour", "isCustom"
 ) VALUES (
-  '1485c0b3-c145-4dc1-a535-900afa503f4b', 'Concentration Curl', 'concentration-curl', 'Classic single-arm seated curl with elbow braced against inner thigh for absolute peak isolation.',
+  '3bcfc250-fbb2-4a71-9214-cb31acb1b8c7', 'Concentration Curl', 'concentration-curl', 'Classic single-arm seated curl with elbow braced against inner thigh for absolute peak isolation.',
   'Biceps', 'Forearms', 'Arms',
   'Dumbbell', 'Beginner', 'Isolation',
   'Sit on bench, brace tricep against inner thigh, curl dumbbell up to face, squeeze hard at peak, and lower.', '["Sit on bench with legs spread, brace back of upper arm against inner thigh."]', '["Curl dumbbell upward, rotate pinky outward at top, squeeze 1s, lower slowly."]',
@@ -1082,7 +1082,7 @@ INSERT INTO "Exercise" (
   "setupSteps" = EXCLUDED."setupSteps",
   "executionSteps" = EXCLUDED."executionSteps",
   "commonMistakes" = EXCLUDED."commonMistakes";
-INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('b516b330-6d27-46a4-9ff9-ba6004730d12', '1485c0b3-c145-4dc1-a535-900afa503f4b', 'VIDEO', 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
+INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('media-concentration-curl', '3bcfc250-fbb2-4a71-9214-cb31acb1b8c7', 'VIDEO', '/videos/exercises/barbell-biceps-curl.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
 
 INSERT INTO "Exercise" (
   "id", "name", "slug", "description", "primaryMuscle", "secondaryMuscles", "bodyPart",
@@ -1091,7 +1091,7 @@ INSERT INTO "Exercise" (
   "commonMistakes", "safetyTips", "beginnerAlternative", "intermediateAlternative", "advancedAlternative",
   "tags", "caloriesBurnPerHour", "isCustom"
 ) VALUES (
-  '04384fb4-54f0-4eef-af18-4270f818c051', 'Spider Curl', 'spider-curl', 'Chest-supported prone incline curl placing maximum tension at the top shortened position of the biceps.',
+  '9ccd49d0-7205-4958-bf3f-91670065587c', 'Spider Curl', 'spider-curl', 'Chest-supported prone incline curl placing maximum tension at the top shortened position of the biceps.',
   'Biceps', 'Forearms', 'Arms',
   'Barbell', 'Intermediate', 'Isolation',
   'Lie chest-down on 45-degree incline bench with arms hanging vertically forward, curl barbell up toward face.', '["Lie chest-down on incline bench, arms hanging straight down in front of torso with EZ-bar."]', '["Curl bar upward, squeeze biceps at top contraction, lower with control."]',
@@ -1104,7 +1104,7 @@ INSERT INTO "Exercise" (
   "setupSteps" = EXCLUDED."setupSteps",
   "executionSteps" = EXCLUDED."executionSteps",
   "commonMistakes" = EXCLUDED."commonMistakes";
-INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('b7690506-1921-4b96-87b0-d38bc5ce898c', '04384fb4-54f0-4eef-af18-4270f818c051', 'VIDEO', 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
+INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('media-spider-curl', '9ccd49d0-7205-4958-bf3f-91670065587c', 'VIDEO', '/videos/exercises/barbell-biceps-curl.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
 
 INSERT INTO "Exercise" (
   "id", "name", "slug", "description", "primaryMuscle", "secondaryMuscles", "bodyPart",
@@ -1113,7 +1113,7 @@ INSERT INTO "Exercise" (
   "commonMistakes", "safetyTips", "beginnerAlternative", "intermediateAlternative", "advancedAlternative",
   "tags", "caloriesBurnPerHour", "isCustom"
 ) VALUES (
-  '9b648e8b-c7fd-49d2-86e5-64fd4c78c5b9', 'Cable Bicep Curl', 'cable-bicep-curl', 'Cable curl providing continuous resistance throughout both the stretched and contracted positions.',
+  'f3044441-b224-4f9c-841a-a6ad42fb0f1b', 'Cable Bicep Curl', 'cable-bicep-curl', 'Cable curl providing continuous resistance throughout both the stretched and contracted positions.',
   'Biceps', 'Forearms', 'Arms',
   'Cable', 'Beginner', 'Isolation',
   'Attach straight bar to low pulley, stand tall, curl bar up to collarbones, and lower slowly.', '["Stand facing low cable pulley holding bar with underhand grip."]', '["Curl bar upward, squeeze biceps at top, resist cable pull on the eccentric."]',
@@ -1126,7 +1126,7 @@ INSERT INTO "Exercise" (
   "setupSteps" = EXCLUDED."setupSteps",
   "executionSteps" = EXCLUDED."executionSteps",
   "commonMistakes" = EXCLUDED."commonMistakes";
-INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('44dfd911-d31a-4541-b58b-c322954f966b', '9b648e8b-c7fd-49d2-86e5-64fd4c78c5b9', 'VIDEO', 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
+INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('media-cable-bicep-curl', 'f3044441-b224-4f9c-841a-a6ad42fb0f1b', 'VIDEO', '/videos/exercises/barbell-biceps-curl.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
 
 INSERT INTO "Exercise" (
   "id", "name", "slug", "description", "primaryMuscle", "secondaryMuscles", "bodyPart",
@@ -1135,7 +1135,7 @@ INSERT INTO "Exercise" (
   "commonMistakes", "safetyTips", "beginnerAlternative", "intermediateAlternative", "advancedAlternative",
   "tags", "caloriesBurnPerHour", "isCustom"
 ) VALUES (
-  'c5aa457c-8b8b-43ef-b8b8-ce7c49abf35f', 'EZ-Bar Bicep Curl', 'ez-bar-bicep-curl', 'Curling with an ergonomic undulating bar that reduces wrist and forearm strain.',
+  '5b9fce11-30dd-4eb1-9d78-ce8d356aecad', 'EZ-Bar Bicep Curl', 'ez-bar-bicep-curl', 'Curling with an ergonomic undulating bar that reduces wrist and forearm strain.',
   'Biceps', 'Forearms', 'Arms',
   'Barbell', 'Beginner', 'Isolation',
   'Grip EZ-bar on the angled grooves, stand upright, curl bar to shoulder height, and lower slowly.', '["Grip EZ-bar on comfortable inner or outer angled knurling."]', '["Curl bar upward without moving elbows forward, squeeze biceps, lower under control."]',
@@ -1148,7 +1148,7 @@ INSERT INTO "Exercise" (
   "setupSteps" = EXCLUDED."setupSteps",
   "executionSteps" = EXCLUDED."executionSteps",
   "commonMistakes" = EXCLUDED."commonMistakes";
-INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('85c9767f-7286-404a-8167-359874cf9871', 'c5aa457c-8b8b-43ef-b8b8-ce7c49abf35f', 'VIDEO', 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
+INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('media-ez-bar-bicep-curl', '5b9fce11-30dd-4eb1-9d78-ce8d356aecad', 'VIDEO', '/videos/exercises/barbell-biceps-curl.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
 
 INSERT INTO "Exercise" (
   "id", "name", "slug", "description", "primaryMuscle", "secondaryMuscles", "bodyPart",
@@ -1157,7 +1157,7 @@ INSERT INTO "Exercise" (
   "commonMistakes", "safetyTips", "beginnerAlternative", "intermediateAlternative", "advancedAlternative",
   "tags", "caloriesBurnPerHour", "isCustom"
 ) VALUES (
-  '49b776d9-8977-4ff7-9890-c2e7108e3724', 'Dumbbell Alternating Curl', 'dumbbell-alternating-curl', 'Classic free-standing curl allowing individual limb focus and dynamic wrist supination.',
+  '6410e880-b8aa-4266-9dea-00bda456d845', 'Dumbbell Alternating Curl', 'dumbbell-alternating-curl', 'Classic free-standing curl allowing individual limb focus and dynamic wrist supination.',
   'Biceps', 'Forearms', 'Arms',
   'Dumbbell', 'Beginner', 'Isolation',
   'Stand tall with dumbbells at sides, curl one arm up while rotating palm upward, lower, and alternate sides.', '["Stand tall holding dumbbells with neutral palms."]', '["Curl one dumbbell up, turning palm toward ceiling, squeeze bicep, lower, repeat other side."]',
@@ -1170,7 +1170,7 @@ INSERT INTO "Exercise" (
   "setupSteps" = EXCLUDED."setupSteps",
   "executionSteps" = EXCLUDED."executionSteps",
   "commonMistakes" = EXCLUDED."commonMistakes";
-INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('a96175ad-3c5d-4942-acc6-26b78782949d', '49b776d9-8977-4ff7-9890-c2e7108e3724', 'VIDEO', 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
+INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('media-dumbbell-alternating-curl', '6410e880-b8aa-4266-9dea-00bda456d845', 'VIDEO', '/videos/exercises/barbell-biceps-curl.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
 
 INSERT INTO "Exercise" (
   "id", "name", "slug", "description", "primaryMuscle", "secondaryMuscles", "bodyPart",
@@ -1179,7 +1179,7 @@ INSERT INTO "Exercise" (
   "commonMistakes", "safetyTips", "beginnerAlternative", "intermediateAlternative", "advancedAlternative",
   "tags", "caloriesBurnPerHour", "isCustom"
 ) VALUES (
-  '9ce4e734-947f-4394-bb34-7efe16220708', 'Triceps Rope Pushdown', 'triceps-rope-pushdown', 'The premier triceps isolation movement allowing full extension and lateral head separation at the lockout.',
+  'a9bbbcc9-be0b-4485-8684-026928885712', 'Triceps Rope Pushdown', 'triceps-rope-pushdown', 'The premier triceps isolation movement allowing full extension and lateral head separation at the lockout.',
   'Triceps', 'Forearms', 'Arms',
   'Cable', 'Beginner', 'Isolation',
   'Attach rope to high pulley, pin elbows to ribs, push rope down and spread ends apart at full elbow extension.', '["Stand facing cable, slight torso hinge, elbows pinned tightly by your ribcage, hold rope handles."]', '["Push rope down by extending elbows, flare ends outward at bottom, squeeze triceps 1s, return slowly."]',
@@ -1192,7 +1192,7 @@ INSERT INTO "Exercise" (
   "setupSteps" = EXCLUDED."setupSteps",
   "executionSteps" = EXCLUDED."executionSteps",
   "commonMistakes" = EXCLUDED."commonMistakes";
-INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('cb9f8050-5977-4c27-ab25-aeb08f98e098', '9ce4e734-947f-4394-bb34-7efe16220708', 'VIDEO', 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
+INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('media-triceps-rope-pushdown', 'a9bbbcc9-be0b-4485-8684-026928885712', 'VIDEO', '/videos/exercises/tricep-pushdown.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
 
 INSERT INTO "Exercise" (
   "id", "name", "slug", "description", "primaryMuscle", "secondaryMuscles", "bodyPart",
@@ -1201,7 +1201,7 @@ INSERT INTO "Exercise" (
   "commonMistakes", "safetyTips", "beginnerAlternative", "intermediateAlternative", "advancedAlternative",
   "tags", "caloriesBurnPerHour", "isCustom"
 ) VALUES (
-  '0de7e6e6-41bf-440c-8895-11018d46a526', 'Skull Crushers (Lying Triceps Extension)', 'skull-crushers', 'Mass-building triceps exercise placing intense loaded stretch on the long and medial heads of the triceps.',
+  '49f63df2-9179-4969-8fc3-4539809d84a2', 'Skull Crushers (Lying Triceps Extension)', 'skull-crushers', 'Mass-building triceps exercise placing intense loaded stretch on the long and medial heads of the triceps.',
   'Triceps', 'Forearms', 'Arms',
   'Barbell', 'Intermediate', 'Isolation',
   'Lie on flat bench with EZ-bar extended above chest, bend elbows to lower bar toward forehead/crown, and extend back up.', '["Lie flat on bench holding EZ-bar over chest with narrow overhand grip, arms angled slightly back."]', '["Bend at elbows lowering bar toward hairline, keep upper arms steady, extend elbows back to top."]',
@@ -1214,7 +1214,7 @@ INSERT INTO "Exercise" (
   "setupSteps" = EXCLUDED."setupSteps",
   "executionSteps" = EXCLUDED."executionSteps",
   "commonMistakes" = EXCLUDED."commonMistakes";
-INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('1799a78a-3b9e-4641-96a8-694981167075', '0de7e6e6-41bf-440c-8895-11018d46a526', 'VIDEO', 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
+INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('media-skull-crushers', '49f63df2-9179-4969-8fc3-4539809d84a2', 'VIDEO', '/videos/exercises/tricep-pushdown.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
 
 INSERT INTO "Exercise" (
   "id", "name", "slug", "description", "primaryMuscle", "secondaryMuscles", "bodyPart",
@@ -1223,7 +1223,7 @@ INSERT INTO "Exercise" (
   "commonMistakes", "safetyTips", "beginnerAlternative", "intermediateAlternative", "advancedAlternative",
   "tags", "caloriesBurnPerHour", "isCustom"
 ) VALUES (
-  '3a3e6223-3ea9-4b2a-9ce4-74f9aa441358', 'Close-Grip Bench Press', 'close-grip-bench-press', 'Heavy compound horizontal press prioritizing triceps power and lockout strength with shoulder-width grip.',
+  '2f576d89-9486-44e1-8b0b-d56405adfb64', 'Close-Grip Bench Press', 'close-grip-bench-press', 'Heavy compound horizontal press prioritizing triceps power and lockout strength with shoulder-width grip.',
   'Triceps', 'Chest, Front Deltoids', 'Arms',
   'Barbell', 'Intermediate', 'Horizontal Push',
   'Lie on flat bench, grip barbell at shoulder-width, lower bar to lower sternum keeping elbows tucked, and press to lockout.', '["Lie on bench, grip bar with hands directly in line with shoulders (approx. 14-16 inches apart)."]', '["Lower bar to lower chest while keeping elbows tucked close to ribs, press upward forcefully."]',
@@ -1236,7 +1236,7 @@ INSERT INTO "Exercise" (
   "setupSteps" = EXCLUDED."setupSteps",
   "executionSteps" = EXCLUDED."executionSteps",
   "commonMistakes" = EXCLUDED."commonMistakes";
-INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('824b7148-0af4-4e8e-ad76-42216cba58d0', '3a3e6223-3ea9-4b2a-9ce4-74f9aa441358', 'VIDEO', 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
+INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('media-close-grip-bench-press', '2f576d89-9486-44e1-8b0b-d56405adfb64', 'VIDEO', '/videos/exercises/bench-press.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
 
 INSERT INTO "Exercise" (
   "id", "name", "slug", "description", "primaryMuscle", "secondaryMuscles", "bodyPart",
@@ -1245,7 +1245,7 @@ INSERT INTO "Exercise" (
   "commonMistakes", "safetyTips", "beginnerAlternative", "intermediateAlternative", "advancedAlternative",
   "tags", "caloriesBurnPerHour", "isCustom"
 ) VALUES (
-  '3e520e19-3462-46ab-b560-0b2fb8086fc6', 'Overhead Triceps Extension', 'overhead-triceps-extension', 'Overhead extension placing the triceps long head under maximum stretch for complete arm development.',
+  '4740d4c6-410d-4fa9-badb-a8d6b70947b7', 'Overhead Triceps Extension', 'overhead-triceps-extension', 'Overhead extension placing the triceps long head under maximum stretch for complete arm development.',
   'Triceps', 'Forearms', 'Arms',
   'Dumbbell', 'Beginner', 'Isolation',
   'Sit or stand holding a dumbbell overhead with both hands, lower dumbbell behind head, and extend arms overhead.', '["Sit tall with core engaged, hold dumbbell overhead with both hands in diamond grip."]', '["Lower dumbbell behind neck by bending elbows, feel deep long-head stretch, extend arms to top."]',
@@ -1258,7 +1258,7 @@ INSERT INTO "Exercise" (
   "setupSteps" = EXCLUDED."setupSteps",
   "executionSteps" = EXCLUDED."executionSteps",
   "commonMistakes" = EXCLUDED."commonMistakes";
-INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('08cf667e-8439-44d3-8c7a-2561b520a0e7', '3e520e19-3462-46ab-b560-0b2fb8086fc6', 'VIDEO', 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
+INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('media-overhead-triceps-extension', '4740d4c6-410d-4fa9-badb-a8d6b70947b7', 'VIDEO', '/videos/exercises/tricep-pushdown.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
 
 INSERT INTO "Exercise" (
   "id", "name", "slug", "description", "primaryMuscle", "secondaryMuscles", "bodyPart",
@@ -1267,7 +1267,7 @@ INSERT INTO "Exercise" (
   "commonMistakes", "safetyTips", "beginnerAlternative", "intermediateAlternative", "advancedAlternative",
   "tags", "caloriesBurnPerHour", "isCustom"
 ) VALUES (
-  '87847331-73cb-4092-9ed5-b107b784f34a', 'Triceps Dips (Parallel Bar)', 'triceps-dips', 'Upright parallel bar dip focusing on triceps lockout strength and overload.',
+  '6929392f-cf4b-4c4a-8126-30545896c980', 'Triceps Dips (Parallel Bar)', 'triceps-dips', 'Upright parallel bar dip focusing on triceps lockout strength and overload.',
   'Triceps', 'Chest, Front Deltoids', 'Arms',
   'Bodyweight', 'Intermediate', 'Vertical Push',
   'Mount bars, keep torso upright, lower until elbows reach 90 degrees, and push back up to lockout.', '["Mount parallel bars, lock arms, keep torso strictly upright with legs straight below."]', '["Lower down keeping elbows tucked close to sides, press through palms to lockout."]',
@@ -1280,7 +1280,7 @@ INSERT INTO "Exercise" (
   "setupSteps" = EXCLUDED."setupSteps",
   "executionSteps" = EXCLUDED."executionSteps",
   "commonMistakes" = EXCLUDED."commonMistakes";
-INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('95ae2016-09df-4bbe-9fd1-ad956bba5b26', '87847331-73cb-4092-9ed5-b107b784f34a', 'VIDEO', 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
+INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('media-triceps-dips', '6929392f-cf4b-4c4a-8126-30545896c980', 'VIDEO', '/videos/exercises/shoulder-press.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
 
 INSERT INTO "Exercise" (
   "id", "name", "slug", "description", "primaryMuscle", "secondaryMuscles", "bodyPart",
@@ -1289,7 +1289,7 @@ INSERT INTO "Exercise" (
   "commonMistakes", "safetyTips", "beginnerAlternative", "intermediateAlternative", "advancedAlternative",
   "tags", "caloriesBurnPerHour", "isCustom"
 ) VALUES (
-  '2efd9177-f53f-48ac-bd19-bbce8f73b615', 'Straight-Bar Triceps Pushdown', 'straight-bar-triceps-pushdown', 'Classic cable pushdown utilizing a solid bar to allow maximum loading on the medial and lateral heads.',
+  'bd47fdab-6db8-42a2-8203-b8a369e93373', 'Straight-Bar Triceps Pushdown', 'straight-bar-triceps-pushdown', 'Classic cable pushdown utilizing a solid bar to allow maximum loading on the medial and lateral heads.',
   'Triceps', 'Forearms', 'Arms',
   'Cable', 'Beginner', 'Isolation',
   'Grip straight or V-bar on high pulley with overhand grip, push bar down to thighs, and return to chest height.', '["Stand facing cable with slight forward lean, grip bar overhand, elbows tucked to ribs."]', '["Push bar down to touch thighs, lock elbows with control, return to chest level."]',
@@ -1302,7 +1302,7 @@ INSERT INTO "Exercise" (
   "setupSteps" = EXCLUDED."setupSteps",
   "executionSteps" = EXCLUDED."executionSteps",
   "commonMistakes" = EXCLUDED."commonMistakes";
-INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('391dfc69-736e-4123-8475-9800b227b23b', '2efd9177-f53f-48ac-bd19-bbce8f73b615', 'VIDEO', 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
+INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('media-straight-bar-triceps-pushdown', 'bd47fdab-6db8-42a2-8203-b8a369e93373', 'VIDEO', '/videos/exercises/tricep-pushdown.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
 
 INSERT INTO "Exercise" (
   "id", "name", "slug", "description", "primaryMuscle", "secondaryMuscles", "bodyPart",
@@ -1311,7 +1311,7 @@ INSERT INTO "Exercise" (
   "commonMistakes", "safetyTips", "beginnerAlternative", "intermediateAlternative", "advancedAlternative",
   "tags", "caloriesBurnPerHour", "isCustom"
 ) VALUES (
-  '5b179b6b-ebcb-42cf-91c0-372a5dfed7fd', 'Cable Triceps Kickback', 'cable-triceps-kickback', 'Single-arm cable kickback providing continuous tension at peak triceps contraction.',
+  '8b80f77f-2a80-4191-ae9d-cf5b9ec8498e', 'Cable Triceps Kickback', 'cable-triceps-kickback', 'Single-arm cable kickback providing continuous tension at peak triceps contraction.',
   'Triceps', 'Forearms', 'Arms',
   'Cable', 'Beginner', 'Isolation',
   'Set cable to mid height without attachment, hinge at hips, hold cable rubber stopper, extend arm straight back.', '["Hinge forward at 45 degrees, elbow tucked high against torso, hold cable end."]', '["Extend arm backward until completely straight, squeeze triceps for 1s, return to 90 degrees."]',
@@ -1324,7 +1324,7 @@ INSERT INTO "Exercise" (
   "setupSteps" = EXCLUDED."setupSteps",
   "executionSteps" = EXCLUDED."executionSteps",
   "commonMistakes" = EXCLUDED."commonMistakes";
-INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('35061309-f365-4405-8202-6d248c7beb58', '5b179b6b-ebcb-42cf-91c0-372a5dfed7fd', 'VIDEO', 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
+INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('media-cable-triceps-kickback', '8b80f77f-2a80-4191-ae9d-cf5b9ec8498e', 'VIDEO', '/videos/exercises/tricep-pushdown.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
 
 INSERT INTO "Exercise" (
   "id", "name", "slug", "description", "primaryMuscle", "secondaryMuscles", "bodyPart",
@@ -1333,7 +1333,7 @@ INSERT INTO "Exercise" (
   "commonMistakes", "safetyTips", "beginnerAlternative", "intermediateAlternative", "advancedAlternative",
   "tags", "caloriesBurnPerHour", "isCustom"
 ) VALUES (
-  'db735f7f-594e-455d-abad-17490221e425', 'Diamond Push-Ups', 'diamond-push-ups', 'Bodyweight push-up variation with hands touching in a diamond shape for extreme triceps emphasis.',
+  'f13abc89-c732-40c2-a368-4c2b1639944e', 'Diamond Push-Ups', 'diamond-push-ups', 'Bodyweight push-up variation with hands touching in a diamond shape for extreme triceps emphasis.',
   'Triceps', 'Chest, Front Deltoids, Core', 'Arms',
   'Bodyweight', 'Intermediate', 'Horizontal Push',
   'Place thumbs and index fingers together beneath chest, lower body until chest touches hands, and press back up.', '["High plank position with index fingers and thumbs forming a diamond directly under sternum."]', '["Lower chest to touch diamond, keep elbows tracking close to torso, press up to lockout."]',
@@ -1346,7 +1346,7 @@ INSERT INTO "Exercise" (
   "setupSteps" = EXCLUDED."setupSteps",
   "executionSteps" = EXCLUDED."executionSteps",
   "commonMistakes" = EXCLUDED."commonMistakes";
-INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('990dc41b-7c9b-4232-b660-a4aafb32fdcb', 'db735f7f-594e-455d-abad-17490221e425', 'VIDEO', 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
+INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('media-diamond-push-ups', 'f13abc89-c732-40c2-a368-4c2b1639944e', 'VIDEO', '/videos/exercises/push-up.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
 
 INSERT INTO "Exercise" (
   "id", "name", "slug", "description", "primaryMuscle", "secondaryMuscles", "bodyPart",
@@ -1355,7 +1355,7 @@ INSERT INTO "Exercise" (
   "commonMistakes", "safetyTips", "beginnerAlternative", "intermediateAlternative", "advancedAlternative",
   "tags", "caloriesBurnPerHour", "isCustom"
 ) VALUES (
-  'c75f62eb-daef-4391-a337-092138e51986', 'Barbell Back Squat', 'barbell-back-squat', 'The premier lower body compound movement for developing massive quadriceps, glutes, core stability, and overall athletic power.',
+  '0c3d2db8-3c6c-4c07-ab9e-64e31c1378e9', 'Barbell Back Squat', 'barbell-back-squat', 'The premier lower body compound movement for developing massive quadriceps, glutes, core stability, and overall athletic power.',
   'Quadriceps', 'Glutes, Hamstrings, Adductors, Lower Back, Core', 'Legs',
   'Barbell', 'Intermediate', 'Squat',
   'Rest barbell across upper traps, step back, squat down until hips descend below knees (parallel), and drive up through mid-foot.', '["Step under bar, set bar across upper traps (high bar) or rear delts (low bar).","Unrack, take two steps back, establish shoulder-width stance with toes flared 15-30 degrees.","Take deep breath, brace core 360 degrees, pull bar firmly into back."]', '["Initiate by breaking at hips and knees simultaneously.","Descend under control while pushing knees out in line with toes.","Hit parallel or deeper with upright torso, drive through whole foot to stand tall."]',
@@ -1368,7 +1368,7 @@ INSERT INTO "Exercise" (
   "setupSteps" = EXCLUDED."setupSteps",
   "executionSteps" = EXCLUDED."executionSteps",
   "commonMistakes" = EXCLUDED."commonMistakes";
-INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('76bfabe2-26f8-4f0d-9ad5-26d67c8d2acf', 'c75f62eb-daef-4391-a337-092138e51986', 'VIDEO', 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
+INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('media-barbell-back-squat', '0c3d2db8-3c6c-4c07-ab9e-64e31c1378e9', 'VIDEO', '/videos/exercises/squat.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
 
 INSERT INTO "Exercise" (
   "id", "name", "slug", "description", "primaryMuscle", "secondaryMuscles", "bodyPart",
@@ -1377,7 +1377,7 @@ INSERT INTO "Exercise" (
   "commonMistakes", "safetyTips", "beginnerAlternative", "intermediateAlternative", "advancedAlternative",
   "tags", "caloriesBurnPerHour", "isCustom"
 ) VALUES (
-  '344f9910-e82c-4878-9fe1-406ccd812d7b', 'Leg Press', 'leg-press', 'Heavy machine compound press allowing massive quadriceps overload without spinal loading.',
+  '9e64d526-2cad-4f59-96f9-4dd5a6f56a11', 'Leg Press', 'leg-press', 'Heavy machine compound press allowing massive quadriceps overload without spinal loading.',
   'Quadriceps', 'Glutes, Adductors, Hamstrings', 'Legs',
   'Machine', 'Beginner', 'Squat',
   'Sit in 45-degree leg press sled, place feet shoulder-width on platform, unlock safety handles, lower sled to 90 degrees, press up.', '["Sit back firmly in seat with lower back flat against pad, feet shoulder-width on footplate."]', '["Lower sled under control until knees reach 90 degrees, press through mid-foot, do not lock knees violently."]',
@@ -1390,7 +1390,7 @@ INSERT INTO "Exercise" (
   "setupSteps" = EXCLUDED."setupSteps",
   "executionSteps" = EXCLUDED."executionSteps",
   "commonMistakes" = EXCLUDED."commonMistakes";
-INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('13fe170d-9276-42e5-81ab-6e59d927224b', '344f9910-e82c-4878-9fe1-406ccd812d7b', 'VIDEO', 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
+INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('media-leg-press', '9e64d526-2cad-4f59-96f9-4dd5a6f56a11', 'VIDEO', '/videos/exercises/squat.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
 
 INSERT INTO "Exercise" (
   "id", "name", "slug", "description", "primaryMuscle", "secondaryMuscles", "bodyPart",
@@ -1399,7 +1399,7 @@ INSERT INTO "Exercise" (
   "commonMistakes", "safetyTips", "beginnerAlternative", "intermediateAlternative", "advancedAlternative",
   "tags", "caloriesBurnPerHour", "isCustom"
 ) VALUES (
-  'ff1b97aa-8f55-40dc-be8c-adba2264032c', 'Bulgarian Split Squat', 'bulgarian-split-squat', 'The most effective unilateral quad and glute hypertrophy exercise, correcting strength imbalances and building stability.',
+  '3809279c-1007-4893-b959-0e1868d89d72', 'Bulgarian Split Squat', 'bulgarian-split-squat', 'The most effective unilateral quad and glute hypertrophy exercise, correcting strength imbalances and building stability.',
   'Quadriceps', 'Glutes, Hamstrings, Adductors, Calves', 'Legs',
   'Dumbbell', 'Intermediate', 'Lunge',
   'Place rear foot on bench behind you, hold dumbbells at sides, descend until front thigh is parallel to ground, and press up.', '["Place laces of rear foot on bench roughly 2-3 feet behind front foot, torso upright or slightly angled."]', '["Lower hips down and back until rear knee nearly touches floor, drive through front heel to return."]',
@@ -1412,7 +1412,7 @@ INSERT INTO "Exercise" (
   "setupSteps" = EXCLUDED."setupSteps",
   "executionSteps" = EXCLUDED."executionSteps",
   "commonMistakes" = EXCLUDED."commonMistakes";
-INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('e71ae44a-fa46-4bdb-a52d-9fe6b4d14411', 'ff1b97aa-8f55-40dc-be8c-adba2264032c', 'VIDEO', 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
+INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('media-bulgarian-split-squat', '3809279c-1007-4893-b959-0e1868d89d72', 'VIDEO', '/videos/exercises/squat.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
 
 INSERT INTO "Exercise" (
   "id", "name", "slug", "description", "primaryMuscle", "secondaryMuscles", "bodyPart",
@@ -1421,7 +1421,7 @@ INSERT INTO "Exercise" (
   "commonMistakes", "safetyTips", "beginnerAlternative", "intermediateAlternative", "advancedAlternative",
   "tags", "caloriesBurnPerHour", "isCustom"
 ) VALUES (
-  '8dc8e16d-ab0e-475c-9a3e-57bdeba87499', 'Hack Squat', 'hack-squat', 'Angled machine squat that stabilizes torso completely, allowing pure knee flexion and quad isolation.',
+  '8492534b-3b89-4724-8d14-f9c2eb27f247', 'Hack Squat', 'hack-squat', 'Angled machine squat that stabilizes torso completely, allowing pure knee flexion and quad isolation.',
   'Quadriceps', 'Glutes', 'Legs',
   'Machine', 'Intermediate', 'Squat',
   'Step into hack squat machine with shoulders under pads, unlock safety catches, squat down to full depth, and press up.', '["Back flat against backrest, shoulders under pads, feet mid-platform shoulder-width."]', '["Descend smoothly pushing knees forward, hit full depth, drive through feet to return to top."]',
@@ -1434,7 +1434,7 @@ INSERT INTO "Exercise" (
   "setupSteps" = EXCLUDED."setupSteps",
   "executionSteps" = EXCLUDED."executionSteps",
   "commonMistakes" = EXCLUDED."commonMistakes";
-INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('49185777-f62a-4482-9c7f-ec2234d46fab', '8dc8e16d-ab0e-475c-9a3e-57bdeba87499', 'VIDEO', 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
+INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('media-hack-squat', '8492534b-3b89-4724-8d14-f9c2eb27f247', 'VIDEO', '/videos/exercises/squat.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
 
 INSERT INTO "Exercise" (
   "id", "name", "slug", "description", "primaryMuscle", "secondaryMuscles", "bodyPart",
@@ -1443,7 +1443,7 @@ INSERT INTO "Exercise" (
   "commonMistakes", "safetyTips", "beginnerAlternative", "intermediateAlternative", "advancedAlternative",
   "tags", "caloriesBurnPerHour", "isCustom"
 ) VALUES (
-  '1254ac1d-d0a6-410a-8294-db6c76b40320', 'Leg Extension', 'leg-extension', 'Strict open-chain quadriceps isolation exercise emphasizing the rectus femoris at full knee extension.',
+  '9f3f6d75-92cf-4252-8777-f0e02fca6251', 'Leg Extension', 'leg-extension', 'Strict open-chain quadriceps isolation exercise emphasizing the rectus femoris at full knee extension.',
   'Quadriceps', 'None (pure isolation)', 'Legs',
   'Machine', 'Beginner', 'Isolation',
   'Sit in machine with shin pad against lower shins, extend legs upward until straight, squeeze quads for 1s, lower slowly.', '["Adjust back pad so knees align with machine pivot axis, shin pad resting just above ankles."]', '["Extend legs upward smoothly, lock out with a 1-second quad squeeze, lower with a 3-second negative."]',
@@ -1456,7 +1456,7 @@ INSERT INTO "Exercise" (
   "setupSteps" = EXCLUDED."setupSteps",
   "executionSteps" = EXCLUDED."executionSteps",
   "commonMistakes" = EXCLUDED."commonMistakes";
-INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('c8ea256e-f021-428b-bdf0-2429f1cfa3e2', '1254ac1d-d0a6-410a-8294-db6c76b40320', 'VIDEO', 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
+INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('media-leg-extension', '9f3f6d75-92cf-4252-8777-f0e02fca6251', 'VIDEO', '/videos/exercises/leg-extension.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
 
 INSERT INTO "Exercise" (
   "id", "name", "slug", "description", "primaryMuscle", "secondaryMuscles", "bodyPart",
@@ -1465,7 +1465,7 @@ INSERT INTO "Exercise" (
   "commonMistakes", "safetyTips", "beginnerAlternative", "intermediateAlternative", "advancedAlternative",
   "tags", "caloriesBurnPerHour", "isCustom"
 ) VALUES (
-  '50817e9f-aae0-4da8-a530-e2c941fc4623', 'Front Squat', 'front-squat', 'Barbell squat with bar held across anterior deltoids in front rack, requiring upright torso and heavy quad emphasis.',
+  'a1855af3-2c7c-4402-8c5e-0eb75e431ebd', 'Front Squat', 'front-squat', 'Barbell squat with bar held across anterior deltoids in front rack, requiring upright torso and heavy quad emphasis.',
   'Quadriceps', 'Glutes, Upper Back, Core', 'Legs',
   'Barbell', 'Advanced', 'Squat',
   'Hold barbell in front rack position across shoulders with high elbows, squat down between knees, and drive straight up.', '["Rest bar in groove of front delts, fingers hooked lightly under bar, elbows held high parallel to floor."]', '["Squat straight down maintaining high elbows and vertical spine, hit depth, drive up through mid-foot."]',
@@ -1478,7 +1478,7 @@ INSERT INTO "Exercise" (
   "setupSteps" = EXCLUDED."setupSteps",
   "executionSteps" = EXCLUDED."executionSteps",
   "commonMistakes" = EXCLUDED."commonMistakes";
-INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('2e93624f-6f7b-4dbc-a9f6-0ddde15fbc46', '50817e9f-aae0-4da8-a530-e2c941fc4623', 'VIDEO', 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
+INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('media-front-squat', 'a1855af3-2c7c-4402-8c5e-0eb75e431ebd', 'VIDEO', '/videos/exercises/squat.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
 
 INSERT INTO "Exercise" (
   "id", "name", "slug", "description", "primaryMuscle", "secondaryMuscles", "bodyPart",
@@ -1487,7 +1487,7 @@ INSERT INTO "Exercise" (
   "commonMistakes", "safetyTips", "beginnerAlternative", "intermediateAlternative", "advancedAlternative",
   "tags", "caloriesBurnPerHour", "isCustom"
 ) VALUES (
-  'add3de21-6e6d-44ff-b077-ce9ccb03afeb', 'Goblet Squat', 'goblet-squat', 'The best fundamental squat learning tool, holding dumbbell/kettlebell at chest level to promote perfect mechanics.',
+  'c7eb4cde-0d45-45a4-b8ed-ce92d81c0761', 'Goblet Squat', 'goblet-squat', 'The best fundamental squat learning tool, holding dumbbell/kettlebell at chest level to promote perfect mechanics.',
   'Quadriceps', 'Glutes, Core', 'Legs',
   'Dumbbell', 'Beginner', 'Squat',
   'Hold dumbbell vertically against chest with both hands under top bell, squat down between hips, and stand up.', '["Stand with feet shoulder-width, hold dumbbell vertically touching sternum with both hands."]', '["Squat down tracking knees over toes, elbows slide inside knees at bottom, stand up tall."]',
@@ -1500,7 +1500,7 @@ INSERT INTO "Exercise" (
   "setupSteps" = EXCLUDED."setupSteps",
   "executionSteps" = EXCLUDED."executionSteps",
   "commonMistakes" = EXCLUDED."commonMistakes";
-INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('d03175ed-562f-4656-af0b-748849a5a537', 'add3de21-6e6d-44ff-b077-ce9ccb03afeb', 'VIDEO', 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
+INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('media-goblet-squat', 'c7eb4cde-0d45-45a4-b8ed-ce92d81c0761', 'VIDEO', '/videos/exercises/squat.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
 
 INSERT INTO "Exercise" (
   "id", "name", "slug", "description", "primaryMuscle", "secondaryMuscles", "bodyPart",
@@ -1509,7 +1509,7 @@ INSERT INTO "Exercise" (
   "commonMistakes", "safetyTips", "beginnerAlternative", "intermediateAlternative", "advancedAlternative",
   "tags", "caloriesBurnPerHour", "isCustom"
 ) VALUES (
-  '38f35355-16f4-4cfc-ba12-b208ccfeb602', 'Walking Lunges', 'walking-lunges', 'Dynamic unilateral movement developing quads, glutes, balance, and functional conditioning.',
+  'a5e66601-af5f-484c-bc2e-9e5148d7d4ea', 'Walking Lunges', 'walking-lunges', 'Dynamic unilateral movement developing quads, glutes, balance, and functional conditioning.',
   'Quadriceps', 'Glutes, Hamstrings, Calves, Core', 'Legs',
   'Dumbbell', 'Beginner', 'Lunge',
   'Hold dumbbells at sides, step forward into a lunge until back knee grazes floor, drive forward into next step.', '["Stand tall holding dumbbells, open walking path ahead."]', '["Step forward, lower rear knee toward floor, push through front foot directly into next stride."]',
@@ -1522,7 +1522,7 @@ INSERT INTO "Exercise" (
   "setupSteps" = EXCLUDED."setupSteps",
   "executionSteps" = EXCLUDED."executionSteps",
   "commonMistakes" = EXCLUDED."commonMistakes";
-INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('e36c2df3-d64f-41cd-b533-7a42ea27f52b', '38f35355-16f4-4cfc-ba12-b208ccfeb602', 'VIDEO', 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
+INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('media-walking-lunges', 'a5e66601-af5f-484c-bc2e-9e5148d7d4ea', 'VIDEO', '/videos/exercises/squat.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
 
 INSERT INTO "Exercise" (
   "id", "name", "slug", "description", "primaryMuscle", "secondaryMuscles", "bodyPart",
@@ -1531,7 +1531,7 @@ INSERT INTO "Exercise" (
   "commonMistakes", "safetyTips", "beginnerAlternative", "intermediateAlternative", "advancedAlternative",
   "tags", "caloriesBurnPerHour", "isCustom"
 ) VALUES (
-  'c5021d64-3dc9-49e3-a5b7-6e3e19d06688', 'Sissy Squat', 'sissy-squat', 'Advanced quad isolation exercise maximizing knee flexion and loaded stretch on the rectus femoris.',
+  '71dfcc4e-4315-4a21-9064-688e6e023173', 'Sissy Squat', 'sissy-squat', 'Advanced quad isolation exercise maximizing knee flexion and loaded stretch on the rectus femoris.',
   'Quadriceps', 'Core, Hip Flexors', 'Legs',
   'Bodyweight', 'Advanced', 'Squat',
   'Lock shins into sissy squat bench, lean torso backward as knees bend forward, and return to standing.', '["Lock feet and calves into sissy squat bench or hold a support pole."]', '["Lean back keeping straight line from knees to head, descend into deep knee flexion, push back up with quads."]',
@@ -1544,7 +1544,7 @@ INSERT INTO "Exercise" (
   "setupSteps" = EXCLUDED."setupSteps",
   "executionSteps" = EXCLUDED."executionSteps",
   "commonMistakes" = EXCLUDED."commonMistakes";
-INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('a2924593-4828-4199-bad5-5ef4481e00dc', 'c5021d64-3dc9-49e3-a5b7-6e3e19d06688', 'VIDEO', 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
+INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('media-sissy-squat', '71dfcc4e-4315-4a21-9064-688e6e023173', 'VIDEO', '/videos/exercises/leg-extension.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
 
 INSERT INTO "Exercise" (
   "id", "name", "slug", "description", "primaryMuscle", "secondaryMuscles", "bodyPart",
@@ -1553,7 +1553,7 @@ INSERT INTO "Exercise" (
   "commonMistakes", "safetyTips", "beginnerAlternative", "intermediateAlternative", "advancedAlternative",
   "tags", "caloriesBurnPerHour", "isCustom"
 ) VALUES (
-  'f1d34b0b-6431-4813-a1c8-078ed428f1c8', 'Step-Up', 'step-up', 'Unilateral leg exercise targeting quads and gluteus maximus with minimal lower back shear.',
+  'bd27b3c4-f700-433b-a33b-f1d7bc91cd9f', 'Step-Up', 'step-up', 'Unilateral leg exercise targeting quads and gluteus maximus with minimal lower back shear.',
   'Quadriceps', 'Glutes, Hamstrings, Calves', 'Legs',
   'Dumbbell', 'Beginner', 'Lunge',
   'Place one foot on sturdy box/bench, drive through front leg to stand on box, and lower slowly.', '["Stand facing knee-height box holding dumbbells at sides."]', '["Step front foot firmly on box, drive through mid-foot to stand up, lower under control with front leg."]',
@@ -1566,7 +1566,7 @@ INSERT INTO "Exercise" (
   "setupSteps" = EXCLUDED."setupSteps",
   "executionSteps" = EXCLUDED."executionSteps",
   "commonMistakes" = EXCLUDED."commonMistakes";
-INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('2e7e1f07-c9ac-4b48-ad20-548540b470ee', 'f1d34b0b-6431-4813-a1c8-078ed428f1c8', 'VIDEO', 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
+INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('media-step-up', 'bd27b3c4-f700-433b-a33b-f1d7bc91cd9f', 'VIDEO', '/videos/exercises/squat.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
 
 INSERT INTO "Exercise" (
   "id", "name", "slug", "description", "primaryMuscle", "secondaryMuscles", "bodyPart",
@@ -1575,7 +1575,7 @@ INSERT INTO "Exercise" (
   "commonMistakes", "safetyTips", "beginnerAlternative", "intermediateAlternative", "advancedAlternative",
   "tags", "caloriesBurnPerHour", "isCustom"
 ) VALUES (
-  '5096b5a1-8e03-4cfa-9a4d-fa1af5581850', 'Romanian Deadlift (RDL)', 'romanian-deadlift', 'The golden standard hip-hinge exercise for developing explosive hamstrings, glutes, and lower back resilience.',
+  '54bd5966-21e2-4483-9877-1ac01c8331ca', 'Romanian Deadlift (RDL)', 'romanian-deadlift', 'The golden standard hip-hinge exercise for developing explosive hamstrings, glutes, and lower back resilience.',
   'Hamstrings', 'Glutes, Lower Back, Forearms, Core', 'Legs',
   'Barbell', 'Intermediate', 'Hinge',
   'Hold barbell at hip height, unlock knees slightly, push hips backward until deep hamstring stretch, and drive hips forward.', '["Stand with feet hip-width apart holding barbell with overhand grip.","Soften knees slightly (15 degree bend) and lock that knee angle in place.","Brace core, pull shoulder blades down, keep bar in contact with thighs."]', '["Push your hips backward as if touching a wall behind you.","Slide the bar down your thighs until bar reaches mid-shin and hamstrings are fully stretched.","Maintain neutral spine, drive hips forward through glutes and hamstrings to return to standing."]',
@@ -1588,7 +1588,7 @@ INSERT INTO "Exercise" (
   "setupSteps" = EXCLUDED."setupSteps",
   "executionSteps" = EXCLUDED."executionSteps",
   "commonMistakes" = EXCLUDED."commonMistakes";
-INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('9c95f8cf-ec9e-46c4-91fb-466b0089611d', '5096b5a1-8e03-4cfa-9a4d-fa1af5581850', 'VIDEO', 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
+INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('media-romanian-deadlift', '54bd5966-21e2-4483-9877-1ac01c8331ca', 'VIDEO', '/videos/exercises/romanian-deadlift.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
 
 INSERT INTO "Exercise" (
   "id", "name", "slug", "description", "primaryMuscle", "secondaryMuscles", "bodyPart",
@@ -1597,7 +1597,7 @@ INSERT INTO "Exercise" (
   "commonMistakes", "safetyTips", "beginnerAlternative", "intermediateAlternative", "advancedAlternative",
   "tags", "caloriesBurnPerHour", "isCustom"
 ) VALUES (
-  'b7bdb15f-361f-4951-82f5-6d794f0963e6', 'Seated Leg Curl', 'seated-leg-curl', 'Machine knee flexion exercise training hamstrings at longer muscle lengths (hip flexed) for superior hypertrophy.',
+  'd6711878-921f-47bb-85c4-ab52ed4ae743', 'Seated Leg Curl', 'seated-leg-curl', 'Machine knee flexion exercise training hamstrings at longer muscle lengths (hip flexed) for superior hypertrophy.',
   'Hamstrings', 'Calves (Gastrocnemius)', 'Legs',
   'Machine', 'Beginner', 'Isolation',
   'Sit in machine with thigh pad clamped tight, curl pad down under seat, hold 1s squeeze, and return with control.', '["Adjust backrest so knee aligns with pivot point, lock thigh pad firmly down over quadriceps."]', '["Curl pad down and backward under seat, squeeze hamstrings hard for 1 second, resist weight for 3 seconds on return."]',
@@ -1610,7 +1610,7 @@ INSERT INTO "Exercise" (
   "setupSteps" = EXCLUDED."setupSteps",
   "executionSteps" = EXCLUDED."executionSteps",
   "commonMistakes" = EXCLUDED."commonMistakes";
-INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('7707f6ea-3b79-4864-84cf-64e2b967645d', 'b7bdb15f-361f-4951-82f5-6d794f0963e6', 'VIDEO', 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
+INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('media-seated-leg-curl', 'd6711878-921f-47bb-85c4-ab52ed4ae743', 'VIDEO', '/videos/exercises/leg-extension.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
 
 INSERT INTO "Exercise" (
   "id", "name", "slug", "description", "primaryMuscle", "secondaryMuscles", "bodyPart",
@@ -1619,7 +1619,7 @@ INSERT INTO "Exercise" (
   "commonMistakes", "safetyTips", "beginnerAlternative", "intermediateAlternative", "advancedAlternative",
   "tags", "caloriesBurnPerHour", "isCustom"
 ) VALUES (
-  '4bfb9392-0f9b-4707-8efe-a1e4a62838db', 'Lying Leg Curl', 'lying-leg-curl', 'Prone machine curl isolating the knee flexion function of the hamstrings across both heads.',
+  'b7e1fd83-c96e-49d1-aa7c-3404bbfe77fc', 'Lying Leg Curl', 'lying-leg-curl', 'Prone machine curl isolating the knee flexion function of the hamstrings across both heads.',
   'Hamstrings', 'Calves', 'Legs',
   'Machine', 'Beginner', 'Isolation',
   'Lie face down with roller pad behind ankles, curl pad up toward glutes, squeeze, and lower slowly.', '["Lie prone on bench, knees just off edge of pad, roller resting against Achilles tendons."]', '["Curl legs upward toward buttocks, squeeze hamstrings, lower with 3s tempo."]',
@@ -1632,7 +1632,7 @@ INSERT INTO "Exercise" (
   "setupSteps" = EXCLUDED."setupSteps",
   "executionSteps" = EXCLUDED."executionSteps",
   "commonMistakes" = EXCLUDED."commonMistakes";
-INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('ac3fe12f-e31a-4f6a-83a1-358e2dea403a', '4bfb9392-0f9b-4707-8efe-a1e4a62838db', 'VIDEO', 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
+INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('media-lying-leg-curl', 'b7e1fd83-c96e-49d1-aa7c-3404bbfe77fc', 'VIDEO', '/videos/exercises/leg-extension.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
 
 INSERT INTO "Exercise" (
   "id", "name", "slug", "description", "primaryMuscle", "secondaryMuscles", "bodyPart",
@@ -1641,7 +1641,7 @@ INSERT INTO "Exercise" (
   "commonMistakes", "safetyTips", "beginnerAlternative", "intermediateAlternative", "advancedAlternative",
   "tags", "caloriesBurnPerHour", "isCustom"
 ) VALUES (
-  '6240751c-c259-4aef-bb0a-d3af939059ed', 'Nordic Hamstring Curl', 'nordic-hamstring-curl', 'The premier eccentric bodyweight hamstring builder, proven to dramatically reduce hamstring strain injuries.',
+  '1a0c56b3-fc1c-4e60-a6b0-120ff9652c5a', 'Nordic Hamstring Curl', 'nordic-hamstring-curl', 'The premier eccentric bodyweight hamstring builder, proven to dramatically reduce hamstring strain injuries.',
   'Hamstrings', 'Glutes, Calves, Core', 'Legs',
   'Bodyweight', 'Advanced', 'Isolation',
   'Kneel with ankles anchored securely, lower torso forward under strict hamstring control as far as possible, catch with hands, and push back up.', '["Kneel on padded surface with ankles locked down under a heavy barbell or partner holding heels."]', '["Keep straight line from knees to shoulders, lower body forward resisting gravity with hamstrings, push off floor lightly to return."]',
@@ -1654,7 +1654,7 @@ INSERT INTO "Exercise" (
   "setupSteps" = EXCLUDED."setupSteps",
   "executionSteps" = EXCLUDED."executionSteps",
   "commonMistakes" = EXCLUDED."commonMistakes";
-INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('81a2fcf8-23d7-442b-8fc9-4afa7dfd49e0', '6240751c-c259-4aef-bb0a-d3af939059ed', 'VIDEO', 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
+INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('media-nordic-hamstring-curl', '1a0c56b3-fc1c-4e60-a6b0-120ff9652c5a', 'VIDEO', '/videos/exercises/romanian-deadlift.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
 
 INSERT INTO "Exercise" (
   "id", "name", "slug", "description", "primaryMuscle", "secondaryMuscles", "bodyPart",
@@ -1663,7 +1663,7 @@ INSERT INTO "Exercise" (
   "commonMistakes", "safetyTips", "beginnerAlternative", "intermediateAlternative", "advancedAlternative",
   "tags", "caloriesBurnPerHour", "isCustom"
 ) VALUES (
-  'aefdc69e-1eeb-42f3-ba82-3cd08d06214b', 'Dumbbell Romanian Deadlift', 'dumbbell-romanian-deadlift', 'Free-weight hip hinge with dumbbells allowing personalized grip angle and natural tracking along sides of legs.',
+  '447b7586-3a56-470b-8a24-7ab763e4a044', 'Dumbbell Romanian Deadlift', 'dumbbell-romanian-deadlift', 'Free-weight hip hinge with dumbbells allowing personalized grip angle and natural tracking along sides of legs.',
   'Hamstrings', 'Glutes, Lower Back', 'Legs',
   'Dumbbell', 'Beginner', 'Hinge',
   'Hold dumbbells in front of thighs, hinge hips back with soft knees, lower weights to mid-shins, and drive hips forward.', '["Stand tall holding dumbbells, feet hip-width, knees slightly bent."]', '["Push hips back, lower dumbbells down front/sides of shins, stretch hamstrings, return upright."]',
@@ -1676,7 +1676,7 @@ INSERT INTO "Exercise" (
   "setupSteps" = EXCLUDED."setupSteps",
   "executionSteps" = EXCLUDED."executionSteps",
   "commonMistakes" = EXCLUDED."commonMistakes";
-INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('10f9e639-b61a-4416-8643-711b0c6f1cc5', 'aefdc69e-1eeb-42f3-ba82-3cd08d06214b', 'VIDEO', 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
+INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('media-dumbbell-romanian-deadlift', '447b7586-3a56-470b-8a24-7ab763e4a044', 'VIDEO', '/videos/exercises/romanian-deadlift.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
 
 INSERT INTO "Exercise" (
   "id", "name", "slug", "description", "primaryMuscle", "secondaryMuscles", "bodyPart",
@@ -1685,7 +1685,7 @@ INSERT INTO "Exercise" (
   "commonMistakes", "safetyTips", "beginnerAlternative", "intermediateAlternative", "advancedAlternative",
   "tags", "caloriesBurnPerHour", "isCustom"
 ) VALUES (
-  '0548aaae-d47d-410e-95fd-c03bff0d8ead', 'Stiff-Leg Deadlift', 'stiff-leg-deadlift', 'Deadlift variation with elevated hips and minimal knee bend for intense hamstring stretch starting from floor or deficit.',
+  '72abc6f5-d9f4-4b90-a685-c50443c28ab2', 'Stiff-Leg Deadlift', 'stiff-leg-deadlift', 'Deadlift variation with elevated hips and minimal knee bend for intense hamstring stretch starting from floor or deficit.',
   'Hamstrings', 'Glutes, Lower Back', 'Legs',
   'Barbell', 'Advanced', 'Hinge',
   'Stand over bar with nearly straight knees, hinge down to grip bar, lift using hamstrings and glutes while keeping hips high.', '["Stand over bar with feet hip-width, knees kept almost completely straight with slight micro-bend."]', '["Hinge down with high hips, grip bar, pull up using posterior chain, lower back to light floor touch."]',
@@ -1698,7 +1698,7 @@ INSERT INTO "Exercise" (
   "setupSteps" = EXCLUDED."setupSteps",
   "executionSteps" = EXCLUDED."executionSteps",
   "commonMistakes" = EXCLUDED."commonMistakes";
-INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('e7e61f8b-2853-4e34-ae50-f62a6090d1f3', '0548aaae-d47d-410e-95fd-c03bff0d8ead', 'VIDEO', 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
+INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('media-stiff-leg-deadlift', '72abc6f5-d9f4-4b90-a685-c50443c28ab2', 'VIDEO', '/videos/exercises/romanian-deadlift.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
 
 INSERT INTO "Exercise" (
   "id", "name", "slug", "description", "primaryMuscle", "secondaryMuscles", "bodyPart",
@@ -1707,7 +1707,7 @@ INSERT INTO "Exercise" (
   "commonMistakes", "safetyTips", "beginnerAlternative", "intermediateAlternative", "advancedAlternative",
   "tags", "caloriesBurnPerHour", "isCustom"
 ) VALUES (
-  'a6b647bc-6812-4a0a-8f0d-7c3aa41ef8e7', 'Good Morning', 'good-morning', 'Barbell hip hinge with bar on upper back targeting hamstrings, glutes, and spinal erectors.',
+  'c45c767b-f4ff-4c48-975a-00198941105e', 'Good Morning', 'good-morning', 'Barbell hip hinge with bar on upper back targeting hamstrings, glutes, and spinal erectors.',
   'Hamstrings', 'Lower Back, Glutes', 'Legs',
   'Barbell', 'Intermediate', 'Hinge',
   'Place barbell across upper traps, soft knees, hinge hips backward until torso is near parallel to floor, and return.', '["Barbell racked across upper traps, feet shoulder-width, knees softly bent."]', '["Hinge hips backward, keep back rigid as torso tilts forward, feel hamstring stretch, extend hips."]',
@@ -1720,7 +1720,7 @@ INSERT INTO "Exercise" (
   "setupSteps" = EXCLUDED."setupSteps",
   "executionSteps" = EXCLUDED."executionSteps",
   "commonMistakes" = EXCLUDED."commonMistakes";
-INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('25ef1365-60c3-483e-b214-94cfa2b4cd02', 'a6b647bc-6812-4a0a-8f0d-7c3aa41ef8e7', 'VIDEO', 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
+INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('media-good-morning', 'c45c767b-f4ff-4c48-975a-00198941105e', 'VIDEO', '/videos/exercises/romanian-deadlift.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
 
 INSERT INTO "Exercise" (
   "id", "name", "slug", "description", "primaryMuscle", "secondaryMuscles", "bodyPart",
@@ -1729,7 +1729,7 @@ INSERT INTO "Exercise" (
   "commonMistakes", "safetyTips", "beginnerAlternative", "intermediateAlternative", "advancedAlternative",
   "tags", "caloriesBurnPerHour", "isCustom"
 ) VALUES (
-  'ee4560d5-0d77-47ab-9334-e75373c97976', 'Single-Leg Romanian Deadlift', 'single-leg-romanian-deadlift', 'Unilateral hinge building hamstring strength, ankle stability, and hip balance.',
+  '03212759-c77e-4bd6-a899-37136cf08149', 'Single-Leg Romanian Deadlift', 'single-leg-romanian-deadlift', 'Unilateral hinge building hamstring strength, ankle stability, and hip balance.',
   'Hamstrings', 'Glutes, Core, Calves', 'Legs',
   'Dumbbell', 'Intermediate', 'Hinge',
   'Stand on one leg, hinge forward extending other leg straight behind you, lower dumbbell to shin level, and return.', '["Stand balancing on one leg holding dumbbell in opposite hand."]', '["Hinge forward lifting rear leg in line with torso, feel hamstring load on working leg, return upright."]',
@@ -1742,7 +1742,7 @@ INSERT INTO "Exercise" (
   "setupSteps" = EXCLUDED."setupSteps",
   "executionSteps" = EXCLUDED."executionSteps",
   "commonMistakes" = EXCLUDED."commonMistakes";
-INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('c5b5f08c-b80b-46ea-a8c5-ba4fa332cc05', 'ee4560d5-0d77-47ab-9334-e75373c97976', 'VIDEO', 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
+INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('media-single-leg-romanian-deadlift', '03212759-c77e-4bd6-a899-37136cf08149', 'VIDEO', '/videos/exercises/romanian-deadlift.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
 
 INSERT INTO "Exercise" (
   "id", "name", "slug", "description", "primaryMuscle", "secondaryMuscles", "bodyPart",
@@ -1751,7 +1751,7 @@ INSERT INTO "Exercise" (
   "commonMistakes", "safetyTips", "beginnerAlternative", "intermediateAlternative", "advancedAlternative",
   "tags", "caloriesBurnPerHour", "isCustom"
 ) VALUES (
-  'fa5d2025-ac49-474a-99bf-ab42963dd831', 'Barbell Hip Thrust', 'barbell-hip-thrust', 'The supreme glute hypertrophy exercise providing peak mechanical tension at full hip extension.',
+  '75f3100c-2073-4d45-b061-1c0ca2b1d4e7', 'Barbell Hip Thrust', 'barbell-hip-thrust', 'The supreme glute hypertrophy exercise providing peak mechanical tension at full hip extension.',
   'Glutes', 'Hamstrings, Quadriceps, Adductors', 'Legs',
   'Barbell', 'Intermediate', 'Hinge',
   'Upper back against bench, barbell padded across hips, drive hips up to ceiling until thighs and torso align, squeeze glutes hard.', '["Sit on floor with upper back against bench pad, barbell with thick pad rolled over hips.","Set feet shoulder-width apart, shins vertical at top of thrust.","Tuck chin to chest, keep eyes looking forward at knees."]', '["Drive through heels and push hips upward into full extension.","Squeeze glutes aggressively for 1-2 seconds at the top (pelvis in slight posterior tilt).","Lower hips under control without hyperextending lower back."]',
@@ -1764,7 +1764,7 @@ INSERT INTO "Exercise" (
   "setupSteps" = EXCLUDED."setupSteps",
   "executionSteps" = EXCLUDED."executionSteps",
   "commonMistakes" = EXCLUDED."commonMistakes";
-INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('ae9776ac-21f0-4ce6-9b99-3587b52e1cc1', 'fa5d2025-ac49-474a-99bf-ab42963dd831', 'VIDEO', 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
+INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('media-barbell-hip-thrust', '75f3100c-2073-4d45-b061-1c0ca2b1d4e7', 'VIDEO', '/videos/exercises/hip-thrust.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
 
 INSERT INTO "Exercise" (
   "id", "name", "slug", "description", "primaryMuscle", "secondaryMuscles", "bodyPart",
@@ -1773,7 +1773,7 @@ INSERT INTO "Exercise" (
   "commonMistakes", "safetyTips", "beginnerAlternative", "intermediateAlternative", "advancedAlternative",
   "tags", "caloriesBurnPerHour", "isCustom"
 ) VALUES (
-  'a03245ef-fe6e-44ab-acdc-70b5c4733ae5', 'Cable Glute Kickback', 'cable-glute-kickback', 'Isolation exercise targeting gluteus maximus through terminal hip extension with constant cable tension.',
+  'e4519a9b-eb49-4b27-8734-e9285f3078d8', 'Cable Glute Kickback', 'cable-glute-kickback', 'Isolation exercise targeting gluteus maximus through terminal hip extension with constant cable tension.',
   'Glutes', 'Hamstrings', 'Legs',
   'Cable', 'Beginner', 'Isolation',
   'Attach ankle strap to low cable, kick leg backward in an arc squeezing glute at top, and return under control.', '["Attach strap to ankle, stand facing cable tower holding frame for support, slight forward torso lean."]', '["Kick leg back and slightly outward, squeeze glute at peak for 1s, return without swinging."]',
@@ -1786,7 +1786,7 @@ INSERT INTO "Exercise" (
   "setupSteps" = EXCLUDED."setupSteps",
   "executionSteps" = EXCLUDED."executionSteps",
   "commonMistakes" = EXCLUDED."commonMistakes";
-INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('202b8c6a-eac5-4946-bd39-6e453b181561', 'a03245ef-fe6e-44ab-acdc-70b5c4733ae5', 'VIDEO', 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
+INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('media-cable-glute-kickback', 'e4519a9b-eb49-4b27-8734-e9285f3078d8', 'VIDEO', '/videos/exercises/hip-thrust.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
 
 INSERT INTO "Exercise" (
   "id", "name", "slug", "description", "primaryMuscle", "secondaryMuscles", "bodyPart",
@@ -1795,7 +1795,7 @@ INSERT INTO "Exercise" (
   "commonMistakes", "safetyTips", "beginnerAlternative", "intermediateAlternative", "advancedAlternative",
   "tags", "caloriesBurnPerHour", "isCustom"
 ) VALUES (
-  'f37c88cd-daf5-49db-be7c-57c7a74380b9', 'Dumbbell Sumo Squat', 'dumbbell-sumo-squat', 'Wide-stance squat emphasizing glutes, adductors, and inner thighs.',
+  '184f98e8-dcd0-4995-a704-9535e8f0b00a', 'Dumbbell Sumo Squat', 'dumbbell-sumo-squat', 'Wide-stance squat emphasizing glutes, adductors, and inner thighs.',
   'Glutes', 'Adductors, Quadriceps, Hamstrings', 'Legs',
   'Dumbbell', 'Beginner', 'Squat',
   'Take a wide stance with toes turned outward at 45 degrees, hold heavy dumbbell hanging between legs, squat down and drive up.', '["Stand with wide stance (1.5x shoulder-width), toes flared out 45 degrees, hold dumbbell vertically."]', '["Squat down pushing knees outward in line with toes, descend to parallel, squeeze glutes at top."]',
@@ -1808,7 +1808,7 @@ INSERT INTO "Exercise" (
   "setupSteps" = EXCLUDED."setupSteps",
   "executionSteps" = EXCLUDED."executionSteps",
   "commonMistakes" = EXCLUDED."commonMistakes";
-INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('1754e626-dcaf-40d4-8174-112c7695b8bf', 'f37c88cd-daf5-49db-be7c-57c7a74380b9', 'VIDEO', 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
+INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('media-dumbbell-sumo-squat', '184f98e8-dcd0-4995-a704-9535e8f0b00a', 'VIDEO', '/videos/exercises/squat.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
 
 INSERT INTO "Exercise" (
   "id", "name", "slug", "description", "primaryMuscle", "secondaryMuscles", "bodyPart",
@@ -1817,7 +1817,7 @@ INSERT INTO "Exercise" (
   "commonMistakes", "safetyTips", "beginnerAlternative", "intermediateAlternative", "advancedAlternative",
   "tags", "caloriesBurnPerHour", "isCustom"
 ) VALUES (
-  '49e803ce-2a35-4596-9669-7fbf38acbf8d', 'Glute Bridge', 'glute-bridge', 'Floor-based hip extension perfect for learning glute recruitment and high-rep pump.',
+  'fa8f2cd2-b4af-4dc2-8180-8a7b6d854651', 'Glute Bridge', 'glute-bridge', 'Floor-based hip extension perfect for learning glute recruitment and high-rep pump.',
   'Glutes', 'Hamstrings, Core', 'Legs',
   'Bodyweight', 'Beginner', 'Hinge',
   'Lie on back with knees bent and feet flat, drive hips upward toward ceiling, squeeze glutes hard for 2s, lower.', '["Lie supine on mat, feet flat hip-width apart, arms at sides."]', '["Press through heels to lift hips until thighs and torso form straight line, hold 2s squeeze, lower."]',
@@ -1830,7 +1830,7 @@ INSERT INTO "Exercise" (
   "setupSteps" = EXCLUDED."setupSteps",
   "executionSteps" = EXCLUDED."executionSteps",
   "commonMistakes" = EXCLUDED."commonMistakes";
-INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('6ae65e29-a02c-42b8-b766-9888125261f7', '49e803ce-2a35-4596-9669-7fbf38acbf8d', 'VIDEO', 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
+INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('media-glute-bridge', 'fa8f2cd2-b4af-4dc2-8180-8a7b6d854651', 'VIDEO', '/videos/exercises/hip-thrust.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
 
 INSERT INTO "Exercise" (
   "id", "name", "slug", "description", "primaryMuscle", "secondaryMuscles", "bodyPart",
@@ -1839,7 +1839,7 @@ INSERT INTO "Exercise" (
   "commonMistakes", "safetyTips", "beginnerAlternative", "intermediateAlternative", "advancedAlternative",
   "tags", "caloriesBurnPerHour", "isCustom"
 ) VALUES (
-  '84a0cb05-4a31-4a06-b49a-0dcbbd93dd70', 'Seated Hip Abduction Machine', 'seated-hip-abduction-machine', 'Machine isolating the gluteus medius and minimus for hip stability and outer glute shape.',
+  'c552c517-08b4-4684-97e9-246022768598', 'Seated Hip Abduction Machine', 'seated-hip-abduction-machine', 'Machine isolating the gluteus medius and minimus for hip stability and outer glute shape.',
   'Glutes', 'Abductors', 'Legs',
   'Machine', 'Beginner', 'Isolation',
   'Sit in machine with pads against outer knees, push knees outward against resistance, hold 1s, return slowly.', '["Sit with back against pad, place outside of knees against pads, adjust starting pin."]', '["Push legs outward as far as possible, squeeze outer glutes for 1s, control the return."]',
@@ -1852,7 +1852,7 @@ INSERT INTO "Exercise" (
   "setupSteps" = EXCLUDED."setupSteps",
   "executionSteps" = EXCLUDED."executionSteps",
   "commonMistakes" = EXCLUDED."commonMistakes";
-INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('35b099b8-86d1-40fc-9e89-e1f6218687be', '84a0cb05-4a31-4a06-b49a-0dcbbd93dd70', 'VIDEO', 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
+INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('media-seated-hip-abduction-machine', 'c552c517-08b4-4684-97e9-246022768598', 'VIDEO', '/videos/exercises/hip-thrust.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
 
 INSERT INTO "Exercise" (
   "id", "name", "slug", "description", "primaryMuscle", "secondaryMuscles", "bodyPart",
@@ -1861,7 +1861,7 @@ INSERT INTO "Exercise" (
   "commonMistakes", "safetyTips", "beginnerAlternative", "intermediateAlternative", "advancedAlternative",
   "tags", "caloriesBurnPerHour", "isCustom"
 ) VALUES (
-  '3ea8aa20-4533-4c21-a818-fa1d00412ee6', 'Cable Pull-Through', 'cable-pull-through', 'Low cable hip hinge loading the glutes and hamstrings with horizontal shear resistance.',
+  '75a95210-e912-40c8-a766-336fe7768574', 'Cable Pull-Through', 'cable-pull-through', 'Low cable hip hinge loading the glutes and hamstrings with horizontal shear resistance.',
   'Glutes', 'Hamstrings, Lower Back', 'Legs',
   'Cable', 'Beginner', 'Hinge',
   'Stand facing away from low pulley holding rope between legs, hinge hips back, and snap hips forward to stand tall.', '["Set cable at lowest setting with rope, straddle cable facing away, take 2 steps forward."]', '["Hinge hips back letting cable pull hands between thighs, squeeze glutes and drive hips forward to lockout."]',
@@ -1874,7 +1874,7 @@ INSERT INTO "Exercise" (
   "setupSteps" = EXCLUDED."setupSteps",
   "executionSteps" = EXCLUDED."executionSteps",
   "commonMistakes" = EXCLUDED."commonMistakes";
-INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('60191bd8-67cd-4b37-ba3f-2654971bae0d', '3ea8aa20-4533-4c21-a818-fa1d00412ee6', 'VIDEO', 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
+INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('media-cable-pull-through', '75a95210-e912-40c8-a766-336fe7768574', 'VIDEO', '/videos/exercises/romanian-deadlift.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
 
 INSERT INTO "Exercise" (
   "id", "name", "slug", "description", "primaryMuscle", "secondaryMuscles", "bodyPart",
@@ -1883,7 +1883,7 @@ INSERT INTO "Exercise" (
   "commonMistakes", "safetyTips", "beginnerAlternative", "intermediateAlternative", "advancedAlternative",
   "tags", "caloriesBurnPerHour", "isCustom"
 ) VALUES (
-  '1cc8a3fa-b1a8-4503-b1f6-bb11f7dd85c0', 'Hyperextension (Glute-Focused)', 'hyperextension-glute-focused', '45-degree back extension performed with rounded upper back and flared toes to isolate glutes.',
+  '59688264-c87b-4334-b311-a4801153633c', 'Hyperextension (Glute-Focused)', 'hyperextension-glute-focused', '45-degree back extension performed with rounded upper back and flared toes to isolate glutes.',
   'Glutes', 'Hamstrings, Lower Back', 'Legs',
   'Bench', 'Beginner', 'Hinge',
   'Position hips over 45-degree pad, round upper back slightly, flare toes out, lower torso, and squeeze glutes to rise.', '["Set pad just below hip crease, flare toes out 45 degrees, cross arms or hold plate."]', '["Lower torso down, round thoracic spine, drive hips into pad to lift torso until straight, squeeze glutes."]',
@@ -1896,7 +1896,7 @@ INSERT INTO "Exercise" (
   "setupSteps" = EXCLUDED."setupSteps",
   "executionSteps" = EXCLUDED."executionSteps",
   "commonMistakes" = EXCLUDED."commonMistakes";
-INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('3f83df79-b8e6-43df-afcc-077b8b88e0b3', '1cc8a3fa-b1a8-4503-b1f6-bb11f7dd85c0', 'VIDEO', 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
+INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('media-hyperextension-glute-focused', '59688264-c87b-4334-b311-a4801153633c', 'VIDEO', '/videos/exercises/romanian-deadlift.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
 
 INSERT INTO "Exercise" (
   "id", "name", "slug", "description", "primaryMuscle", "secondaryMuscles", "bodyPart",
@@ -1905,7 +1905,7 @@ INSERT INTO "Exercise" (
   "commonMistakes", "safetyTips", "beginnerAlternative", "intermediateAlternative", "advancedAlternative",
   "tags", "caloriesBurnPerHour", "isCustom"
 ) VALUES (
-  '9fcdc024-8945-480d-8a33-fc6292a7fcf0', 'Banded Monster Walks', 'banded-monster-walks', 'Dynamic resistance band walk activating the gluteus medius and hip stabilizers.',
+  'd9474b9e-d95b-4f33-844a-2cef4d70c1aa', 'Banded Monster Walks', 'banded-monster-walks', 'Dynamic resistance band walk activating the gluteus medius and hip stabilizers.',
   'Glutes', 'Abductors', 'Legs',
   'Resistance Band', 'Beginner', 'Isolation',
   'Place loop band around ankles or above knees, get into quarter squat, take diagonal steps forward and backward.', '["Place mini loop band around ankles, stand in quarter squat with feet hip-width."]', '["Take diagonal steps forward while maintaining constant outward band tension, repeat backward."]',
@@ -1918,7 +1918,7 @@ INSERT INTO "Exercise" (
   "setupSteps" = EXCLUDED."setupSteps",
   "executionSteps" = EXCLUDED."executionSteps",
   "commonMistakes" = EXCLUDED."commonMistakes";
-INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('616a5304-8c18-4902-97d6-10a38f4a20be', '9fcdc024-8945-480d-8a33-fc6292a7fcf0', 'VIDEO', 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
+INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('media-banded-monster-walks', 'd9474b9e-d95b-4f33-844a-2cef4d70c1aa', 'VIDEO', '/videos/exercises/hip-thrust.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
 
 INSERT INTO "Exercise" (
   "id", "name", "slug", "description", "primaryMuscle", "secondaryMuscles", "bodyPart",
@@ -1927,7 +1927,7 @@ INSERT INTO "Exercise" (
   "commonMistakes", "safetyTips", "beginnerAlternative", "intermediateAlternative", "advancedAlternative",
   "tags", "caloriesBurnPerHour", "isCustom"
 ) VALUES (
-  'fb5db4a6-521b-452a-9584-df5b10c35d3e', 'Standing Calf Raise', 'standing-calf-raise', 'Heavy standing calf exercise prioritizing the gastrocnemius muscle under full ankle plantarflexion.',
+  'add7019e-9e9c-4ead-bbbf-4e2942fa073d', 'Standing Calf Raise', 'standing-calf-raise', 'Heavy standing calf exercise prioritizing the gastrocnemius muscle under full ankle plantarflexion.',
   'Calves', 'Soleus', 'Legs',
   'Machine', 'Beginner', 'Isolation',
   'Place balls of feet on block with straight knees, lower heels for deep stretch, rise onto tiptoes, and hold 1s squeeze.', '["Position shoulders under pads, balls of feet on block, knees straight with micro-softness."]', '["Lower heels into deep 2-second stretch, drive up onto big toes, squeeze calves hard for 1s, lower slowly."]',
@@ -1940,7 +1940,7 @@ INSERT INTO "Exercise" (
   "setupSteps" = EXCLUDED."setupSteps",
   "executionSteps" = EXCLUDED."executionSteps",
   "commonMistakes" = EXCLUDED."commonMistakes";
-INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('87fad735-1067-4eac-b268-761101769ecc', 'fb5db4a6-521b-452a-9584-df5b10c35d3e', 'VIDEO', 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
+INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('media-standing-calf-raise', 'add7019e-9e9c-4ead-bbbf-4e2942fa073d', 'VIDEO', '/videos/exercises/squat.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
 
 INSERT INTO "Exercise" (
   "id", "name", "slug", "description", "primaryMuscle", "secondaryMuscles", "bodyPart",
@@ -1949,7 +1949,7 @@ INSERT INTO "Exercise" (
   "commonMistakes", "safetyTips", "beginnerAlternative", "intermediateAlternative", "advancedAlternative",
   "tags", "caloriesBurnPerHour", "isCustom"
 ) VALUES (
-  'cc1ce35e-bf44-4f89-baea-a62bb14b20b1', 'Seated Calf Raise', 'seated-calf-raise', 'Bent-knee calf raise specifically targeting the deep soleus muscle.',
+  '0a23cbed-8539-4789-b6bd-902409929b69', 'Seated Calf Raise', 'seated-calf-raise', 'Bent-knee calf raise specifically targeting the deep soleus muscle.',
   'Calves', 'None', 'Legs',
   'Machine', 'Beginner', 'Isolation',
   'Sit with knees at 90 degrees under thigh pads, lower heels below platform, press up onto balls of feet, and squeeze.', '["Sit in machine, balls of feet on block, thigh pads adjusted snugly over lower quadriceps."]', '["Lower heels for full stretch, push through balls of feet to full plantarflexion, squeeze 1s, lower with control."]',
@@ -1962,7 +1962,7 @@ INSERT INTO "Exercise" (
   "setupSteps" = EXCLUDED."setupSteps",
   "executionSteps" = EXCLUDED."executionSteps",
   "commonMistakes" = EXCLUDED."commonMistakes";
-INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('415a12c7-2671-4603-acbd-2666dc43728e', 'cc1ce35e-bf44-4f89-baea-a62bb14b20b1', 'VIDEO', 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
+INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('media-seated-calf-raise', '0a23cbed-8539-4789-b6bd-902409929b69', 'VIDEO', '/videos/exercises/squat.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
 
 INSERT INTO "Exercise" (
   "id", "name", "slug", "description", "primaryMuscle", "secondaryMuscles", "bodyPart",
@@ -1971,7 +1971,7 @@ INSERT INTO "Exercise" (
   "commonMistakes", "safetyTips", "beginnerAlternative", "intermediateAlternative", "advancedAlternative",
   "tags", "caloriesBurnPerHour", "isCustom"
 ) VALUES (
-  '9ce29fca-3352-4336-8bb6-3f2196c9fa4e', 'Leg Press Calf Raise', 'leg-press-calf-raise', 'Performing calf raises on the 45-degree leg press sled for heavy gastrocnemius loading.',
+  'aebee051-a628-4c62-8910-09b07331792e', 'Leg Press Calf Raise', 'leg-press-calf-raise', 'Performing calf raises on the 45-degree leg press sled for heavy gastrocnemius loading.',
   'Calves', 'Soleus', 'Legs',
   'Machine', 'Beginner', 'Isolation',
   'Place balls of feet on bottom lip of leg press platform, extend ankles forward, squeeze calves, and lower heels into stretch.', '["Sit in 45-degree leg press, place balls of feet on bottom edge of footplate with heels hanging free."]', '["Press sled forward with ankles, hold peak contraction 1s, lower slowly into deep stretch."]',
@@ -1984,7 +1984,7 @@ INSERT INTO "Exercise" (
   "setupSteps" = EXCLUDED."setupSteps",
   "executionSteps" = EXCLUDED."executionSteps",
   "commonMistakes" = EXCLUDED."commonMistakes";
-INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('402351bb-53be-491b-9cb0-bdc885f4de6c', '9ce29fca-3352-4336-8bb6-3f2196c9fa4e', 'VIDEO', 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
+INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('media-leg-press-calf-raise', 'aebee051-a628-4c62-8910-09b07331792e', 'VIDEO', '/videos/exercises/bench-press.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
 
 INSERT INTO "Exercise" (
   "id", "name", "slug", "description", "primaryMuscle", "secondaryMuscles", "bodyPart",
@@ -1993,7 +1993,7 @@ INSERT INTO "Exercise" (
   "commonMistakes", "safetyTips", "beginnerAlternative", "intermediateAlternative", "advancedAlternative",
   "tags", "caloriesBurnPerHour", "isCustom"
 ) VALUES (
-  '6370e3df-d91c-4a8b-ac94-8498086036b3', 'Donkey Calf Raise', 'donkey-calf-raise', 'Hip-hinged calf raise placing maximum stretch on the gastrocnemius through hip flexion.',
+  'e795c9b1-f72c-4800-87c9-d21f702273b7', 'Donkey Calf Raise', 'donkey-calf-raise', 'Hip-hinged calf raise placing maximum stretch on the gastrocnemius through hip flexion.',
   'Calves', 'Soleus, Hamstrings', 'Legs',
   'Machine', 'Intermediate', 'Isolation',
   'Hinge forward at 90 degrees with hips under machine pad, lower heels, and rise onto toes.', '["Hinge forward at 90 degrees with pad resting across lower back/sacrum, balls of feet on step."]', '["Lower heels deep, drive onto toes, squeeze calves hard for 1s, return with 3s tempo."]',
@@ -2006,7 +2006,7 @@ INSERT INTO "Exercise" (
   "setupSteps" = EXCLUDED."setupSteps",
   "executionSteps" = EXCLUDED."executionSteps",
   "commonMistakes" = EXCLUDED."commonMistakes";
-INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('94cc9299-b98f-4236-8b6c-90a754c64bb0', '6370e3df-d91c-4a8b-ac94-8498086036b3', 'VIDEO', 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
+INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('media-donkey-calf-raise', 'e795c9b1-f72c-4800-87c9-d21f702273b7', 'VIDEO', '/videos/exercises/squat.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
 
 INSERT INTO "Exercise" (
   "id", "name", "slug", "description", "primaryMuscle", "secondaryMuscles", "bodyPart",
@@ -2015,7 +2015,7 @@ INSERT INTO "Exercise" (
   "commonMistakes", "safetyTips", "beginnerAlternative", "intermediateAlternative", "advancedAlternative",
   "tags", "caloriesBurnPerHour", "isCustom"
 ) VALUES (
-  'ca3f6021-bf39-44fc-96cf-679937384cfe', 'Single-Leg Bodyweight Calf Raise', 'single-leg-bodyweight-calf-raise', 'Unilateral calf exercise on a step requiring zero equipment while providing high muscular stimulation.',
+  '84c91708-89b5-4fe5-8527-03af3186ccf6', 'Single-Leg Bodyweight Calf Raise', 'single-leg-bodyweight-calf-raise', 'Unilateral calf exercise on a step requiring zero equipment while providing high muscular stimulation.',
   'Calves', 'Soleus', 'Legs',
   'Bodyweight', 'Beginner', 'Isolation',
   'Stand on one foot on a step ledge, lower heel into deep stretch, drive up to peak height, and pause.', '["Stand on edge of step with one foot, hook other foot behind ankle, touch wall for balance."]', '["Lower heel for 2s deep stretch, rise high onto big toe, squeeze 1s, lower under control."]',
@@ -2028,7 +2028,7 @@ INSERT INTO "Exercise" (
   "setupSteps" = EXCLUDED."setupSteps",
   "executionSteps" = EXCLUDED."executionSteps",
   "commonMistakes" = EXCLUDED."commonMistakes";
-INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('8e54c0c6-0273-4931-8509-318fa374e5ef', 'ca3f6021-bf39-44fc-96cf-679937384cfe', 'VIDEO', 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
+INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('media-single-leg-bodyweight-calf-raise', '84c91708-89b5-4fe5-8527-03af3186ccf6', 'VIDEO', '/videos/exercises/bench-press.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
 
 INSERT INTO "Exercise" (
   "id", "name", "slug", "description", "primaryMuscle", "secondaryMuscles", "bodyPart",
@@ -2037,7 +2037,7 @@ INSERT INTO "Exercise" (
   "commonMistakes", "safetyTips", "beginnerAlternative", "intermediateAlternative", "advancedAlternative",
   "tags", "caloriesBurnPerHour", "isCustom"
 ) VALUES (
-  '5813da6e-b127-44c8-906e-a667c2a17005', 'Tibialis Anterior Raise', 'tibialis-anterior-raise', 'Shin exercise strengthening the front of the lower leg to bulletproof knees and prevent shin splints.',
+  '4fc8af83-9e53-4dd1-bc88-37bf22e9b351', 'Tibialis Anterior Raise', 'tibialis-anterior-raise', 'Shin exercise strengthening the front of the lower leg to bulletproof knees and prevent shin splints.',
   'Calves', 'Tibialis Anterior', 'Legs',
   'Bodyweight', 'Beginner', 'Isolation',
   'Lean back against wall with heels out, flex toes upward toward shins, hold squeeze 1s, and lower.', '["Lean upper back against wall, walk heels roughly 1-2 feet out in front of you."]', '["Pull toes and forefeet upward toward shins as high as possible, hold 1s, lower slowly."]',
@@ -2050,7 +2050,7 @@ INSERT INTO "Exercise" (
   "setupSteps" = EXCLUDED."setupSteps",
   "executionSteps" = EXCLUDED."executionSteps",
   "commonMistakes" = EXCLUDED."commonMistakes";
-INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('fc6bc6f3-1591-4bbb-8bf4-cfb275c80a1f', '5813da6e-b127-44c8-906e-a667c2a17005', 'VIDEO', 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
+INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('media-tibialis-anterior-raise', '4fc8af83-9e53-4dd1-bc88-37bf22e9b351', 'VIDEO', '/videos/exercises/squat.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
 
 INSERT INTO "Exercise" (
   "id", "name", "slug", "description", "primaryMuscle", "secondaryMuscles", "bodyPart",
@@ -2059,7 +2059,7 @@ INSERT INTO "Exercise" (
   "commonMistakes", "safetyTips", "beginnerAlternative", "intermediateAlternative", "advancedAlternative",
   "tags", "caloriesBurnPerHour", "isCustom"
 ) VALUES (
-  '9c7d5fab-8fe5-444a-b832-584ce01d5083', 'Hanging Leg Raise', 'hanging-leg-raise', 'The premier lower abdominal and core compression exercise performed from a dead hang.',
+  'f3841bce-5815-49d4-9151-ee98c09f40df', 'Hanging Leg Raise', 'hanging-leg-raise', 'The premier lower abdominal and core compression exercise performed from a dead hang.',
   'Abs', 'Hip Flexors, Forearms, Lats', 'Core',
   'Bodyweight', 'Intermediate', 'Isolation',
   'Hang from pull-up bar, tuck pelvis, raise legs straight up until toes touch or approach the bar, and lower slowly.', '["Hang with straight arms from pull-up bar, engage lats and lock pelvis into posterior tilt."]', '["Curl pelvis upward and lift legs toward bar without swinging, pause, lower slowly with a 3s eccentric."]',
@@ -2072,7 +2072,7 @@ INSERT INTO "Exercise" (
   "setupSteps" = EXCLUDED."setupSteps",
   "executionSteps" = EXCLUDED."executionSteps",
   "commonMistakes" = EXCLUDED."commonMistakes";
-INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('9f0b986b-fdab-47d6-b500-223d421c9abc', '9c7d5fab-8fe5-444a-b832-584ce01d5083', 'VIDEO', 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
+INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('media-hanging-leg-raise', 'f3841bce-5815-49d4-9151-ee98c09f40df', 'VIDEO', '/videos/exercises/leg-raises.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
 
 INSERT INTO "Exercise" (
   "id", "name", "slug", "description", "primaryMuscle", "secondaryMuscles", "bodyPart",
@@ -2081,7 +2081,7 @@ INSERT INTO "Exercise" (
   "commonMistakes", "safetyTips", "beginnerAlternative", "intermediateAlternative", "advancedAlternative",
   "tags", "caloriesBurnPerHour", "isCustom"
 ) VALUES (
-  '1a5d404e-62ed-44ba-a9de-c5c47e38ecbc', 'Cable Crunch', 'cable-crunch', 'Kneeling cable crunch providing heavy progressive overload resistance directly onto the rectus abdominis.',
+  '4440896d-67b4-428c-9be2-50d4d82b07bb', 'Cable Crunch', 'cable-crunch', 'Kneeling cable crunch providing heavy progressive overload resistance directly onto the rectus abdominis.',
   'Abs', 'Obliques', 'Core',
   'Cable', 'Beginner', 'Isolation',
   'Kneel holding rope beside ears, flex spine rounding elbows toward knees, squeeze abs hard, and return under control.', '["Kneel in front of high cable holding rope handles pinned to sides of head/ears, hips stationary."]', '["Contract abs to round spine downward, bringing elbows toward mid-thighs, squeeze 1s, return with control."]',
@@ -2094,7 +2094,7 @@ INSERT INTO "Exercise" (
   "setupSteps" = EXCLUDED."setupSteps",
   "executionSteps" = EXCLUDED."executionSteps",
   "commonMistakes" = EXCLUDED."commonMistakes";
-INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('ea5b9af1-681d-4fd8-8e41-88618717bd48', '1a5d404e-62ed-44ba-a9de-c5c47e38ecbc', 'VIDEO', 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
+INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('media-cable-crunch', '4440896d-67b4-428c-9be2-50d4d82b07bb', 'VIDEO', '/videos/exercises/plank.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
 
 INSERT INTO "Exercise" (
   "id", "name", "slug", "description", "primaryMuscle", "secondaryMuscles", "bodyPart",
@@ -2103,7 +2103,7 @@ INSERT INTO "Exercise" (
   "commonMistakes", "safetyTips", "beginnerAlternative", "intermediateAlternative", "advancedAlternative",
   "tags", "caloriesBurnPerHour", "isCustom"
 ) VALUES (
-  'cd418aa1-1396-4303-8d01-f6964759eb25', 'Ab Wheel Rollout', 'ab-wheel-rollout', 'Advanced anti-extension core exercise building bulletproof abdominal wall strength.',
+  '4d1f63bd-5d10-45e4-ae22-2ab675574f66', 'Ab Wheel Rollout', 'ab-wheel-rollout', 'Advanced anti-extension core exercise building bulletproof abdominal wall strength.',
   'Abs', 'Lats, Shoulders, Lower Back', 'Core',
   'Bodyweight', 'Advanced', 'Isolation',
   'Kneel with hands on ab wheel, roll forward keeping hollow body position until nose is near floor, and pull back with abs.', '["Kneel on pad holding ab wheel handles directly under shoulders, tuck pelvis into hollow hold."]', '["Roll wheel forward extending arms and hips, keep core clamped, pull back through abs to return."]',
@@ -2116,7 +2116,7 @@ INSERT INTO "Exercise" (
   "setupSteps" = EXCLUDED."setupSteps",
   "executionSteps" = EXCLUDED."executionSteps",
   "commonMistakes" = EXCLUDED."commonMistakes";
-INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('a88af37c-4636-49f3-98ca-93774af4763e', 'cd418aa1-1396-4303-8d01-f6964759eb25', 'VIDEO', 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
+INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('media-ab-wheel-rollout', '4d1f63bd-5d10-45e4-ae22-2ab675574f66', 'VIDEO', '/videos/exercises/plank.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
 
 INSERT INTO "Exercise" (
   "id", "name", "slug", "description", "primaryMuscle", "secondaryMuscles", "bodyPart",
@@ -2125,7 +2125,7 @@ INSERT INTO "Exercise" (
   "commonMistakes", "safetyTips", "beginnerAlternative", "intermediateAlternative", "advancedAlternative",
   "tags", "caloriesBurnPerHour", "isCustom"
 ) VALUES (
-  '23de4fb1-5825-4c3b-9235-14e1ee697416', 'Plank', 'plank', 'Foundational isometric anti-extension and core stabilization exercise.',
+  '8759113a-d329-4408-9724-e155ea39300c', 'Plank', 'plank', 'Foundational isometric anti-extension and core stabilization exercise.',
   'Abs', 'Shoulders, Glutes, Lower Back', 'Core',
   'Bodyweight', 'Beginner', 'Isolation',
   'Rest on forearms and toes in a rigid straight line, brace abs as if about to be punched, squeeze glutes, and hold.', '["Rest on forearms with elbows beneath shoulders, feet together, body in straight line."]', '["Squeeze glutes, pull belly button into spine, create full-body tension, hold for target time."]',
@@ -2138,7 +2138,7 @@ INSERT INTO "Exercise" (
   "setupSteps" = EXCLUDED."setupSteps",
   "executionSteps" = EXCLUDED."executionSteps",
   "commonMistakes" = EXCLUDED."commonMistakes";
-INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('b246e958-26ea-4fc6-905f-030c7d20be3a', '23de4fb1-5825-4c3b-9235-14e1ee697416', 'VIDEO', 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
+INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('media-plank', '8759113a-d329-4408-9724-e155ea39300c', 'VIDEO', '/videos/exercises/plank.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
 
 INSERT INTO "Exercise" (
   "id", "name", "slug", "description", "primaryMuscle", "secondaryMuscles", "bodyPart",
@@ -2147,7 +2147,7 @@ INSERT INTO "Exercise" (
   "commonMistakes", "safetyTips", "beginnerAlternative", "intermediateAlternative", "advancedAlternative",
   "tags", "caloriesBurnPerHour", "isCustom"
 ) VALUES (
-  'e2ad3cd2-1454-4c3c-808a-d954e44b7484', 'Russian Twist', 'russian-twist', 'Rotational core exercise targeting internal and external obliques and deep transverse abdominis.',
+  '997186e9-683c-4809-a312-bf29926ce10d', 'Russian Twist', 'russian-twist', 'Rotational core exercise targeting internal and external obliques and deep transverse abdominis.',
   'Abs', 'Obliques, Hip Flexors', 'Core',
   'Bodyweight', 'Beginner', 'Isolation',
   'Sit in V-shape with feet elevated, rotate torso side to side touching hands or weight to floor on each side.', '["Sit on floor with knees bent, lean torso back 45 degrees, elevate feet 3 inches off floor."]', '["Rotate shoulders and torso to touch floor on right, rotate smoothly to left, maintain V-sit."]',
@@ -2160,7 +2160,7 @@ INSERT INTO "Exercise" (
   "setupSteps" = EXCLUDED."setupSteps",
   "executionSteps" = EXCLUDED."executionSteps",
   "commonMistakes" = EXCLUDED."commonMistakes";
-INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('28f5ceb7-12c4-450a-9ad2-542de0ce6248', 'e2ad3cd2-1454-4c3c-808a-d954e44b7484', 'VIDEO', 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
+INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('media-russian-twist', '997186e9-683c-4809-a312-bf29926ce10d', 'VIDEO', '/videos/exercises/russian-twist.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
 
 INSERT INTO "Exercise" (
   "id", "name", "slug", "description", "primaryMuscle", "secondaryMuscles", "bodyPart",
@@ -2169,7 +2169,7 @@ INSERT INTO "Exercise" (
   "commonMistakes", "safetyTips", "beginnerAlternative", "intermediateAlternative", "advancedAlternative",
   "tags", "caloriesBurnPerHour", "isCustom"
 ) VALUES (
-  '9851e3d7-98f8-48a6-b633-d2ea78adc025', 'Dead Bug', 'dead-bug', 'Precision anti-extension and cross-body motor control core exercise protecting lower back.',
+  '9d73bb62-6ad0-4769-a98e-9b1f6173fe4a', 'Dead Bug', 'dead-bug', 'Precision anti-extension and cross-body motor control core exercise protecting lower back.',
   'Abs', 'Hip Flexors, Shoulders', 'Core',
   'Bodyweight', 'Beginner', 'Isolation',
   'Lie on back with arms and knees in air at 90 degrees, press lower back to floor, extend opposite arm and leg simultaneously.', '["Lie supine, knees at 90 degrees, arms pointing to ceiling, flatten lower back into mat."]', '["Slowly extend right arm overhead and left leg down near floor, keep lower back glued to floor, return and switch."]',
@@ -2182,7 +2182,7 @@ INSERT INTO "Exercise" (
   "setupSteps" = EXCLUDED."setupSteps",
   "executionSteps" = EXCLUDED."executionSteps",
   "commonMistakes" = EXCLUDED."commonMistakes";
-INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('b69954b3-ac6a-43d6-a09d-e9e12620660e', '9851e3d7-98f8-48a6-b633-d2ea78adc025', 'VIDEO', 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
+INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('media-dead-bug', '9d73bb62-6ad0-4769-a98e-9b1f6173fe4a', 'VIDEO', '/videos/exercises/plank.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
 
 INSERT INTO "Exercise" (
   "id", "name", "slug", "description", "primaryMuscle", "secondaryMuscles", "bodyPart",
@@ -2191,7 +2191,7 @@ INSERT INTO "Exercise" (
   "commonMistakes", "safetyTips", "beginnerAlternative", "intermediateAlternative", "advancedAlternative",
   "tags", "caloriesBurnPerHour", "isCustom"
 ) VALUES (
-  '5350ff62-07a4-4d26-b973-bff069bbfb45', 'Mountain Climbers', 'mountain-climbers', 'Dynamic plank exercise combining cardiovascular conditioning with isometric core endurance.',
+  '2b9e5764-01ca-4db1-91b2-49ea8349032f', 'Mountain Climbers', 'mountain-climbers', 'Dynamic plank exercise combining cardiovascular conditioning with isometric core endurance.',
   'Abs', 'Shoulders, Hip Flexors, Quadriceps', 'Core',
   'Bodyweight', 'Beginner', 'Isolation',
   'High plank position, drive knees alternately toward chest in a running cadence while keeping hips level.', '["Start in high plank with hands beneath shoulders, core engaged."]', '["Drive right knee toward chest, quickly return and drive left knee, maintain steady tempo."]',
@@ -2204,7 +2204,7 @@ INSERT INTO "Exercise" (
   "setupSteps" = EXCLUDED."setupSteps",
   "executionSteps" = EXCLUDED."executionSteps",
   "commonMistakes" = EXCLUDED."commonMistakes";
-INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('97b5e8b6-eb62-4096-8435-7971ab4dd2ff', '5350ff62-07a4-4d26-b973-bff069bbfb45', 'VIDEO', 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
+INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('media-mountain-climbers', '2b9e5764-01ca-4db1-91b2-49ea8349032f', 'VIDEO', '/videos/exercises/plank.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
 
 INSERT INTO "Exercise" (
   "id", "name", "slug", "description", "primaryMuscle", "secondaryMuscles", "bodyPart",
@@ -2213,7 +2213,7 @@ INSERT INTO "Exercise" (
   "commonMistakes", "safetyTips", "beginnerAlternative", "intermediateAlternative", "advancedAlternative",
   "tags", "caloriesBurnPerHour", "isCustom"
 ) VALUES (
-  'c9e39b9a-64b4-4f5e-98ef-e51e0ae0ac91', 'Side Plank', 'side-plank', 'Isometric anti-lateral flexion exercise targeting obliques, quadratus lumborum, and gluteus medius.',
+  'dac87c06-b97c-4bfe-8b80-54e1151332a6', 'Side Plank', 'side-plank', 'Isometric anti-lateral flexion exercise targeting obliques, quadratus lumborum, and gluteus medius.',
   'Abs', 'Obliques, Glutes, Shoulders', 'Core',
   'Bodyweight', 'Beginner', 'Isolation',
   'Lie on side supported on forearm, lift hips until body forms straight diagonal line, and hold.', '["Lie on side with forearm flat beneath shoulder, feet stacked or staggered."]', '["Raise hips off floor into straight line, hold position with tight core and glutes."]',
@@ -2226,7 +2226,7 @@ INSERT INTO "Exercise" (
   "setupSteps" = EXCLUDED."setupSteps",
   "executionSteps" = EXCLUDED."executionSteps",
   "commonMistakes" = EXCLUDED."commonMistakes";
-INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('00b16415-4fdd-4fa2-a819-51ec312305fe', 'c9e39b9a-64b4-4f5e-98ef-e51e0ae0ac91', 'VIDEO', 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
+INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('media-side-plank', 'dac87c06-b97c-4bfe-8b80-54e1151332a6', 'VIDEO', '/videos/exercises/plank.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
 
 INSERT INTO "Exercise" (
   "id", "name", "slug", "description", "primaryMuscle", "secondaryMuscles", "bodyPart",
@@ -2235,7 +2235,7 @@ INSERT INTO "Exercise" (
   "commonMistakes", "safetyTips", "beginnerAlternative", "intermediateAlternative", "advancedAlternative",
   "tags", "caloriesBurnPerHour", "isCustom"
 ) VALUES (
-  '20e8bae3-8108-4dda-a5f8-48f1925c0dd6', 'Dragon Flag', 'dragon-flag', 'Legendary advanced calisthenics core exercise popularized by Bruce Lee, demanding full-body tension.',
+  '94ffb497-7e13-4aee-8d26-b2273d53c91d', 'Dragon Flag', 'dragon-flag', 'Legendary advanced calisthenics core exercise popularized by Bruce Lee, demanding full-body tension.',
   'Abs', 'Lats, Lower Back, Glutes', 'Core',
   'Bench', 'Advanced', 'Isolation',
   'Lie on bench gripping behind head, lift entire body vertically pivoting only on upper back, and lower body rigid as a board.', '["Lie on flat bench, grip edge of bench behind head firmly, pivot on upper shoulders."]', '["Raise entire body straight up to vertical, lower slowly keeping body completely straight, stop an inch off bench, pull up."]',
@@ -2248,7 +2248,7 @@ INSERT INTO "Exercise" (
   "setupSteps" = EXCLUDED."setupSteps",
   "executionSteps" = EXCLUDED."executionSteps",
   "commonMistakes" = EXCLUDED."commonMistakes";
-INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('0bd4ccfe-0b36-4729-a7ee-d7f75f67f418', '20e8bae3-8108-4dda-a5f8-48f1925c0dd6', 'VIDEO', 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
+INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('media-dragon-flag', '94ffb497-7e13-4aee-8d26-b2273d53c91d', 'VIDEO', '/videos/exercises/plank.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
 
 INSERT INTO "Exercise" (
   "id", "name", "slug", "description", "primaryMuscle", "secondaryMuscles", "bodyPart",
@@ -2257,7 +2257,7 @@ INSERT INTO "Exercise" (
   "commonMistakes", "safetyTips", "beginnerAlternative", "intermediateAlternative", "advancedAlternative",
   "tags", "caloriesBurnPerHour", "isCustom"
 ) VALUES (
-  '71d4804a-94f1-4799-bfeb-24bb975ebb95', 'Pallof Press', 'pallof-press', 'Top-tier anti-rotation core exercise training rotational stability and spinal stiffness.',
+  '4c7ad66b-bb31-4b33-9ef0-3b8a0b8ef3ae', 'Pallof Press', 'pallof-press', 'Top-tier anti-rotation core exercise training rotational stability and spinal stiffness.',
   'Abs', 'Obliques, Shoulders, Glutes', 'Core',
   'Cable', 'Beginner', 'Isolation',
   'Stand perpendicular to cable pulley holding handle at sternum, press hands forward resisting cable twist, hold 2s, return.', '["Set cable at chest height, stand sideways with feet shoulder-width, hold handle with both hands at chest."]', '["Press hands straight out in front of chest, resist rotation for 2s, bring hands back to chest with control."]',
@@ -2270,7 +2270,7 @@ INSERT INTO "Exercise" (
   "setupSteps" = EXCLUDED."setupSteps",
   "executionSteps" = EXCLUDED."executionSteps",
   "commonMistakes" = EXCLUDED."commonMistakes";
-INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('aee7fc6b-a0ec-4ef7-b3ee-a1d2523dba6d', '71d4804a-94f1-4799-bfeb-24bb975ebb95', 'VIDEO', 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
+INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('media-pallof-press', '4c7ad66b-bb31-4b33-9ef0-3b8a0b8ef3ae', 'VIDEO', '/videos/exercises/plank.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
 
 INSERT INTO "Exercise" (
   "id", "name", "slug", "description", "primaryMuscle", "secondaryMuscles", "bodyPart",
@@ -2279,7 +2279,7 @@ INSERT INTO "Exercise" (
   "commonMistakes", "safetyTips", "beginnerAlternative", "intermediateAlternative", "advancedAlternative",
   "tags", "caloriesBurnPerHour", "isCustom"
 ) VALUES (
-  'e007f66b-6aac-41ed-81f8-efe695570160', 'Barbell Shrug', 'barbell-shrug', 'Heavy vertical elevation of the scapulae for building massive upper trapezius thickness.',
+  '8330a326-bc15-4098-8c5f-d29959262569', 'Barbell Shrug', 'barbell-shrug', 'Heavy vertical elevation of the scapulae for building massive upper trapezius thickness.',
   'Traps', 'Forearms, Upper Back', 'Back',
   'Barbell', 'Beginner', 'Isolation',
   'Hold barbell in front of thighs, elevate shoulders straight up toward ears, squeeze traps for 2s, and lower slowly.', '["Stand tall holding barbell with shoulder-width grip, arms straight."]', '["Shrug shoulders straight up toward ears, hold peak contraction 2s, lower under control into deep stretch."]',
@@ -2292,7 +2292,7 @@ INSERT INTO "Exercise" (
   "setupSteps" = EXCLUDED."setupSteps",
   "executionSteps" = EXCLUDED."executionSteps",
   "commonMistakes" = EXCLUDED."commonMistakes";
-INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('e4802759-78c9-4dc9-9a53-319ba344a4cc', 'e007f66b-6aac-41ed-81f8-efe695570160', 'VIDEO', 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
+INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('media-barbell-shrug', '8330a326-bc15-4098-8c5f-d29959262569', 'VIDEO', '/videos/exercises/bench-press.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
 
 INSERT INTO "Exercise" (
   "id", "name", "slug", "description", "primaryMuscle", "secondaryMuscles", "bodyPart",
@@ -2301,7 +2301,7 @@ INSERT INTO "Exercise" (
   "commonMistakes", "safetyTips", "beginnerAlternative", "intermediateAlternative", "advancedAlternative",
   "tags", "caloriesBurnPerHour", "isCustom"
 ) VALUES (
-  '49814443-75e7-4d7c-9ad9-08d9af6aa8d2', 'Dumbbell Shrug', 'dumbbell-shrug', 'Shrug with dumbbells at sides providing natural arm alignment and independent shoulder elevation.',
+  '7ee608f7-1672-4f60-9b6c-d61bd0c99b23', 'Dumbbell Shrug', 'dumbbell-shrug', 'Shrug with dumbbells at sides providing natural arm alignment and independent shoulder elevation.',
   'Traps', 'Forearms', 'Back',
   'Dumbbell', 'Beginner', 'Isolation',
   'Hold heavy dumbbells at sides, shrug shoulders straight up toward ears, squeeze for 2s, and lower.', '["Stand tall with dumbbells hanging at sides, palms facing inward."]', '["Elevate shoulders straight up toward ears, pause 2s, lower to full bottom stretch."]',
@@ -2314,7 +2314,7 @@ INSERT INTO "Exercise" (
   "setupSteps" = EXCLUDED."setupSteps",
   "executionSteps" = EXCLUDED."executionSteps",
   "commonMistakes" = EXCLUDED."commonMistakes";
-INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('8996b164-ecbc-427c-b43b-61ab955e602f', '49814443-75e7-4d7c-9ad9-08d9af6aa8d2', 'VIDEO', 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
+INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('media-dumbbell-shrug', '7ee608f7-1672-4f60-9b6c-d61bd0c99b23', 'VIDEO', '/videos/exercises/bench-press.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
 
 INSERT INTO "Exercise" (
   "id", "name", "slug", "description", "primaryMuscle", "secondaryMuscles", "bodyPart",
@@ -2323,7 +2323,7 @@ INSERT INTO "Exercise" (
   "commonMistakes", "safetyTips", "beginnerAlternative", "intermediateAlternative", "advancedAlternative",
   "tags", "caloriesBurnPerHour", "isCustom"
 ) VALUES (
-  '0afd442d-8b88-4690-b008-b21d001b1e55', 'Trap Bar Shrug', 'trap-bar-shrug', 'Shrug performed inside a hex bar, placing load directly in line with center of gravity with neutral grip.',
+  'cd2640d2-da69-4d29-9e9e-40646f691a8b', 'Trap Bar Shrug', 'trap-bar-shrug', 'Shrug performed inside a hex bar, placing load directly in line with center of gravity with neutral grip.',
   'Traps', 'Forearms', 'Back',
   'Barbell', 'Intermediate', 'Isolation',
   'Stand inside trap bar, lift to standing, shrug shoulders straight up to ears, squeeze and lower.', '["Stand in center of trap bar, grip neutral handles, stand upright."]', '["Shrug vertically, squeeze traps at top for 2 seconds, lower slowly."]',
@@ -2336,7 +2336,7 @@ INSERT INTO "Exercise" (
   "setupSteps" = EXCLUDED."setupSteps",
   "executionSteps" = EXCLUDED."executionSteps",
   "commonMistakes" = EXCLUDED."commonMistakes";
-INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('f8f1f314-da0c-469b-8822-9493473bcfb4', '0afd442d-8b88-4690-b008-b21d001b1e55', 'VIDEO', 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
+INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('media-trap-bar-shrug', 'cd2640d2-da69-4d29-9e9e-40646f691a8b', 'VIDEO', '/videos/exercises/bench-press.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
 
 INSERT INTO "Exercise" (
   "id", "name", "slug", "description", "primaryMuscle", "secondaryMuscles", "bodyPart",
@@ -2345,7 +2345,7 @@ INSERT INTO "Exercise" (
   "commonMistakes", "safetyTips", "beginnerAlternative", "intermediateAlternative", "advancedAlternative",
   "tags", "caloriesBurnPerHour", "isCustom"
 ) VALUES (
-  '04e627a9-0d40-463e-b132-6b007c6167ca', 'Cable Rope Upright Row (Traps Focus)', 'cable-rope-upright-row', 'Upright row using rope on low cable to allow wide pull angle and upper trap activation.',
+  '1af39d03-65cb-4ae4-86f7-a3b37af6bc56', 'Cable Rope Upright Row (Traps Focus)', 'cable-rope-upright-row', 'Upright row using rope on low cable to allow wide pull angle and upper trap activation.',
   'Traps', 'Shoulders, Biceps', 'Back',
   'Cable', 'Beginner', 'Vertical Pull',
   'Hold rope attachment on low pulley, pull rope up toward collarbones spreading ends apart, squeeze traps, and lower.', '["Stand facing low pulley holding rope with overhand grip."]', '["Pull rope upward leading with elbows, spread hands at top, squeeze traps, lower under control."]',
@@ -2358,7 +2358,7 @@ INSERT INTO "Exercise" (
   "setupSteps" = EXCLUDED."setupSteps",
   "executionSteps" = EXCLUDED."executionSteps",
   "commonMistakes" = EXCLUDED."commonMistakes";
-INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('cbdccb9e-1f8b-4eb5-850c-f0dde37609d8', '04e627a9-0d40-463e-b132-6b007c6167ca', 'VIDEO', 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
+INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('media-cable-rope-upright-row', '1af39d03-65cb-4ae4-86f7-a3b37af6bc56', 'VIDEO', '/videos/exercises/lat-pulldown.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
 
 INSERT INTO "Exercise" (
   "id", "name", "slug", "description", "primaryMuscle", "secondaryMuscles", "bodyPart",
@@ -2367,7 +2367,7 @@ INSERT INTO "Exercise" (
   "commonMistakes", "safetyTips", "beginnerAlternative", "intermediateAlternative", "advancedAlternative",
   "tags", "caloriesBurnPerHour", "isCustom"
 ) VALUES (
-  '2e1b97de-ce2f-4bfe-bf9a-8c19f1f4661e', 'Kelso Shrug (Chest Supported)', 'kelso-shrug', 'Prone incline dumbbell shrug isolating the mid and lower trapezius and rhomboids.',
+  'c156f0c7-959b-4f7c-980b-63a94b518dfc', 'Kelso Shrug (Chest Supported)', 'kelso-shrug', 'Prone incline dumbbell shrug isolating the mid and lower trapezius and rhomboids.',
   'Traps', 'Rhomboids', 'Back',
   'Dumbbell', 'Intermediate', 'Isolation',
   'Lie chest down on 30-degree incline bench holding dumbbells, retract and elevate scapulae together without bending elbows.', '["Lie chest-down on incline bench, dumbbells hanging straight down, arms fully extended."]', '["Retract and pull shoulder blades together and upward, hold squeeze for 2s, lower to full stretch."]',
@@ -2380,7 +2380,7 @@ INSERT INTO "Exercise" (
   "setupSteps" = EXCLUDED."setupSteps",
   "executionSteps" = EXCLUDED."executionSteps",
   "commonMistakes" = EXCLUDED."commonMistakes";
-INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('be3825c1-4831-4619-ade1-8a25bd343c71', '2e1b97de-ce2f-4bfe-bf9a-8c19f1f4661e', 'VIDEO', 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
+INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('media-kelso-shrug', 'c156f0c7-959b-4f7c-980b-63a94b518dfc', 'VIDEO', '/videos/exercises/bench-press.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
 
 INSERT INTO "Exercise" (
   "id", "name", "slug", "description", "primaryMuscle", "secondaryMuscles", "bodyPart",
@@ -2389,7 +2389,7 @@ INSERT INTO "Exercise" (
   "commonMistakes", "safetyTips", "beginnerAlternative", "intermediateAlternative", "advancedAlternative",
   "tags", "caloriesBurnPerHour", "isCustom"
 ) VALUES (
-  '627dd2e6-494d-422c-b418-28e6ba938a18', 'Barbell Wrist Curl', 'barbell-wrist-curl', 'Forearm flexor isolation exercise for increasing wrist strength and inner forearm mass.',
+  '332dcf6e-8602-40b3-b32a-0c968f023560', 'Barbell Wrist Curl', 'barbell-wrist-curl', 'Forearm flexor isolation exercise for increasing wrist strength and inner forearm mass.',
   'Forearms', 'Grip', 'Arms',
   'Barbell', 'Beginner', 'Isolation',
   'Rest forearms on bench with palms facing up holding barbell, curl wrists upward, and lower under control.', '["Kneel beside flat bench, rest forearms flat on bench with wrists hanging over edge, palms facing up."]', '["Curl wrists upward toward ceiling, squeeze inner forearms, lower wrists into full stretch."]',
@@ -2402,7 +2402,7 @@ INSERT INTO "Exercise" (
   "setupSteps" = EXCLUDED."setupSteps",
   "executionSteps" = EXCLUDED."executionSteps",
   "commonMistakes" = EXCLUDED."commonMistakes";
-INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('7b61770a-2f8f-493d-9737-456d53983ba0', '627dd2e6-494d-422c-b418-28e6ba938a18', 'VIDEO', 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
+INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('media-barbell-wrist-curl', '332dcf6e-8602-40b3-b32a-0c968f023560', 'VIDEO', '/videos/exercises/barbell-biceps-curl.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
 
 INSERT INTO "Exercise" (
   "id", "name", "slug", "description", "primaryMuscle", "secondaryMuscles", "bodyPart",
@@ -2411,7 +2411,7 @@ INSERT INTO "Exercise" (
   "commonMistakes", "safetyTips", "beginnerAlternative", "intermediateAlternative", "advancedAlternative",
   "tags", "caloriesBurnPerHour", "isCustom"
 ) VALUES (
-  'bb3b5667-deae-4c76-ac22-9ffdc93f890b', 'Reverse Barbell Curl', 'reverse-barbell-curl', 'Overhand grip curl targeting the brachioradialis and forearm extensors.',
+  '13f99a13-efb7-435e-b40e-5c6acc0f2822', 'Reverse Barbell Curl', 'reverse-barbell-curl', 'Overhand grip curl targeting the brachioradialis and forearm extensors.',
   'Forearms', 'Biceps (Brachialis)', 'Arms',
   'Barbell', 'Beginner', 'Isolation',
   'Hold EZ-bar with overhand (pronated) grip, stand tall, curl bar up to chest level, and lower slowly.', '["Stand tall holding EZ-bar with overhand grip shoulder-width."]', '["Curl bar upward keeping wrists neutral, squeeze tops of forearms, lower with a 3s eccentric."]',
@@ -2424,7 +2424,7 @@ INSERT INTO "Exercise" (
   "setupSteps" = EXCLUDED."setupSteps",
   "executionSteps" = EXCLUDED."executionSteps",
   "commonMistakes" = EXCLUDED."commonMistakes";
-INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('15c385c2-bd73-4c7c-a5de-0a1dff00383c', 'bb3b5667-deae-4c76-ac22-9ffdc93f890b', 'VIDEO', 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
+INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('media-reverse-barbell-curl', '13f99a13-efb7-435e-b40e-5c6acc0f2822', 'VIDEO', '/videos/exercises/barbell-biceps-curl.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
 
 INSERT INTO "Exercise" (
   "id", "name", "slug", "description", "primaryMuscle", "secondaryMuscles", "bodyPart",
@@ -2433,7 +2433,7 @@ INSERT INTO "Exercise" (
   "commonMistakes", "safetyTips", "beginnerAlternative", "intermediateAlternative", "advancedAlternative",
   "tags", "caloriesBurnPerHour", "isCustom"
 ) VALUES (
-  '2d8792e3-e3c1-4449-8d18-672eb1ddd2ae', 'Farmer''s Walk', 'farmers-walk', 'Heavy loaded carry building crushing grip strength, forearm endurance, traps, and core stability.',
+  '6a8432cd-754a-4143-b9e7-a754ff12d4ef', 'Farmer''s Walk', 'farmers-walk', 'Heavy loaded carry building crushing grip strength, forearm endurance, traps, and core stability.',
   'Forearms', 'Traps, Core, Glutes, Calves', 'Full Body',
   'Dumbbell', 'Intermediate', 'Carry',
   'Pick up heavy dumbbells or farmer handles, stand tall with shoulders packed, and walk with short deliberate steps.', '["Deadlift heavy dumbbells at sides, stand tall with chest proud and shoulders back."]', '["Walk forward in a straight line with steady controlled steps, keep torso upright, do not let weights sway."]',
@@ -2446,7 +2446,7 @@ INSERT INTO "Exercise" (
   "setupSteps" = EXCLUDED."setupSteps",
   "executionSteps" = EXCLUDED."executionSteps",
   "commonMistakes" = EXCLUDED."commonMistakes";
-INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('ae843ae8-3ef4-4ca5-8b38-e1dd2f4faa7f', '2d8792e3-e3c1-4449-8d18-672eb1ddd2ae', 'VIDEO', 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
+INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('media-farmers-walk', '6a8432cd-754a-4143-b9e7-a754ff12d4ef', 'VIDEO', '/videos/exercises/deadlift.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
 
 INSERT INTO "Exercise" (
   "id", "name", "slug", "description", "primaryMuscle", "secondaryMuscles", "bodyPart",
@@ -2455,7 +2455,7 @@ INSERT INTO "Exercise" (
   "commonMistakes", "safetyTips", "beginnerAlternative", "intermediateAlternative", "advancedAlternative",
   "tags", "caloriesBurnPerHour", "isCustom"
 ) VALUES (
-  '7dc277e9-fe64-4c62-a0eb-646252087d95', 'Dead Hang', 'dead-hang', 'Static bodyweight hang from pull-up bar for grip endurance, forearm development, and spinal decompression.',
+  'abff4ef7-e2c6-4d75-904c-f9ec611fd12b', 'Dead Hang', 'dead-hang', 'Static bodyweight hang from pull-up bar for grip endurance, forearm development, and spinal decompression.',
   'Forearms', 'Lats, Shoulders', 'Arms',
   'Bodyweight', 'Beginner', 'Isolation',
   'Hang from pull-up bar with overhand grip with feet off floor, hold for target time, and step down safely.', '["Grip pull-up bar shoulder-width with overhand grip, step off box into full hang."]', '["Hang relaxed allowing gravity to stretch spine, grip bar tight, hold for time."]',
@@ -2468,7 +2468,7 @@ INSERT INTO "Exercise" (
   "setupSteps" = EXCLUDED."setupSteps",
   "executionSteps" = EXCLUDED."executionSteps",
   "commonMistakes" = EXCLUDED."commonMistakes";
-INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('ba52aad0-9d76-45a4-985f-acd76bbab57f', '7dc277e9-fe64-4c62-a0eb-646252087d95', 'VIDEO', 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
+INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('media-dead-hang', 'abff4ef7-e2c6-4d75-904c-f9ec611fd12b', 'VIDEO', '/videos/exercises/barbell-biceps-curl.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
 
 INSERT INTO "Exercise" (
   "id", "name", "slug", "description", "primaryMuscle", "secondaryMuscles", "bodyPart",
@@ -2477,7 +2477,7 @@ INSERT INTO "Exercise" (
   "commonMistakes", "safetyTips", "beginnerAlternative", "intermediateAlternative", "advancedAlternative",
   "tags", "caloriesBurnPerHour", "isCustom"
 ) VALUES (
-  'a41e52ef-4c8b-4116-a1dc-f2c625f60c14', 'Plate Pinch Hold', 'plate-pinch-hold', 'Pinch grip isometric exercise targeting finger extensors/flexors and thumb strength.',
+  '064ddd36-ad68-4c12-85cc-b1f206c9f1a0', 'Plate Pinch Hold', 'plate-pinch-hold', 'Pinch grip isometric exercise targeting finger extensors/flexors and thumb strength.',
   'Forearms', 'Grip', 'Arms',
   'Barbell', 'Intermediate', 'Isolation',
   'Pinch smooth sides of two weight plates together with fingers and thumb, stand tall and hold for time.', '["Place two weight plates smooth sides facing out, pinch tops with fingers and thumb."]', '["Stand upright holding plates at sides, hold for maximum time without dropping."]',
@@ -2490,7 +2490,7 @@ INSERT INTO "Exercise" (
   "setupSteps" = EXCLUDED."setupSteps",
   "executionSteps" = EXCLUDED."executionSteps",
   "commonMistakes" = EXCLUDED."commonMistakes";
-INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('09bbaa21-041e-410b-8492-6be0a2907c53', 'a41e52ef-4c8b-4116-a1dc-f2c625f60c14', 'VIDEO', 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
+INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('media-plate-pinch-hold', '064ddd36-ad68-4c12-85cc-b1f206c9f1a0', 'VIDEO', '/videos/exercises/barbell-biceps-curl.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
 
 INSERT INTO "Exercise" (
   "id", "name", "slug", "description", "primaryMuscle", "secondaryMuscles", "bodyPart",
@@ -2499,7 +2499,7 @@ INSERT INTO "Exercise" (
   "commonMistakes", "safetyTips", "beginnerAlternative", "intermediateAlternative", "advancedAlternative",
   "tags", "caloriesBurnPerHour", "isCustom"
 ) VALUES (
-  '6ced3ff4-b537-47c7-bde1-fbe011611b9b', 'Back Extension (45-Degree)', 'back-extension-45-degree', 'Erector spinae strengthening exercise building lower back stamina and preventing disc fatigue.',
+  'c10ec43e-578a-4b2d-9087-65783b2d22ef', 'Back Extension (45-Degree)', 'back-extension-45-degree', 'Erector spinae strengthening exercise building lower back stamina and preventing disc fatigue.',
   'Lower Back', 'Glutes, Hamstrings', 'Back',
   'Bench', 'Beginner', 'Hinge',
   'Position hips against pad on 45-degree bench, lower torso toward floor, and raise torso until body is straight.', '["Set pad just below hip crease, feet hooked under rollers, cross arms over chest."]', '["Hinge at hips lowering torso down, extend back up using lower back and glutes until torso aligns with legs."]',
@@ -2512,7 +2512,7 @@ INSERT INTO "Exercise" (
   "setupSteps" = EXCLUDED."setupSteps",
   "executionSteps" = EXCLUDED."executionSteps",
   "commonMistakes" = EXCLUDED."commonMistakes";
-INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('a60aacc8-c209-40e0-82f7-b9a972920eda', '6ced3ff4-b537-47c7-bde1-fbe011611b9b', 'VIDEO', 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
+INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('media-back-extension-45-degree', 'c10ec43e-578a-4b2d-9087-65783b2d22ef', 'VIDEO', '/videos/exercises/romanian-deadlift.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
 
 INSERT INTO "Exercise" (
   "id", "name", "slug", "description", "primaryMuscle", "secondaryMuscles", "bodyPart",
@@ -2521,7 +2521,7 @@ INSERT INTO "Exercise" (
   "commonMistakes", "safetyTips", "beginnerAlternative", "intermediateAlternative", "advancedAlternative",
   "tags", "caloriesBurnPerHour", "isCustom"
 ) VALUES (
-  '1ebf574b-4e3b-4da9-af8a-f56109560c89', 'Bird-Dog', 'bird-dog', 'Stuart McGill foundational core and lower back stability exercise promoting rotary stability.',
+  'fa7fa165-90c1-45f8-906d-d1dc18767f77', 'Bird-Dog', 'bird-dog', 'Stuart McGill foundational core and lower back stability exercise promoting rotary stability.',
   'Lower Back', 'Glutes, Abs, Shoulders', 'Core',
   'Bodyweight', 'Beginner', 'Isolation',
   'Start on hands and knees, reach right arm forward and left leg straight back, hold 3s, return, and alternate.', '["On all fours with hands under shoulders and knees under hips, flat neutral spine."]', '["Extend right arm forward and left leg back parallel to floor, hold 3s without rotating pelvis, return and switch sides."]',
@@ -2534,7 +2534,7 @@ INSERT INTO "Exercise" (
   "setupSteps" = EXCLUDED."setupSteps",
   "executionSteps" = EXCLUDED."executionSteps",
   "commonMistakes" = EXCLUDED."commonMistakes";
-INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('0f7e25f0-69af-467c-a0b0-071fbc388b32', '1ebf574b-4e3b-4da9-af8a-f56109560c89', 'VIDEO', 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
+INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('media-bird-dog', 'fa7fa165-90c1-45f8-906d-d1dc18767f77', 'VIDEO', '/videos/exercises/romanian-deadlift.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
 
 INSERT INTO "Exercise" (
   "id", "name", "slug", "description", "primaryMuscle", "secondaryMuscles", "bodyPart",
@@ -2543,7 +2543,7 @@ INSERT INTO "Exercise" (
   "commonMistakes", "safetyTips", "beginnerAlternative", "intermediateAlternative", "advancedAlternative",
   "tags", "caloriesBurnPerHour", "isCustom"
 ) VALUES (
-  '54792770-3da9-4a1f-8799-73a9565069e9', 'Superman', 'superman', 'Prone floor extension targeting erector spinae, glutes, and posterior chain.',
+  '5a2bf8db-cd7e-41d7-9e3a-e573f4273a0a', 'Superman', 'superman', 'Prone floor extension targeting erector spinae, glutes, and posterior chain.',
   'Lower Back', 'Glutes, Upper Back, Hamstrings', 'Back',
   'Bodyweight', 'Beginner', 'Isolation',
   'Lie face down with arms extended forward, simultaneously lift chest, arms, and legs off floor, hold 2s, and lower.', '["Lie prone on mat with arms outstretched ahead and legs straight."]', '["Contract lower back and glutes to lift chest and thighs 2-4 inches off mat, hold 2s squeeze, lower."]',
@@ -2556,7 +2556,7 @@ INSERT INTO "Exercise" (
   "setupSteps" = EXCLUDED."setupSteps",
   "executionSteps" = EXCLUDED."executionSteps",
   "commonMistakes" = EXCLUDED."commonMistakes";
-INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('0fefcd55-e2f1-4fa2-8447-783d58f2b1f1', '54792770-3da9-4a1f-8799-73a9565069e9', 'VIDEO', 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
+INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('media-superman', '5a2bf8db-cd7e-41d7-9e3a-e573f4273a0a', 'VIDEO', '/videos/exercises/romanian-deadlift.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
 
 INSERT INTO "Exercise" (
   "id", "name", "slug", "description", "primaryMuscle", "secondaryMuscles", "bodyPart",
@@ -2565,7 +2565,7 @@ INSERT INTO "Exercise" (
   "commonMistakes", "safetyTips", "beginnerAlternative", "intermediateAlternative", "advancedAlternative",
   "tags", "caloriesBurnPerHour", "isCustom"
 ) VALUES (
-  'a349a720-b737-487e-a3da-1abf31c9959a', 'Jefferson Curl', 'jefferson-curl', 'Segmental spinal flexion and extension mobility movement building loaded spinal resilience and hamstring flexibility.',
+  '6b729982-5939-4a4b-ab7e-367424a88aa7', 'Jefferson Curl', 'jefferson-curl', 'Segmental spinal flexion and extension mobility movement building loaded spinal resilience and hamstring flexibility.',
   'Lower Back', 'Hamstrings, Glutes', 'Back',
   'Barbell', 'Advanced', 'Hinge',
   'Stand on a box holding light weight, roll spine down vertebra by vertebra into full flexion below feet, and unroll back up.', '["Stand on plyo box, legs straight, hold very light weight (5-10kg)."]', '["Tuck chin to chest, round neck, then upper back, then lower back sequentially, reach below feet, reverse slowly."]',
@@ -2578,7 +2578,7 @@ INSERT INTO "Exercise" (
   "setupSteps" = EXCLUDED."setupSteps",
   "executionSteps" = EXCLUDED."executionSteps",
   "commonMistakes" = EXCLUDED."commonMistakes";
-INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('b9fe8ae2-ffd4-4a40-81be-080e3697ad31', 'a349a720-b737-487e-a3da-1abf31c9959a', 'VIDEO', 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
+INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('media-jefferson-curl', '6b729982-5939-4a4b-ab7e-367424a88aa7', 'VIDEO', '/videos/exercises/romanian-deadlift.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
 
 INSERT INTO "Exercise" (
   "id", "name", "slug", "description", "primaryMuscle", "secondaryMuscles", "bodyPart",
@@ -2587,7 +2587,7 @@ INSERT INTO "Exercise" (
   "commonMistakes", "safetyTips", "beginnerAlternative", "intermediateAlternative", "advancedAlternative",
   "tags", "caloriesBurnPerHour", "isCustom"
 ) VALUES (
-  '0a3ed1b0-6468-4c66-b2c5-87bbd003b4fb', 'Reverse Hyperextension', 'reverse-hyperextension', 'Patented Louie Simmons movement decompressing the lumbar spine while strengthening glutes and erectors.',
+  '5be22a6a-e834-4cd9-86de-aa5ce792b9f4', 'Reverse Hyperextension', 'reverse-hyperextension', 'Patented Louie Simmons movement decompressing the lumbar spine while strengthening glutes and erectors.',
   'Lower Back', 'Glutes, Hamstrings', 'Back',
   'Machine', 'Intermediate', 'Hinge',
   'Lie face down on reverse hyper machine holding handles, pendulum swing legs up until horizontal, squeeze, and lower.', '["Lie prone on machine with hips at edge of pad, strap around ankles, grip handles firmly."]', '["Swing legs upward using glutes and lower back until aligned with torso, pause 1s, allow legs to swing under into decompression."]',
@@ -2600,7 +2600,7 @@ INSERT INTO "Exercise" (
   "setupSteps" = EXCLUDED."setupSteps",
   "executionSteps" = EXCLUDED."executionSteps",
   "commonMistakes" = EXCLUDED."commonMistakes";
-INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('7f083299-d2a6-43ac-9bb6-f8aad430c55b', '0a3ed1b0-6468-4c66-b2c5-87bbd003b4fb', 'VIDEO', 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
+INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('media-reverse-hyperextension', '5be22a6a-e834-4cd9-86de-aa5ce792b9f4', 'VIDEO', '/videos/exercises/romanian-deadlift.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
 
 INSERT INTO "Exercise" (
   "id", "name", "slug", "description", "primaryMuscle", "secondaryMuscles", "bodyPart",
@@ -2609,7 +2609,7 @@ INSERT INTO "Exercise" (
   "commonMistakes", "safetyTips", "beginnerAlternative", "intermediateAlternative", "advancedAlternative",
   "tags", "caloriesBurnPerHour", "isCustom"
 ) VALUES (
-  '062260f6-598a-4171-b655-8ac097049b1d', 'Seated Hip Adduction Machine', 'seated-hip-adduction-machine', 'Machine isolating the adductor magnus and longus (inner thighs) for hip strength and groin injury prevention.',
+  '0612216d-16c2-4bfb-bf23-9e613b188eb0', 'Seated Hip Adduction Machine', 'seated-hip-adduction-machine', 'Machine isolating the adductor magnus and longus (inner thighs) for hip strength and groin injury prevention.',
   'Adductors', 'Glutes (stabilizer)', 'Legs',
   'Machine', 'Beginner', 'Isolation',
   'Sit in machine with pads inside knees, pull knees together against resistance until pads touch, hold 1s, and release slowly.', '["Sit in machine with back pad adjusted, legs spread wide with pads on inner knees."]', '["Squeeze knees together smoothly until pads touch, pause for 1 second, resist weight as legs open wide."]',
@@ -2622,7 +2622,7 @@ INSERT INTO "Exercise" (
   "setupSteps" = EXCLUDED."setupSteps",
   "executionSteps" = EXCLUDED."executionSteps",
   "commonMistakes" = EXCLUDED."commonMistakes";
-INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('c4e0b8bf-f83e-4ff7-b75d-f3a1de11f77c', '062260f6-598a-4171-b655-8ac097049b1d', 'VIDEO', 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
+INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('media-seated-hip-adduction-machine', '0612216d-16c2-4bfb-bf23-9e613b188eb0', 'VIDEO', '/videos/exercises/bench-press.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
 
 INSERT INTO "Exercise" (
   "id", "name", "slug", "description", "primaryMuscle", "secondaryMuscles", "bodyPart",
@@ -2631,7 +2631,7 @@ INSERT INTO "Exercise" (
   "commonMistakes", "safetyTips", "beginnerAlternative", "intermediateAlternative", "advancedAlternative",
   "tags", "caloriesBurnPerHour", "isCustom"
 ) VALUES (
-  'a976e5ac-a31d-47af-859c-875bdd4b369f', 'Copenhagen Adductor Plank', 'copenhagen-adductor-plank', 'Elite athletic bodyweight exercise for high-force adductor strength and groin resilience.',
+  '0e1ac873-ee6f-404b-a504-c8e8bde70bbe', 'Copenhagen Adductor Plank', 'copenhagen-adductor-plank', 'Elite athletic bodyweight exercise for high-force adductor strength and groin resilience.',
   'Adductors', 'Obliques, Core, Glutes', 'Legs',
   'Bodyweight', 'Advanced', 'Isolation',
   'Side plank with top leg resting on bench and bottom leg hovering underneath, hold body in rigid straight line.', '["Lie in side plank with top foot/ankle resting on bench (knee height), bottom leg free underneath."]', '["Lift hips and hold body rigid using top inner thigh (adductor) and obliques, hold for target time."]',
@@ -2644,7 +2644,7 @@ INSERT INTO "Exercise" (
   "setupSteps" = EXCLUDED."setupSteps",
   "executionSteps" = EXCLUDED."executionSteps",
   "commonMistakes" = EXCLUDED."commonMistakes";
-INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('41ace624-2c07-4aa8-9e8a-7fa7eca7b25d', 'a976e5ac-a31d-47af-859c-875bdd4b369f', 'VIDEO', 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
+INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('media-copenhagen-adductor-plank', '0e1ac873-ee6f-404b-a504-c8e8bde70bbe', 'VIDEO', '/videos/exercises/bench-press.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
 
 INSERT INTO "Exercise" (
   "id", "name", "slug", "description", "primaryMuscle", "secondaryMuscles", "bodyPart",
@@ -2653,7 +2653,7 @@ INSERT INTO "Exercise" (
   "commonMistakes", "safetyTips", "beginnerAlternative", "intermediateAlternative", "advancedAlternative",
   "tags", "caloriesBurnPerHour", "isCustom"
 ) VALUES (
-  '43f948f6-cddd-46ce-bc72-2abc189a61db', 'Cossack Squat', 'cossack-squat', 'Frontal plane deep single-leg squat stretching the adductor of the trailing leg while building lead leg strength.',
+  '1797f718-63ba-48b2-8cee-ecef3a7cb515', 'Cossack Squat', 'cossack-squat', 'Frontal plane deep single-leg squat stretching the adductor of the trailing leg while building lead leg strength.',
   'Adductors', 'Quadriceps, Glutes, Hamstrings', 'Legs',
   'Bodyweight', 'Intermediate', 'Squat',
   'Wide stance, squat down deep to one side while other leg remains straight with toes pointing up, stand and alternate.', '["Stand in very wide straddle stance (2x shoulder-width), chest tall."]', '["Squat deep onto right leg, keep right heel on floor, left leg straight with toes rotating up to ceiling, drive up and switch."]',
@@ -2666,7 +2666,7 @@ INSERT INTO "Exercise" (
   "setupSteps" = EXCLUDED."setupSteps",
   "executionSteps" = EXCLUDED."executionSteps",
   "commonMistakes" = EXCLUDED."commonMistakes";
-INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('48ff33b5-6c1c-4b8c-8c96-4a2c2e3ec2c1', '43f948f6-cddd-46ce-bc72-2abc189a61db', 'VIDEO', 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
+INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('media-cossack-squat', '1797f718-63ba-48b2-8cee-ecef3a7cb515', 'VIDEO', '/videos/exercises/squat.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
 
 INSERT INTO "Exercise" (
   "id", "name", "slug", "description", "primaryMuscle", "secondaryMuscles", "bodyPart",
@@ -2675,7 +2675,7 @@ INSERT INTO "Exercise" (
   "commonMistakes", "safetyTips", "beginnerAlternative", "intermediateAlternative", "advancedAlternative",
   "tags", "caloriesBurnPerHour", "isCustom"
 ) VALUES (
-  '3522883a-0fe1-4902-9f89-80fff449c49f', 'Cable Hip Adduction', 'cable-hip-adduction', 'Standing cable movement pulling the leg across the midline against resistance.',
+  '2de0e7e9-7470-44b4-b124-27b16d3b682d', 'Cable Hip Adduction', 'cable-hip-adduction', 'Standing cable movement pulling the leg across the midline against resistance.',
   'Adductors', 'Core, Balance', 'Legs',
   'Cable', 'Beginner', 'Isolation',
   'Attach ankle strap to low cable, stand sideways with working leg closer to tower, pull leg across midline, and return.', '["Attach strap to inside ankle, stand sideways 2 feet away from low pulley."]', '["Pull working leg inward across the front of supporting leg, squeeze inner thigh, return slowly."]',
@@ -2688,7 +2688,7 @@ INSERT INTO "Exercise" (
   "setupSteps" = EXCLUDED."setupSteps",
   "executionSteps" = EXCLUDED."executionSteps",
   "commonMistakes" = EXCLUDED."commonMistakes";
-INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('840ee80c-930b-493e-8efc-1cf025090c48', '3522883a-0fe1-4902-9f89-80fff449c49f', 'VIDEO', 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
+INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('media-cable-hip-adduction', '2de0e7e9-7470-44b4-b124-27b16d3b682d', 'VIDEO', '/videos/exercises/bench-press.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
 
 INSERT INTO "Exercise" (
   "id", "name", "slug", "description", "primaryMuscle", "secondaryMuscles", "bodyPart",
@@ -2697,7 +2697,7 @@ INSERT INTO "Exercise" (
   "commonMistakes", "safetyTips", "beginnerAlternative", "intermediateAlternative", "advancedAlternative",
   "tags", "caloriesBurnPerHour", "isCustom"
 ) VALUES (
-  'cc4d10a4-7e73-4f4b-b367-9cadd6ebbbed', 'Standing Cable Hip Abduction', 'standing-cable-hip-abduction', 'Standing cable kick-out targeting the gluteus medius and minimus for hip stability.',
+  '8fe4dd87-af46-4a0e-9111-221608e7b32e', 'Standing Cable Hip Abduction', 'standing-cable-hip-abduction', 'Standing cable kick-out targeting the gluteus medius and minimus for hip stability.',
   'Abductors', 'Glutes', 'Legs',
   'Cable', 'Beginner', 'Isolation',
   'Attach ankle strap to low pulley, stand sideways with working leg away from tower, kick leg outward, squeeze, and return.', '["Attach strap to outside ankle, stand holding machine frame with slight torso lean."]', '["Sweep leg outward to side leading with heel, squeeze outer hip at top, lower slowly across front."]',
@@ -2710,7 +2710,7 @@ INSERT INTO "Exercise" (
   "setupSteps" = EXCLUDED."setupSteps",
   "executionSteps" = EXCLUDED."executionSteps",
   "commonMistakes" = EXCLUDED."commonMistakes";
-INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('07e5fa0c-86db-4304-9ddb-c48d9a7b97b1', 'cc4d10a4-7e73-4f4b-b367-9cadd6ebbbed', 'VIDEO', 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
+INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('media-standing-cable-hip-abduction', '8fe4dd87-af46-4a0e-9111-221608e7b32e', 'VIDEO', '/videos/exercises/bench-press.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
 
 INSERT INTO "Exercise" (
   "id", "name", "slug", "description", "primaryMuscle", "secondaryMuscles", "bodyPart",
@@ -2719,7 +2719,7 @@ INSERT INTO "Exercise" (
   "commonMistakes", "safetyTips", "beginnerAlternative", "intermediateAlternative", "advancedAlternative",
   "tags", "caloriesBurnPerHour", "isCustom"
 ) VALUES (
-  '6eebb807-496e-4531-911d-934173796eab', 'Side-Lying Clamshell', 'side-lying-clamshell', 'Classic physical therapy and glute activation movement targeting the deep external rotators and gluteus medius.',
+  '43c493c6-8dd8-4c27-8444-77013d501a9d', 'Side-Lying Clamshell', 'side-lying-clamshell', 'Classic physical therapy and glute activation movement targeting the deep external rotators and gluteus medius.',
   'Abductors', 'Glutes', 'Legs',
   'Resistance Band', 'Beginner', 'Isolation',
   'Lie on side with knees bent at 90 degrees and feet touching, open top knee like a clamshell, hold 1s, and lower.', '["Lie on side with knees bent at 90 degrees, heels glued together, band above knees."]', '["Rotate top knee open toward ceiling keeping feet touching, squeeze outer glute, lower slowly."]',
@@ -2732,7 +2732,7 @@ INSERT INTO "Exercise" (
   "setupSteps" = EXCLUDED."setupSteps",
   "executionSteps" = EXCLUDED."executionSteps",
   "commonMistakes" = EXCLUDED."commonMistakes";
-INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('2c6ddbbf-5ad6-44e9-92c0-a4d4881c7ec0', '6eebb807-496e-4531-911d-934173796eab', 'VIDEO', 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
+INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('media-side-lying-clamshell', '43c493c6-8dd8-4c27-8444-77013d501a9d', 'VIDEO', '/videos/exercises/bench-press.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
 
 INSERT INTO "Exercise" (
   "id", "name", "slug", "description", "primaryMuscle", "secondaryMuscles", "bodyPart",
@@ -2741,7 +2741,7 @@ INSERT INTO "Exercise" (
   "commonMistakes", "safetyTips", "beginnerAlternative", "intermediateAlternative", "advancedAlternative",
   "tags", "caloriesBurnPerHour", "isCustom"
 ) VALUES (
-  '5435c619-d873-424d-ab94-acccb1e9f573', 'Lateral Band Walk', 'lateral-band-walk', 'Side-to-side stepping drill against resistance band tension for continuous outer hip engagement.',
+  '655a946f-b95e-4249-98bd-d6605e1addbb', 'Lateral Band Walk', 'lateral-band-walk', 'Side-to-side stepping drill against resistance band tension for continuous outer hip engagement.',
   'Abductors', 'Glutes', 'Legs',
   'Resistance Band', 'Beginner', 'Isolation',
   'Place band around ankles or feet, quarter squat, step sideways keeping tension on band at all times.', '["Loop mini resistance band around forefeet or ankles, get into athletic quarter squat."]', '["Take step to the right leading with right foot, follow with left foot keeping band taut, repeat 15 steps, then reverse."]',
@@ -2754,7 +2754,7 @@ INSERT INTO "Exercise" (
   "setupSteps" = EXCLUDED."setupSteps",
   "executionSteps" = EXCLUDED."executionSteps",
   "commonMistakes" = EXCLUDED."commonMistakes";
-INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('60640fa6-1857-49bb-a25a-7898b3a59e93', '5435c619-d873-424d-ab94-acccb1e9f573', 'VIDEO', 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
+INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('media-lateral-band-walk', '655a946f-b95e-4249-98bd-d6605e1addbb', 'VIDEO', '/videos/exercises/bench-press.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
 
 INSERT INTO "Exercise" (
   "id", "name", "slug", "description", "primaryMuscle", "secondaryMuscles", "bodyPart",
@@ -2763,7 +2763,7 @@ INSERT INTO "Exercise" (
   "commonMistakes", "safetyTips", "beginnerAlternative", "intermediateAlternative", "advancedAlternative",
   "tags", "caloriesBurnPerHour", "isCustom"
 ) VALUES (
-  '748ed7ff-3d15-4711-8347-87cde1239a66', 'Side-Lying Leg Raise', 'side-lying-leg-raise', 'Mat-based hip abduction movement developing outer hip endurance and control.',
+  '1de0bec5-95dd-4468-a9ed-864a1dc9cc32', 'Side-Lying Leg Raise', 'side-lying-leg-raise', 'Mat-based hip abduction movement developing outer hip endurance and control.',
   'Abductors', 'Glutes', 'Legs',
   'Bodyweight', 'Beginner', 'Isolation',
   'Lie on side with legs straight, raise top leg upward to 45 degrees leading with heel, squeeze, and lower.', '["Lie completely straight on side, rest head on bottom arm, top hand on floor in front for balance."]', '["Raise top leg smoothly upward, lead with heel with slight internal rotation, hold 1s, lower slowly."]',
@@ -2776,35 +2776,35 @@ INSERT INTO "Exercise" (
   "setupSteps" = EXCLUDED."setupSteps",
   "executionSteps" = EXCLUDED."executionSteps",
   "commonMistakes" = EXCLUDED."commonMistakes";
-INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('3b7e6ace-2578-4347-bd18-fe2a261930b9', '748ed7ff-3d15-4711-8347-87cde1239a66', 'VIDEO', 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
+INSERT INTO "ExerciseMedia" ("id", "exerciseId", "type", "url", "provider", "isPrimary") VALUES ('media-side-lying-leg-raise', '1de0bec5-95dd-4468-a9ed-864a1dc9cc32', 'VIDEO', '/videos/exercises/bench-press.mp4', 'EXTERNAL', true) ON CONFLICT ("id") DO NOTHING;
 
 INSERT INTO "Workout" ("id", "name", "slug", "description", "category", "difficulty", "durationMinutes", "isTemplate", "isPublic", "tags")
-VALUES ('775c6e7d-63ec-4d45-afc5-98c67b36d5bb', 'Push Day (Chest, Shoulders & Triceps)', 'push-day-hypertrophy', 'High-intensity pushing session maximizing mechanical tension on pectorals, anterior deltoids, and triceps.', 'push_pull_legs', 'Intermediate', 50, true, true, 'chest, shoulders, triceps, push, ppl')
+VALUES ('cf0716fa-692f-4318-a2de-5ecee4fe6218', 'Push Day (Chest, Shoulders & Triceps)', 'push-day-hypertrophy', 'High-intensity pushing session maximizing mechanical tension on pectorals, anterior deltoids, and triceps.', 'push_pull_legs', 'Intermediate', 50, true, true, 'chest, shoulders, triceps, push, ppl')
 ON CONFLICT ("slug") DO NOTHING;
-INSERT INTO "WorkoutExercise" ("id", "workoutId", "exerciseId", "orderIndex", "targetSets", "targetReps", "targetRestSec", "tempo", "notes") VALUES ('5fbaa203-5351-4145-b1e8-7caefadd020b', '775c6e7d-63ec-4d45-afc5-98c67b36d5bb', '34c6ba28-52e8-49dc-bdc6-b7f2f80e4bd9', 0, 4, '6-8', 120, '3-1-1-0', 'Primary compound press. Warm up thoroughly.') ON CONFLICT ("id") DO NOTHING;
-INSERT INTO "WorkoutExercise" ("id", "workoutId", "exerciseId", "orderIndex", "targetSets", "targetReps", "targetRestSec", "tempo", "notes") VALUES ('c4471573-44f8-4ee5-af59-cf82e4851377', '775c6e7d-63ec-4d45-afc5-98c67b36d5bb', 'ee84a506-0065-4a7d-a0e4-675f3e8244b2', 1, 3, '8-10', 90, '2-0-1-0', 'Vertical pressing volume.') ON CONFLICT ("id") DO NOTHING;
-INSERT INTO "WorkoutExercise" ("id", "workoutId", "exerciseId", "orderIndex", "targetSets", "targetReps", "targetRestSec", "tempo", "notes") VALUES ('74898c2d-c227-4c6f-b4b6-3ddb2f870717', '775c6e7d-63ec-4d45-afc5-98c67b36d5bb', '9ce4e734-947f-4394-bb34-7efe16220708', 2, 3, '12-15', 60, '2-0-1-1', 'Spread rope ends at lockout.') ON CONFLICT ("id") DO NOTHING;
+INSERT INTO "WorkoutExercise" ("id", "workoutId", "exerciseId", "orderIndex", "targetSets", "targetReps", "targetRestSec", "tempo", "notes") VALUES ('f7c608a5-bdb2-40f9-ad9c-2b79b095c705', 'cf0716fa-692f-4318-a2de-5ecee4fe6218', '0a937555-24fa-41c5-947c-f747b72bf9cc', 0, 4, '6-8', 120, '3-1-1-0', 'Primary compound press. Warm up thoroughly.') ON CONFLICT ("id") DO NOTHING;
+INSERT INTO "WorkoutExercise" ("id", "workoutId", "exerciseId", "orderIndex", "targetSets", "targetReps", "targetRestSec", "tempo", "notes") VALUES ('17ae9349-5b61-4971-a204-7efe316814a8', 'cf0716fa-692f-4318-a2de-5ecee4fe6218', 'dc939741-9609-46df-b06c-318410fc0479', 1, 3, '8-10', 90, '2-0-1-0', 'Vertical pressing volume.') ON CONFLICT ("id") DO NOTHING;
+INSERT INTO "WorkoutExercise" ("id", "workoutId", "exerciseId", "orderIndex", "targetSets", "targetReps", "targetRestSec", "tempo", "notes") VALUES ('952776b6-087e-454b-8b89-0860368550ff', 'cf0716fa-692f-4318-a2de-5ecee4fe6218', 'a9bbbcc9-be0b-4485-8684-026928885712', 2, 3, '12-15', 60, '2-0-1-1', 'Spread rope ends at lockout.') ON CONFLICT ("id") DO NOTHING;
 
 INSERT INTO "Workout" ("id", "name", "slug", "description", "category", "difficulty", "durationMinutes", "isTemplate", "isPublic", "tags")
-VALUES ('d00f5c36-087e-4eb9-bfc4-9a890f2c5a1c', 'Pull Day (Back, Rear Delts & Biceps)', 'pull-day-hypertrophy', 'Complete pulling routine targeting lat width, upper back thickness, and peak bicep recruitment.', 'push_pull_legs', 'Intermediate', 50, true, true, 'back, biceps, pull, lats, ppl')
+VALUES ('98abe0c2-49b0-41ac-8798-851dda7c5bb9', 'Pull Day (Back, Rear Delts & Biceps)', 'pull-day-hypertrophy', 'Complete pulling routine targeting lat width, upper back thickness, and peak bicep recruitment.', 'push_pull_legs', 'Intermediate', 50, true, true, 'back, biceps, pull, lats, ppl')
 ON CONFLICT ("slug") DO NOTHING;
-INSERT INTO "WorkoutExercise" ("id", "workoutId", "exerciseId", "orderIndex", "targetSets", "targetReps", "targetRestSec", "tempo", "notes") VALUES ('4b155483-d48f-4fd5-811a-17fe1c67cbb8', 'd00f5c36-087e-4eb9-bfc4-9a890f2c5a1c', 'd454eb4f-c05d-403b-bd95-a8904c7fe41d', 0, 3, '5', 180, '2-0-1-0', 'Heavy posterior chain pull.') ON CONFLICT ("id") DO NOTHING;
-INSERT INTO "WorkoutExercise" ("id", "workoutId", "exerciseId", "orderIndex", "targetSets", "targetReps", "targetRestSec", "tempo", "notes") VALUES ('9b6f682b-7a4c-4f22-9c35-36b6923478f4', 'd00f5c36-087e-4eb9-bfc4-9a890f2c5a1c', 'de656105-0f2b-4a7c-ad8b-5790c1430faf', 1, 4, '8-10', 90, '2-1-1-0', 'Pull bar to navel.') ON CONFLICT ("id") DO NOTHING;
-INSERT INTO "WorkoutExercise" ("id", "workoutId", "exerciseId", "orderIndex", "targetSets", "targetReps", "targetRestSec", "tempo", "notes") VALUES ('a60f7475-9a45-4b78-b39c-2562f63c1d4b', 'd00f5c36-087e-4eb9-bfc4-9a890f2c5a1c', '03381b92-41d3-43fb-a70f-e3728e53c5e1', 2, 3, '10-12', 75, '2-1-1-0', 'Squeeze lats at bottom.') ON CONFLICT ("id") DO NOTHING;
-INSERT INTO "WorkoutExercise" ("id", "workoutId", "exerciseId", "orderIndex", "targetSets", "targetReps", "targetRestSec", "tempo", "notes") VALUES ('44a16606-ebac-4034-8978-29bba5699d2d', 'd00f5c36-087e-4eb9-bfc4-9a890f2c5a1c', '89f7d659-870e-4dce-a42c-101ebc4ed388', 3, 3, '10-12', 60, '2-0-1-0', 'Strict form, no hip swing.') ON CONFLICT ("id") DO NOTHING;
+INSERT INTO "WorkoutExercise" ("id", "workoutId", "exerciseId", "orderIndex", "targetSets", "targetReps", "targetRestSec", "tempo", "notes") VALUES ('bcca1ef3-378a-4104-b687-b708610b8b67', '98abe0c2-49b0-41ac-8798-851dda7c5bb9', 'e35321b2-c8ab-422c-a8fa-3e11a85d5bf4', 0, 3, '5', 180, '2-0-1-0', 'Heavy posterior chain pull.') ON CONFLICT ("id") DO NOTHING;
+INSERT INTO "WorkoutExercise" ("id", "workoutId", "exerciseId", "orderIndex", "targetSets", "targetReps", "targetRestSec", "tempo", "notes") VALUES ('ea7f457d-35c1-45b4-8b85-f72c8e6fda84', '98abe0c2-49b0-41ac-8798-851dda7c5bb9', 'd66c0516-d07f-4d78-ba89-a9e198556f6d', 1, 4, '8-10', 90, '2-1-1-0', 'Pull bar to navel.') ON CONFLICT ("id") DO NOTHING;
+INSERT INTO "WorkoutExercise" ("id", "workoutId", "exerciseId", "orderIndex", "targetSets", "targetReps", "targetRestSec", "tempo", "notes") VALUES ('58623c0c-5f3b-4083-835a-de5bd550120a', '98abe0c2-49b0-41ac-8798-851dda7c5bb9', '402ef5b7-def8-4177-acbd-b3f3d7567e67', 2, 3, '10-12', 75, '2-1-1-0', 'Squeeze lats at bottom.') ON CONFLICT ("id") DO NOTHING;
+INSERT INTO "WorkoutExercise" ("id", "workoutId", "exerciseId", "orderIndex", "targetSets", "targetReps", "targetRestSec", "tempo", "notes") VALUES ('b6d6fc47-5f11-4b87-8712-7211f45e1745', '98abe0c2-49b0-41ac-8798-851dda7c5bb9', '9dbbf9f2-c349-4398-b122-de0d946d96e9', 3, 3, '10-12', 60, '2-0-1-0', 'Strict form, no hip swing.') ON CONFLICT ("id") DO NOTHING;
 
 INSERT INTO "Workout" ("id", "name", "slug", "description", "category", "difficulty", "durationMinutes", "isTemplate", "isPublic", "tags")
-VALUES ('97045dc7-0e2d-4014-99e9-5780dbec0e77', 'Legs & Core Blast', 'legs-core-blast', 'Comprehensive lower body workout developing quadriceps, hamstrings, glutes, and core bracing.', 'push_pull_legs', 'Intermediate', 55, true, true, 'legs, quads, hamstrings, glutes, calves')
+VALUES ('c3591cba-f593-42fe-a8db-b12ee26b25fb', 'Legs & Core Blast', 'legs-core-blast', 'Comprehensive lower body workout developing quadriceps, hamstrings, glutes, and core bracing.', 'push_pull_legs', 'Intermediate', 55, true, true, 'legs, quads, hamstrings, glutes, calves')
 ON CONFLICT ("slug") DO NOTHING;
-INSERT INTO "WorkoutExercise" ("id", "workoutId", "exerciseId", "orderIndex", "targetSets", "targetReps", "targetRestSec", "tempo", "notes") VALUES ('f48f2b1b-18bb-4cc8-a29e-c1c43299c373', '97045dc7-0e2d-4014-99e9-5780dbec0e77', 'c75f62eb-daef-4391-a337-092138e51986', 0, 4, '6-8', 150, '3-1-1-0', 'Full depth below parallel.') ON CONFLICT ("id") DO NOTHING;
-INSERT INTO "WorkoutExercise" ("id", "workoutId", "exerciseId", "orderIndex", "targetSets", "targetReps", "targetRestSec", "tempo", "notes") VALUES ('659720c4-549e-4d43-9daa-68f958c65d6a', '97045dc7-0e2d-4014-99e9-5780dbec0e77', '5096b5a1-8e03-4cfa-9a4d-fa1af5581850', 1, 3, '8-10', 120, '3-1-1-0', 'Deep hamstring stretch.') ON CONFLICT ("id") DO NOTHING;
+INSERT INTO "WorkoutExercise" ("id", "workoutId", "exerciseId", "orderIndex", "targetSets", "targetReps", "targetRestSec", "tempo", "notes") VALUES ('f50df21c-4e7b-401e-9df4-cf3dd48267f9', 'c3591cba-f593-42fe-a8db-b12ee26b25fb', '0c3d2db8-3c6c-4c07-ab9e-64e31c1378e9', 0, 4, '6-8', 150, '3-1-1-0', 'Full depth below parallel.') ON CONFLICT ("id") DO NOTHING;
+INSERT INTO "WorkoutExercise" ("id", "workoutId", "exerciseId", "orderIndex", "targetSets", "targetReps", "targetRestSec", "tempo", "notes") VALUES ('eaa15a25-20f3-4635-ba1e-0881d8229b2c', 'c3591cba-f593-42fe-a8db-b12ee26b25fb', '54bd5966-21e2-4483-9877-1ac01c8331ca', 1, 3, '8-10', 120, '3-1-1-0', 'Deep hamstring stretch.') ON CONFLICT ("id") DO NOTHING;
 
 INSERT INTO "Workout" ("id", "name", "slug", "description", "category", "difficulty", "durationMinutes", "isTemplate", "isPublic", "tags")
-VALUES ('999ac869-dfc1-4d61-a9c1-f902bfc8abce', '5x5 Strength Foundation (Workout A)', '5x5-strength-workout-a', 'Classic linear progression protocol building raw fundamental strength across the big 3 lifts.', 'strength_5x5', 'Beginner', 45, true, true, '5x5, strength, barbell, basic')
+VALUES ('1b6c07ec-9dc0-42ff-8c32-9b36ed20ec5a', '5x5 Strength Foundation (Workout A)', '5x5-strength-workout-a', 'Classic linear progression protocol building raw fundamental strength across the big 3 lifts.', 'strength_5x5', 'Beginner', 45, true, true, '5x5, strength, barbell, basic')
 ON CONFLICT ("slug") DO NOTHING;
-INSERT INTO "WorkoutExercise" ("id", "workoutId", "exerciseId", "orderIndex", "targetSets", "targetReps", "targetRestSec", "tempo", "notes") VALUES ('24ee9068-03f0-47c1-833f-da244ad81c0a', '999ac869-dfc1-4d61-a9c1-f902bfc8abce', 'c75f62eb-daef-4391-a337-092138e51986', 0, 5, '5', 180, '2-1-1-0', 'Linear progression.') ON CONFLICT ("id") DO NOTHING;
-INSERT INTO "WorkoutExercise" ("id", "workoutId", "exerciseId", "orderIndex", "targetSets", "targetReps", "targetRestSec", "tempo", "notes") VALUES ('e5696e92-4401-4bcf-a13f-3f2f29a3b5e4', '999ac869-dfc1-4d61-a9c1-f902bfc8abce', '34c6ba28-52e8-49dc-bdc6-b7f2f80e4bd9', 1, 5, '5', 180, '2-1-1-0', 'Focus on bar speed.') ON CONFLICT ("id") DO NOTHING;
-INSERT INTO "WorkoutExercise" ("id", "workoutId", "exerciseId", "orderIndex", "targetSets", "targetReps", "targetRestSec", "tempo", "notes") VALUES ('d6dec920-174d-4414-9fac-25b1e2f00030', '999ac869-dfc1-4d61-a9c1-f902bfc8abce', 'de656105-0f2b-4a7c-ad8b-5790c1430faf', 2, 5, '5', 120, '2-0-1-0', 'Explosive pull.') ON CONFLICT ("id") DO NOTHING;
+INSERT INTO "WorkoutExercise" ("id", "workoutId", "exerciseId", "orderIndex", "targetSets", "targetReps", "targetRestSec", "tempo", "notes") VALUES ('15e1e20e-f55a-421b-a9bc-6794c31e780f', '1b6c07ec-9dc0-42ff-8c32-9b36ed20ec5a', '0c3d2db8-3c6c-4c07-ab9e-64e31c1378e9', 0, 5, '5', 180, '2-1-1-0', 'Linear progression.') ON CONFLICT ("id") DO NOTHING;
+INSERT INTO "WorkoutExercise" ("id", "workoutId", "exerciseId", "orderIndex", "targetSets", "targetReps", "targetRestSec", "tempo", "notes") VALUES ('d09ef657-d940-47b5-901d-55e226016bb6', '1b6c07ec-9dc0-42ff-8c32-9b36ed20ec5a', '0a937555-24fa-41c5-947c-f747b72bf9cc', 1, 5, '5', 180, '2-1-1-0', 'Focus on bar speed.') ON CONFLICT ("id") DO NOTHING;
+INSERT INTO "WorkoutExercise" ("id", "workoutId", "exerciseId", "orderIndex", "targetSets", "targetReps", "targetRestSec", "tempo", "notes") VALUES ('521bc182-b364-48b8-8694-567bef82bcf1', '1b6c07ec-9dc0-42ff-8c32-9b36ed20ec5a', 'd66c0516-d07f-4d78-ba89-a9e198556f6d', 2, 5, '5', 120, '2-0-1-0', 'Explosive pull.') ON CONFLICT ("id") DO NOTHING;
 
 -- ==========================================================
 -- 4. SEED ADMIN & DEMO USER ACCOUNTS
@@ -2814,4 +2814,3 @@ VALUES
   ('admin-seed-id', 'admin@fitai.app', '$2a$10$tZ26fJtU0uB5XGzC07HjmeB8aU64d1vB78lG.3p8yNqmFq21oT7K6', 'Admin Master', 'ADMIN', 'muscle_building', 'advanced', 1250, 4, 12),
   ('user-demo-id', 'user@fitai.app', '$2a$10$Y1sL9mG1f1Zt4eN0z5eEkuV1c6L9iB5d4rF3mX8jA2gQ7sH9vK3p2', 'Alex Mercer', 'USER', 'muscle_building', 'intermediate', 450, 2, 5)
 ON CONFLICT ("email") DO NOTHING;
-

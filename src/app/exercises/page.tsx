@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, Suspense } from 'react';
+import React, { useState, useEffect, Suspense, useRef } from 'react';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import { 
@@ -12,15 +12,21 @@ import {
   Layers, 
   Zap, 
   Box, 
+  Film,
+  Play,
+  Pause,
   RotateCcw, 
   Scale,
   X,
   Eye,
   SlidersHorizontal,
-  Flame
+  Flame,
+  Volume2,
+  VolumeX
 } from 'lucide-react';
 import { MUSCLE_GROUPS, EQUIPMENT_LIST } from '@/lib/biomechanics';
 import Exercise3DViewer from '@/components/Exercise3DViewer';
+import { getExerciseVideoUrl } from '@/lib/exercise-videos';
 
 export default function ExercisesPage() {
   return (
@@ -48,8 +54,11 @@ function ExercisesContent() {
   // Compare selection drawer
   const [compareList, setCompareList] = useState<any[]>([]);
 
-  // 3D Quick Preview Modal State
+  // 3D & Video Quick Preview Modal States
   const [active3DExercise, setActive3DExercise] = useState<any | null>(null);
+  const [activeVideoExercise, setActiveVideoExercise] = useState<any | null>(null);
+  const [isVideoMuted, setIsVideoMuted] = useState(true);
+  const modalVideoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
     setLoading(true);
@@ -96,15 +105,21 @@ function ExercisesContent() {
       {/* Header */}
       <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
         <div>
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-bold uppercase tracking-wider mb-2">
-            <Box className="w-3.5 h-3.5" />
-            <span>Interactive 3D Biomechanics & Anatomy</span>
+          <div className="flex items-center gap-2 mb-2">
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-bold uppercase tracking-wider">
+              <Box className="w-3.5 h-3.5" />
+              <span>3D Biomechanics</span>
+            </span>
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 text-xs font-bold uppercase tracking-wider">
+              <Film className="w-3.5 h-3.5" />
+              <span>Kaggle Video Demos</span>
+            </span>
           </div>
           <h1 className="text-3xl sm:text-4xl font-black text-white tracking-tight">
-            Comprehensive 3D Exercise Database
+            Exercise Database & Video Demonstrations
           </h1>
           <p className="text-xs sm:text-sm text-slate-400 mt-1">
-            Browse {total} verified exercises with real-time 3D anatomical models, 360° rotation, EMG muscle heatmaps, and form cues.
+            Browse {total} verified exercises with real Kaggle video demonstrations, interactive 3D anatomy, and kinematic form cues.
           </p>
         </div>
 
@@ -128,7 +143,7 @@ function ExercisesContent() {
             type="text"
             value={search}
             onChange={e => setSearch(e.target.value)}
-            placeholder="Search all 3D exercises by name, keyword, or biomechanical tag (e.g. 'Bench', 'Squat', 'Deadlift')..."
+            placeholder="Search exercises by name, keyword, or biomechanical tag (e.g. 'Bench', 'Squat', 'Deadlift')..."
             className="w-full bg-slate-950 border border-slate-800 rounded-2xl pl-12 pr-4 py-3.5 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500 transition-colors"
           />
         </div>
@@ -260,9 +275,8 @@ function ExercisesContent() {
 
       {/* 3D Quick Preview Interactive Modal */}
       {active3DExercise && (
-        <div className="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4">
+        <div className="fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-md flex items-center justify-center p-4">
           <div className="relative w-full max-w-4xl bg-slate-900 border border-slate-800 rounded-3xl overflow-hidden shadow-2xl animate-in fade-in zoom-in-95 duration-200">
-            {/* Modal Header */}
             <div className="flex items-center justify-between px-6 py-4 bg-slate-950 border-b border-slate-800">
               <div className="flex items-center gap-2">
                 <Box className="w-5 h-5 text-emerald-400" />
@@ -279,7 +293,6 @@ function ExercisesContent() {
               </button>
             </div>
 
-            {/* Modal Body: Full 3D Simulation */}
             <div className="p-4 sm:p-6 space-y-4">
               <Exercise3DViewer
                 exerciseName={active3DExercise.name}
@@ -299,6 +312,63 @@ function ExercisesContent() {
                   className="px-4 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs flex items-center gap-1.5 transition-all shadow-md shadow-emerald-500/20 shrink-0"
                 >
                   <span>Full Form Guide & Sets</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Kaggle Video Demonstration Modal */}
+      {activeVideoExercise && (
+        <div className="fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-md flex items-center justify-center p-4">
+          <div className="relative w-full max-w-3xl bg-slate-900 border border-slate-800 rounded-3xl overflow-hidden shadow-2xl animate-in fade-in zoom-in-95 duration-200">
+            <div className="flex items-center justify-between px-6 py-4 bg-slate-950 border-b border-slate-800">
+              <div className="flex items-center gap-2">
+                <Film className="w-5 h-5 text-cyan-400" />
+                <h3 className="text-lg font-bold text-white">{activeVideoExercise.name}</h3>
+                <span className="px-2.5 py-0.5 rounded-full bg-cyan-500/20 text-cyan-400 text-[10px] font-black uppercase">
+                  Kaggle Video Demo
+                </span>
+              </div>
+              <button
+                onClick={() => setActiveVideoExercise(null)}
+                className="p-1.5 rounded-xl bg-slate-800 text-slate-400 hover:text-white hover:bg-slate-700 transition-colors"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            <div className="p-4 sm:p-6 space-y-4">
+              <div className="relative w-full aspect-video rounded-2xl overflow-hidden bg-black flex items-center justify-center shadow-inner">
+                <video
+                  ref={modalVideoRef}
+                  src={getExerciseVideoUrl(activeVideoExercise.slug, activeVideoExercise.primaryMuscle, activeVideoExercise.movementPattern)}
+                  autoPlay
+                  loop
+                  muted={isVideoMuted}
+                  controls
+                  playsInline
+                  className="w-full h-full object-contain bg-black"
+                />
+              </div>
+
+              <div className="flex items-center justify-between pt-2">
+                <div className="flex items-center gap-2 text-xs text-slate-300">
+                  <span className="px-2.5 py-1 rounded-lg bg-slate-800 text-emerald-400 font-bold">
+                    Primary: {activeVideoExercise.primaryMuscle}
+                  </span>
+                  <span className="px-2.5 py-1 rounded-lg bg-slate-800 text-cyan-400 font-semibold">
+                    Pattern: {activeVideoExercise.movementPattern}
+                  </span>
+                </div>
+
+                <Link
+                  href={`/exercises/${activeVideoExercise.slug}`}
+                  className="px-4 py-2 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold text-xs flex items-center gap-1.5 transition-all shadow-md shadow-cyan-500/20 shrink-0"
+                >
+                  <span>View Full Guide</span>
                   <ArrowRight className="w-3.5 h-3.5" />
                 </Link>
               </div>
@@ -336,15 +406,21 @@ function ExercisesContent() {
                 className="glass-card rounded-3xl p-6 space-y-4 flex flex-col justify-between group relative border border-slate-800 hover:border-emerald-500/50 transition-all shadow-xl"
               >
                 <div className="space-y-3">
-                  {/* Tags & 3D Ready Badge */}
+                  {/* Badges: Muscle + 3D + Video */}
                   <div className="flex items-center justify-between">
                     <span className="px-2.5 py-0.5 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 text-[11px] font-bold">
                       {ex.primaryMuscle}
                     </span>
-                    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-cyan-500/15 text-cyan-300 border border-cyan-500/30 text-[10px] font-black uppercase tracking-wider">
-                      <Box className="w-3 h-3 text-cyan-400" />
-                      3D Model
-                    </span>
+                    <div className="flex items-center gap-1.5">
+                      <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-emerald-500/15 text-emerald-300 border border-emerald-500/30 text-[10px] font-black uppercase tracking-wider">
+                        <Box className="w-3 h-3 text-emerald-400" />
+                        3D
+                      </span>
+                      <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-cyan-500/15 text-cyan-300 border border-cyan-500/30 text-[10px] font-black uppercase tracking-wider">
+                        <Film className="w-3 h-3 text-cyan-400" />
+                        Video
+                      </span>
+                    </div>
                   </div>
 
                   {/* Title & Description */}
@@ -368,28 +444,38 @@ function ExercisesContent() {
                   </div>
                 </div>
 
-                {/* Bottom Actions */}
-                <div className="pt-3 border-t border-slate-800/80 flex items-center justify-between gap-2">
+                {/* Bottom Actions: 3D View + Watch Video Demo + Compare + Guide */}
+                <div className="pt-3 border-t border-slate-800/80 flex flex-wrap items-center justify-between gap-2">
                   <div className="flex items-center gap-1.5">
-                    {/* 1-Click 3D Quick View Button */}
+                    {/* 1-Click 3D Quick View */}
                     <button
                       onClick={() => setActive3DExercise(ex)}
                       className="px-2.5 py-1.5 rounded-xl bg-slate-950 hover:bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 text-xs font-bold flex items-center gap-1 transition-all"
-                      title="Preview interactive 3D model"
+                      title="Inspect interactive 3D model"
                     >
                       <Box className="w-3.5 h-3.5" />
-                      <span>3D View</span>
+                      <span>3D</span>
+                    </button>
+
+                    {/* 1-Click Video Demo Modal */}
+                    <button
+                      onClick={() => setActiveVideoExercise(ex)}
+                      className="px-2.5 py-1.5 rounded-xl bg-slate-950 hover:bg-cyan-500/20 text-cyan-400 border border-cyan-500/40 text-xs font-bold flex items-center gap-1 transition-all"
+                      title="Watch Kaggle workout video demonstration"
+                    >
+                      <Film className="w-3.5 h-3.5" />
+                      <span>Video</span>
                     </button>
 
                     <button
                       onClick={() => toggleCompare(ex)}
-                      className={`px-2.5 py-1.5 rounded-xl text-xs font-semibold transition-all ${
+                      className={`px-2 py-1.5 rounded-xl text-xs font-semibold transition-all ${
                         isComparing
                           ? 'bg-amber-500 text-slate-950 font-bold'
                           : 'bg-slate-800 hover:bg-slate-750 text-slate-300 hover:text-white'
                       }`}
                     >
-                      {isComparing ? '✓ In Compare' : '+ Compare'}
+                      {isComparing ? '✓' : '+'}
                     </button>
                   </div>
 

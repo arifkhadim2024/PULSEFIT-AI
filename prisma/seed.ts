@@ -1,5 +1,6 @@
 import { PrismaClient } from '@prisma/client';
 import bcrypt from 'bcryptjs';
+import { getExerciseVideoUrl } from '../src/lib/exercise-videos';
 
 const prisma = new PrismaClient();
 
@@ -3481,12 +3482,12 @@ async function main() {
       }
     });
 
-    // Create default media for each exercise
+    // Create default media for each exercise using Kaggle dataset
     await prisma.exerciseMedia.create({
       data: {
         exerciseId: created.id,
         type: 'VIDEO',
-        url: `https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4`,
+        url: getExerciseVideoUrl(ex.slug, ex.primaryMuscle, ex.movementPattern),
         thumbnail: `https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?w=800&auto=format&fit=crop&q=80`,
         provider: 'EXTERNAL',
         durationSec: 15,

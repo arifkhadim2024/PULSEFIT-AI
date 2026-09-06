@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { 
@@ -17,10 +17,17 @@ import {
   Scale, 
   Activity,
   Flame,
-  Info
+  Info,
+  Film,
+  Play,
+  Pause,
+  Volume2,
+  VolumeX,
+  Box
 } from 'lucide-react';
 import ExerciseMediaDisplay from '@/components/ExerciseMediaDisplay';
 import TempoTimer from '@/components/TempoTimer';
+import { getExerciseVideoUrl } from '@/lib/exercise-videos';
 
 export default function ExerciseDetailPage() {
   const params = useParams();
@@ -29,6 +36,9 @@ export default function ExerciseDetailPage() {
   const [exercise, setExercise] = useState<any>(null);
   const [related, setRelated] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const [isVideoPlaying, setIsVideoPlaying] = useState(true);
+  const [isVideoMuted, setIsVideoMuted] = useState(true);
+  const videoPlayerRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
     if (!slug) return;
@@ -90,6 +100,26 @@ export default function ExerciseDetailPage() {
     commonMistakes = [];
   }
 
+  const exerciseVideoUrl = getExerciseVideoUrl(exercise.slug, exercise.primaryMuscle, exercise.movementPattern);
+
+  const toggleVideoPlay = () => {
+    if (videoPlayerRef.current) {
+      if (isVideoPlaying) {
+        videoPlayerRef.current.pause();
+      } else {
+        videoPlayerRef.current.play();
+      }
+      setIsVideoPlaying(!isVideoPlaying);
+    }
+  };
+
+  const toggleVideoMute = () => {
+    if (videoPlayerRef.current) {
+      videoPlayerRef.current.muted = !isVideoMuted;
+      setIsVideoMuted(!isVideoMuted);
+    }
+  };
+
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-10">
       {/* Top Breadcrumb & Compare Action */}
@@ -125,6 +155,10 @@ export default function ExerciseDetailPage() {
           <span className="px-3 py-1 rounded-full bg-purple-500/15 border border-purple-500/30 text-purple-400 text-xs font-bold uppercase tracking-wider">
             {exercise.difficulty}
           </span>
+          <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-300 text-xs font-bold uppercase tracking-wider">
+            <Film className="w-3.5 h-3.5 text-cyan-400" />
+            Kaggle Video Dataset
+          </span>
         </div>
 
         <h1 className="text-3xl sm:text-5xl font-black text-white tracking-tight">
@@ -135,9 +169,9 @@ export default function ExerciseDetailPage() {
         </p>
       </div>
 
-      {/* Main Grid: Media Visualizer & Quick Specs */}
+      {/* Main Grid: 3D Media Visualizer & Quick Specs */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-        {/* Left Column: Visual Media Display */}
+        {/* Left Column: Visual Media Display with 3D and Video Tabs */}
         <div className="lg:col-span-7 space-y-6">
           <ExerciseMediaDisplay
             exerciseName={exercise.name}
@@ -200,6 +234,37 @@ export default function ExerciseDetailPage() {
               Approx. <strong className="text-white font-mono">{exercise.caloriesBurnPerHour || 350} kcal / hour</strong> active training output.
             </p>
           </div>
+        </div>
+      </div>
+
+      {/* Dedicated Kaggle Workout Demonstration Video Card */}
+      <div className="p-6 sm:p-8 rounded-3xl bg-slate-900 border border-cyan-500/30 space-y-5 shadow-2xl">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-slate-800">
+          <div>
+            <div className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-cyan-400 mb-1">
+              <Film className="w-4 h-4" />
+              <span>Kaggle Dataset Video Demonstration</span>
+            </div>
+            <h3 className="text-xl font-bold text-white">
+              {exercise.name} - Real-World Form Video
+            </h3>
+          </div>
+          <span className="px-3 py-1 rounded-full bg-slate-950 border border-slate-800 text-xs text-slate-300">
+            Source: <strong className="text-cyan-400">hasyimabdillah/workoutfitness-video</strong>
+          </span>
+        </div>
+
+        <div className="relative w-full aspect-video max-h-[500px] rounded-2xl overflow-hidden bg-black flex items-center justify-center shadow-2xl">
+          <video
+            ref={videoPlayerRef}
+            src={exerciseVideoUrl}
+            autoPlay
+            loop
+            muted={isVideoMuted}
+            controls
+            playsInline
+            className="w-full h-full object-contain bg-black"
+          />
         </div>
       </div>
 

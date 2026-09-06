@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useRef } from 'react';
-import { Play, Pause, Sparkles, Activity, Video, Box, Volume2, VolumeX, Layers, Compass } from 'lucide-react';
+import { Play, Pause, Sparkles, Activity, Video, Box, Volume2, VolumeX, Layers, Compass, Film } from 'lucide-react';
 import Exercise3DViewer from './Exercise3DViewer';
 import { getExerciseVideoUrl } from '@/lib/exercise-videos';
 
@@ -73,7 +73,7 @@ export default function ExerciseMediaDisplay({
       {/* Top Media Tabs Header */}
       <div className="flex flex-wrap items-center justify-between gap-2 px-5 py-3 bg-slate-950/90 border-b border-slate-800">
         <div className="flex items-center gap-1.5 sm:gap-2">
-          {/* 3D Tab - Highlighted */}
+          {/* 3D Tab */}
           <button
             onClick={() => setActiveTab('3d')}
             className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all ${
@@ -86,17 +86,17 @@ export default function ExerciseMediaDisplay({
             <span>Interactive 3D Model</span>
           </button>
 
-          {/* Video Tab */}
+          {/* Kaggle Video Demo Tab */}
           <button
             onClick={() => setActiveTab('video')}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold transition-all ${
+            className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all ${
               activeTab === 'video'
-                ? 'bg-cyan-500/20 text-cyan-400 border border-cyan-500/40'
-                : 'text-slate-400 hover:text-slate-200'
+                ? 'bg-gradient-to-r from-cyan-500 to-blue-500 text-slate-950 shadow-md shadow-cyan-500/20'
+                : 'bg-slate-900/80 text-cyan-400 hover:text-cyan-300 border border-cyan-500/30'
             }`}
           >
-            <Video className="w-3.5 h-3.5" />
-            <span>Video Demo</span>
+            <Film className="w-3.5 h-3.5" />
+            <span>🎬 Real Video Demo</span>
           </button>
 
           {/* Muscle Activation Tab */}
@@ -113,9 +113,11 @@ export default function ExerciseMediaDisplay({
           </button>
         </div>
 
-        <div className="hidden md:flex items-center gap-2 text-xs text-slate-400">
-          <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-          <span>Tempo Cadence: <strong className="text-white font-mono">{tempo}</strong></span>
+        <div className="flex items-center gap-2 text-xs">
+          <span className="px-2.5 py-0.5 rounded-full bg-cyan-500/10 text-cyan-400 border border-cyan-500/30 text-[10px] font-bold">
+            Kaggle Video Dataset
+          </span>
+          <span className="hidden md:inline text-slate-400">Tempo: <strong className="text-white font-mono">{tempo}</strong></span>
         </div>
       </div>
 
@@ -132,8 +134,8 @@ export default function ExerciseMediaDisplay({
       )}
 
       {activeTab === 'video' && (
-        <div className="relative w-full aspect-video sm:aspect-[16/10] max-h-[460px] bg-slate-950 flex items-center justify-center overflow-hidden">
-          <div className="relative w-full h-full flex items-center justify-center group">
+        <div className="relative w-full aspect-video sm:aspect-[16/10] max-h-[480px] bg-slate-950 flex items-center justify-center overflow-hidden">
+          <div className="relative w-full h-full flex items-center justify-center group bg-black">
             {videoSrc ? (
               <video
                 key={videoSrc}
@@ -144,7 +146,7 @@ export default function ExerciseMediaDisplay({
                 loop
                 muted={isMuted}
                 playsInline
-                className="w-full h-full object-cover"
+                className="w-full h-full object-contain bg-black"
               />
             ) : (
               <div className="relative w-full h-full flex flex-col items-center justify-center bg-gradient-to-br from-slate-950 via-slate-900 to-emerald-950/40 p-6 text-center">
@@ -167,14 +169,14 @@ export default function ExerciseMediaDisplay({
             )}
 
             {/* Video Control Overlay */}
-            <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between bg-slate-950/80 backdrop-blur-md px-4 py-2 rounded-2xl border border-slate-800 opacity-90 transition-opacity">
+            <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between bg-slate-950/85 backdrop-blur-md px-4 py-2.5 rounded-2xl border border-slate-800 opacity-95 transition-opacity shadow-2xl">
               <div className="flex items-center gap-3">
                 <button
                   onClick={togglePlay}
-                  className="p-2 rounded-xl bg-emerald-500 text-slate-950 font-bold hover:scale-105 transition-transform"
+                  className="p-2.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-black hover:scale-105 transition-transform"
                   title={isPlaying ? 'Pause' : 'Play'}
                 >
-                  {isPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4 fill-current" />}
+                  {isPlaying ? <Pause className="w-4 h-4 fill-current" /> : <Play className="w-4 h-4 fill-current" />}
                 </button>
                 <button
                   onClick={toggleMute}
@@ -183,17 +185,20 @@ export default function ExerciseMediaDisplay({
                 >
                   {isMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
                 </button>
+                <span className="text-xs text-cyan-400 font-semibold hidden sm:inline">
+                  Workout Video Demonstration
+                </span>
               </div>
 
               {/* Speed Buttons */}
               <div className="flex items-center gap-1.5 bg-slate-900 px-2 py-1 rounded-xl border border-slate-800">
-                {[0.5, 0.75, 1.0].map(spd => (
+                {[0.5, 0.75, 1.0, 1.5].map(spd => (
                   <button
                     key={spd}
                     onClick={() => handleSpeedChange(spd)}
                     className={`px-2 py-0.5 rounded-lg text-xs font-semibold ${
                       playbackSpeed === spd
-                        ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/40'
+                        ? 'bg-cyan-500/20 text-cyan-400 border border-cyan-500/40'
                         : 'text-slate-400 hover:text-white'
                     }`}
                   >
@@ -207,7 +212,7 @@ export default function ExerciseMediaDisplay({
       )}
 
       {activeTab === 'heatmap' && (
-        <div className="w-full aspect-video sm:aspect-[16/10] max-h-[460px] flex flex-col items-center justify-center p-6 sm:p-8 bg-slate-950 text-white">
+        <div className="w-full aspect-video sm:aspect-[16/10] max-h-[480px] flex flex-col items-center justify-center p-6 sm:p-8 bg-slate-950 text-white">
           <div className="w-full max-w-md space-y-5">
             <h4 className="text-sm font-bold text-slate-300 uppercase tracking-wider text-center">
               Target Muscle Activation Breakdown

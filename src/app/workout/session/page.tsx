@@ -405,9 +405,11 @@ function WorkoutSessionPlayerContent() {
             {/* Media Viewer */}
             <ExerciseMediaDisplay
               exerciseName={currentExercise.name}
+              exerciseSlug={currentExercise.slug}
               primaryMuscle={currentExercise.primaryMuscle}
               mediaList={currentExercise.media || []}
               movementPattern={currentExercise.movementPattern}
+              equipment={currentExercise.equipment}
               tempo={currentExercise.tempo}
             />
 
